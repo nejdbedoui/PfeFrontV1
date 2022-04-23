@@ -6,10 +6,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./gestion-action-marketing.component.scss']
 })
 export class GestionActionMarketingComponent implements OnInit {
+  selectedItem:string;
+  stateOptions: any[];
+  value1: string = "";
+  constructor() { 
+    this.stateOptions = [{label: 'image', value: 'image'}, {label: 'video', value: 'video'}];
 
-  constructor() { }
+
+ }
 
   ngOnInit() {
+  }
+
+  uploadedFiles: any[] = [];
+
+
+  onUpload(event) {
+      for(let file of event.files) {
+          this.uploadedFiles.push(file);
+          
+      }
+
+      
   }
 
 }
