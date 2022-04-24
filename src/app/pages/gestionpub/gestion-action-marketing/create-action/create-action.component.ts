@@ -19,7 +19,10 @@ export class CreateActionComponent implements OnInit {
   banner:boolean=false;
   popup:boolean=false;
   notification:boolean=false;
-  sectors:Sector[];
+
+  sector:Sector[];
+
+
   constructor(private _SectorService: SectorEndPointService) { 
     this.optionCanalDiffusion=[{label: 'Mobile', value: 'mobile'}, {label: 'SMS', value: 'sms'},{label: 'TV', value: 'tv'}];
     this.CanalDiffusion=this.optionCanalDiffusion[0];
@@ -29,6 +32,7 @@ export class CreateActionComponent implements OnInit {
  }
 
   ngOnInit() {
+
     this.getAllSectors();
   }
 
@@ -42,27 +46,26 @@ export class CreateActionComponent implements OnInit {
       }
     });
   }
+
   onUpload(event) {
       for(let file of event.files) {
           this.uploadedFiles.push(file);  
+          console.log(event) ;
       }
   }
   selectdatedebut(event){
     this.datedebut=event;
-    console.log(this.datedebut)
   }
   selectdatefin(event){
     this.datefin=event;
-    
-    console.log(this.datefin)
   }
   setpopup(){
 this.popup=!this.popup;
   }
-  setnotif(event){
+  setnotif(){
 this.notification=!this.notification;
   }
-  setbanner(event){
+  setbanner(){
     this.banner=!this.banner;
   }
 }
