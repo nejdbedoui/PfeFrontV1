@@ -19,7 +19,9 @@ export class CreateActionComponent implements OnInit {
   banner:boolean=false;
   popup:boolean=false;
   notification:boolean=false;
+
   sector:Sector[];
+
 
   constructor(private _SectorService: SectorEndPointService) { 
     this.optionCanalDiffusion=[{label: 'Mobile', value: 'mobile'}, {label: 'SMS', value: 'sms'},{label: 'TV', value: 'tv'}];
@@ -30,14 +32,20 @@ export class CreateActionComponent implements OnInit {
  }
 
   ngOnInit() {
-    this._SectorService.findAllSectorByFActif(1).subscribe(val=>{
-      this.sector=val.objectResponse
-      console.log(this.sector)
-    })
+
+    this.getAllSectors();
   }
 
   uploadedFiles: any[] = [];
-img:any;
+
+  getAllSectors(){
+    this._SectorService.findAllSectorByFActif(1).subscribe(response=>{
+      if (response.result==1){
+        this.sectors = response.objectResponse;
+        console.log(response);
+      }
+    });
+  }
 
   onUpload(event) {
       for(let file of event.files) {

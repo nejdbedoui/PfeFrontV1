@@ -25,7 +25,7 @@ export const environment = {
 
   // image_url:'https://images.adcaisse.online',
   backend_url_Pos: "https://be.adcaisse.online/zull-serveur/bp-api-pos/v1/",
-  backend_url_Pos_pub: "http://localhost:8080/v1/",
+  backend_url_Publicite: "http://localhost:8080/v1/",
   backend_url_Admin: "https://be.adcaisse.online/zull-serveur/bp-api-admin/v1/",
   backend_url_Product: "https://be.adcaisse.online/zull-serveur/bp-api-product/v1/",
   backend_url_Transaction: "https://be.adcaisse.online/zull-serveur/bp-api-transaction/v1/",
