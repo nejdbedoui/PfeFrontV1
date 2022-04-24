@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Sector } from '../../../../model/Sector';
+import { SectorEndPointService } from '../../../../service/bp-api-pos/sector-end-point/sector-end-point.service';
 
 @Component({
   selector: 'ngx-create-action',
@@ -17,7 +19,9 @@ export class CreateActionComponent implements OnInit {
   banner:boolean=false;
   popup:boolean=false;
   notification:boolean=false;
-  constructor() { 
+  sector:Sector[];
+
+  constructor(private _SectorService: SectorEndPointService) { 
     this.optionCanalDiffusion=[{label: 'Mobile', value: 'mobile'}, {label: 'SMS', value: 'sms'},{label: 'TV', value: 'tv'}];
     this.CanalDiffusion=this.optionCanalDiffusion[0];
     this.optionContenue = [{label: 'image', value: 'image'}, {label: 'video', value: 'video'}];
@@ -26,32 +30,34 @@ export class CreateActionComponent implements OnInit {
  }
 
   ngOnInit() {
+    this._SectorService.findAllSectorByFActif(1).subscribe(val=>{
+      this.sector=val.objectResponse
+      console.log(this.sector)
+    })
   }
 
   uploadedFiles: any[] = [];
-
+img:any;
 
   onUpload(event) {
       for(let file of event.files) {
           this.uploadedFiles.push(file);  
+          console.log(event) ;
       }
   }
   selectdatedebut(event){
     this.datedebut=event;
-    console.log(this.datedebut)
   }
   selectdatefin(event){
     this.datefin=event;
-    
-    console.log(this.datefin)
   }
   setpopup(){
 this.popup=!this.popup;
   }
-  setnotif(event){
+  setnotif(){
 this.notification=!this.notification;
   }
-  setbanner(event){
+  setbanner(){
     this.banner=!this.banner;
   }
 }
