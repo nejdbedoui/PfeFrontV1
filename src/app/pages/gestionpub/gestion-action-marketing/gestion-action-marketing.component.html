@@ -1,29 +1,39 @@
+<ngx-bread-crumb></ngx-bread-crumb>
 <nb-card>
-    <nb-card-header>
-        <div class="row">
-            <div class="col-md-6"><span style="font-size: 20px;">Gestion Action Marketing</span></div>
-           </div>
-    </nb-card-header>
-    <nb-card-body>
-<nb-select placeholder="Select Showcase" [(selected)]="selectedItem">
-    <nb-option value="0">Default</nb-option>
-    <nb-option value="1">Autre</nb-option>
-  </nb-select> <input *ngIf="selectedItem=='1'" type="text" nbInput placeholder="Text field"><br>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-6"><span style="font-size: 20px;">Gestion Action Marketing</span></div>
+      <div class="col-md-6"><span style="float: right"> Action Marketing&nbsp;&nbsp;</span></div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="button" *ngIf="!affichefilter" style="float: right;background: #79008e !important;" nbButton
+          [shape]="'round'" (click)="affichefilter=true"> Afficher plus de critéres de
+          recherche</button>&nbsp;&nbsp;
+        <button type="button" *ngIf="affichefilter" style="float: right" nbButton status="warning" [shape]="'round'"
+          (click)="affichefilter=false"> Cacher les critères de
+          recherche</button>&nbsp;&nbsp;
+      </div>
+    </div>
+    <br>
 
 
-<p-selectButton [options]="stateOptions" [(ngModel)]="value1"  optionLabel="label"  optionValue="value"></p-selectButton>
-<div class="upload" *ngIf="value1==stateOptions[0]" >
-<h5>choisissez votre image</h5>
-    <p-fileUpload   chooseLabel="Select image" name="demo1" [fileLimit]="4" [showUploadButton]="false" (onSelect)="onUpload($event)"
-            multiple="multiple" accept="image/*" maxFileSize="1000000">
-    </p-fileUpload>
-</div>
+    <div class="row">
+      <div class="col-md-6"></div>
+      <div class="col-md-2"></div>
+      <div class="col-md-4">
+        <div class="" style="text-align: center; margin-top: 8px">
+          <button type="button" (click)="ajouteraction()" style="float: right" class="icon-btn add-btn">
+            <div class="add-icon"></div>
+            <div class="btn-txt">Ajouter une Nouvelle Action Marketing</div>
+          </button>
+        </div>
+      </div>
+    </div>
 
-<div *ngIf="value1==stateOptions[1]">
-    <h5>choisissez votre Video</h5>
-    <p-fileUpload styleClass="upload"  name="demo2"  [fileLimit]="1" [showUploadButton]="false" (onSelect)="onUpload($event)"
-            multiple="multiple" accept="video/*" maxFileSize="100000000">
-    </p-fileUpload>
-</div>
-</nb-card-body>
+    
+
+  </nb-card-body>
 </nb-card>

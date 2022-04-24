@@ -1,0 +1,102 @@
+.smartphone {
+    position: relative;
+    width: 180px;
+    height: 320px;
+    margin: auto;
+    border: 16px black solid;
+    border-top-width: 22px;
+    border-bottom-width: 22px;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-radius: 18px;
+}
+
+.smartphone:before {
+    content: '';
+    display: block;
+    width: 15%;
+    height: 1%;
+    position: absolute;
+    top: -5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #333;
+    border-radius: 15px;
+    z-index: 1;
+}
+
+/* The circle on the bottom of the device */
+.smartphone:after {
+    content: '';
+    display: block;
+    width: 9%;
+    height: 5%;
+    position: absolute;
+    left: 50%;
+    bottom: -9.5%;
+    transform: translate(-50%, -50%);
+    background: #333;
+    border-radius: 15px;
+}
+
+/* The screen (or content) of the device */
+.smartphone .content {
+    width: 100.4%;
+    height: 100.4%;
+    background: white;
+}
+
+.notification {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border: none;
+    height: 20%;
+    top: 50%;
+    background-color: aqua;
+}
+
+.popup1 {
+    width: 100%;
+    border: none;
+    height: 65%;
+    position: relative;
+    transform: translate(-50%, -50%);
+    background-color: blanchedalmond;
+    border-radius: 20px;
+    top: 32%;
+  left: 50%;
+}
+
+.popup2 {
+    width: 90%;
+    border: none;
+    height: 90%;
+    position: relative;
+    transform: translate(-50%, -50%);
+    background-color: blanchedalmond;
+    border-radius: 20px;
+    top: 50%;
+  left: 50%;
+}
+.popup3 {
+    width: 90%;
+    border: none;
+    height: 90%;
+    position: relative;
+    transform: translate(-50%, -50%);
+    background-color: blanchedalmond;
+    border-radius: 20px;
+    top: 50%;
+  left: 50%;
+}
+.banner{
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border: none;
+    height: 15%;
+    bottom: 150px;
+    background-color: blueviolet;
+}

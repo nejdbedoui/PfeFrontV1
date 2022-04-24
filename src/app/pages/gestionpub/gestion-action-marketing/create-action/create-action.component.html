@@ -1,0 +1,77 @@
+<nb-card>
+    <nb-card-header>
+        <div class="row">
+            <div class="col-md-6"><span style="font-size: 20px;">Ajouter Action Marketing</span></div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+<div name="Categorie">
+        <nb-select placeholder="Select Categorie" [(selected)]="categorie">
+            <nb-option value="0">Default</nb-option>
+            <nb-option value="1">Autre</nb-option>
+        </nb-select> <input *ngIf="categorie=='1'" type="text" nbInput placeholder="Libellé Categorie">
+    </div>       
+        
+    <p-selectButton [options]="optionCanalDiffusion" [(ngModel)]="CanalDiffusion" optionLabel="label" optionValue="value">
+    </p-selectButton>
+        <br>
+        <input type="text" nbInput placeholder="Lien "><br>
+
+
+      <textarea fieldSize="medium" nbInput placeholder="Description de votre Action Marketing"></textarea>
+
+      
+
+      
+        
+      <input nbInput placeholder="Pick Date" [nbDatepicker]="datedeb"  >
+      <nb-datepicker #datedeb (dateChange)="selectdatedebut($event)"></nb-datepicker>
+
+      <input nbInput placeholder="Form Picker" [nbDatepicker]="datefn">
+      <nb-datepicker #datefn (dateChange)="selectdatefin($event)"></nb-datepicker>
+   <br>
+      <nb-checkbox (checkedChange)="setpopup($event)">Pop UP</nb-checkbox>
+      <nb-checkbox (checkedChange)="setnotif($event)">Notification</nb-checkbox>
+      <nb-checkbox (checkedChange)="setbanner($event)">Bannier</nb-checkbox>
+
+<div *ngIf="CanalDiffusion==optionCanalDiffusion[1]">
+    <textarea nbInput placeholder="Votre SMS d'envoie"></textarea>
+
+</div>
+
+
+<div *ngIf="CanalDiffusion!=optionCanalDiffusion[1]">
+
+
+        <p-selectButton [options]="optionContenue" [(ngModel)]="contenue" optionLabel="label" optionValue="value">
+        </p-selectButton>
+        <div class="upload" *ngIf="contenue==optionContenue[0]">
+            <h5>choisissez votre image</h5>
+            <p-fileUpload chooseLabel="Choisir image" name="demo1" [fileLimit]="4" [showUploadButton]="false"
+                (onSelect)="onUpload($event)" multiple="multiple" accept="image/*" maxFileSize="1000000">
+            </p-fileUpload>
+        </div>
+
+        <div *ngIf="contenue==optionContenue[1]">
+            <h5>choisissez votre Video</h5>
+            <p-fileUpload chooseLabel="Choisir video" styleClass="upload" name="demo2" [fileLimit]="1"
+                [showUploadButton]="false" (onSelect)="onUpload($event)" multiple="multiple" accept="video/*"
+                maxFileSize="100000000">
+            </p-fileUpload>
+        </div>
+    </div>
+
+
+
+
+    
+    <div class="smartphone" *ngIf="CanalDiffusion!=optionCanalDiffusion[1]">
+      <div class="content">
+        <div *ngIf="notification" class="notification" ></div>
+        <div *ngIf="popup && notification"  class="popup1"></div>
+        <div *ngIf="popup && !notification && !banner"  class="popup2"></div>
+        <div *ngIf="banner"  class="banner"></div>
+      </div>
+    </div><br>
+
+    

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-gestion-action-marketing',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./gestion-action-marketing.component.scss']
 })
 export class GestionActionMarketingComponent implements OnInit {
+  affichefilter:boolean=false;
   selectedItem:string;
   stateOptions: any[];
   value1: string = "";
-  constructor() { 
+  constructor(private route: Router,) { 
     this.stateOptions = [{label: 'image', value: 'image'}, {label: 'video', value: 'video'}];
 
 
@@ -20,7 +22,9 @@ export class GestionActionMarketingComponent implements OnInit {
 
   uploadedFiles: any[] = [];
 
-
+  ajouteraction() {
+    this.route.navigateByUrl("/pages/gestionpub/gestionactionmarketing/ajouteraction");
+  }
   onUpload(event) {
       for(let file of event.files) {
           this.uploadedFiles.push(file);
