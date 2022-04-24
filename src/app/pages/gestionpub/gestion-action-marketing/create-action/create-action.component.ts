@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Sector } from '../../../../model/Sector';
+import { SectorEndPointService } from '../../../../service/bp-api-pos/sector-end-point/sector-end-point.service';
 
 @Component({
   selector: 'ngx-create-action',
@@ -17,7 +19,8 @@ export class CreateActionComponent implements OnInit {
   banner:boolean=false;
   popup:boolean=false;
   notification:boolean=false;
-  constructor() { 
+  sectors:Sector[];
+  constructor(private _SectorService: SectorEndPointService) { 
     this.optionCanalDiffusion=[{label: 'Mobile', value: 'mobile'}, {label: 'SMS', value: 'sms'},{label: 'TV', value: 'tv'}];
     this.CanalDiffusion=this.optionCanalDiffusion[0];
     this.optionContenue = [{label: 'image', value: 'image'}, {label: 'video', value: 'video'}];
@@ -26,11 +29,19 @@ export class CreateActionComponent implements OnInit {
  }
 
   ngOnInit() {
+    this.getAllSectors();
   }
 
   uploadedFiles: any[] = [];
 
-
+  getAllSectors(){
+    this._SectorService.findAllSectorByFActif(1).subscribe(response=>{
+      if (response.result==1){
+        this.sectors = response.objectResponse;
+        console.log(response);
+      }
+    });
+  }
   onUpload(event) {
       for(let file of event.files) {
           this.uploadedFiles.push(file);  
