@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Sector } from '../../../model/Sector';
+import { SectorEndPointService } from '../../../service/bp-api-pos/sector-end-point/sector-end-point.service';
 
 @Component({
   selector: 'ngx-gestion-action-marketing',
@@ -19,6 +21,8 @@ export class GestionActionMarketingComponent implements OnInit {
 
   ngOnInit() {
   }
+
+ 
 
   uploadedFiles: any[] = [];
 

@@ -7,8 +7,7 @@
     <nb-card-body>
 <div name="Categorie">
         <nb-select placeholder="Select Categorie" [(selected)]="categorie">
-            <nb-option value="0">Default</nb-option>
-            <nb-option value="1">Autre</nb-option>
+            <nb-option *ngFor="let sector of sectors" value="sector.designation">{{sector.designation}}</nb-option>
         </nb-select> <input *ngIf="categorie=='1'" type="text" nbInput placeholder="Libellé Categorie">
     </div>       
         
