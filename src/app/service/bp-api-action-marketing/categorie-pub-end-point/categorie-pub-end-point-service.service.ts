@@ -24,19 +24,19 @@ CreateCategoriePub(CategoriePub:CategoriePub){
 }
 
 findByidCategoriePub(idCategoriePub:String){
-  return this.httpclient.get<OneCategoriePubResponse>(environment.backend_url_Pos+"findByIdCategorie/"+idCategoriePub,{ headers: this.header }); 
+  return this.httpclient.get<OneCategoriePubResponse>(environment.backend_url_Publicite+"findByIdCategorie/"+idCategoriePub,{ headers: this.header }); 
 }
 
 findAllCategoriePub(){
-  return this.httpclient.get<CategoriePubResponse>(environment.backend_url_Pos+"findAllCategorie/",{ headers: this.header }); 
+  return this.httpclient.get<CategoriePubResponse>(environment.backend_url_Publicite+"findAllCategorie/",{ headers: this.header }); 
 }
 
 deleteCategoriePub(idCategoriePub:String){
-  return this.httpclient.delete<any>(environment.backend_url_Pos+"DeleteCategorie/"+idCategoriePub,{ headers: this.header });
+  return this.httpclient.delete<any>(environment.backend_url_Publicite+"DeleteCategorie/"+idCategoriePub,{ headers: this.header });
 
 }
 updateCategoriePub(CategoriePub:CategoriePub){
-  return this.httpclient.put<OneCategoriePubResponse>(environment.backend_url_Pos+"UpdateCategorie/",CategoriePub,{ headers: this.header });
+  return this.httpclient.put<OneCategoriePubResponse>(environment.backend_url_Publicite+"UpdateCategorie/",CategoriePub,{ headers: this.header });
 }
 
 }

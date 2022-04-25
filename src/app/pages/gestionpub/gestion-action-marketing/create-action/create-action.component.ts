@@ -23,14 +23,14 @@ export class CreateActionComponent implements OnInit {
   banner: boolean = false;
   popup: boolean = false;
   notification: boolean = false;
-  sectors: Sector[];
+  sectors: CategoriePub[];
   action: ActionMarketing;
   categorie: CategoriePub;
   lien:String;
   description:String;
   smsbody:String;
   id: string = localStorage.getItem("UserId")
-  constructor(private _SectorService: SectorEndPointService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
+  constructor( private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
     this.optionCanalDiffusion = [{ label: 'Mobile', value: 'mobile' }, { label: 'SMS', value: 'sms' }, { label: 'TV', value: 'tv' }];
     this.CanalDiffusion = this.optionCanalDiffusion[0];
     this.optionContenue = [{ label: 'image', value: 'image' }, { label: 'video', value: 'video' }];
@@ -46,7 +46,7 @@ export class CreateActionComponent implements OnInit {
   uploadedFiles: any[] = [];
 
   getAllSectors() {
-    this._SectorService.findAllSectorByFActif(1).subscribe(response => {
+    this._Categoriepubendpointservice.findAllCategoriePub().subscribe(response => {
       if (response.result == 1) {
         this.sectors = response.objectResponse;
 
@@ -58,8 +58,7 @@ export class CreateActionComponent implements OnInit {
     this.categorie.libelle=this.sector;// hedhi badelha c bon base 3abitha 
     this.action = new ActionMarketing();
     console.log(this.categorie)
-    this._Categoriepubendpointservice.CreateCategoriePub(this.categorie).subscribe(val=>{
-      this.action.idCategorie=val.objectResponse.idCategorie
+      this.action.idCategorie=this.sector;
       this.action.url=this.lien;
       this.action.description=this.description;
       this.action.dateDebut=this.datedebut;
@@ -89,10 +88,10 @@ export class CreateActionComponent implements OnInit {
       this.ajouteraction(this.action);
       }
       
-    }
+    
      
       
-      )
+      
 
    
   }
