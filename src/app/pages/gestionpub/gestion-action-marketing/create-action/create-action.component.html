@@ -7,8 +7,8 @@
     <nb-card-body>
 <div name="Categorie">
 
-        <nb-select placeholder="Secteur d'activité" fullWidth [(selected)]="categorie">
-            <nb-option *ngFor="let sctor of sector"  value="{{sctor.designation}}">{{sctor.designation}}</nb-option>
+        <nb-select placeholder="Secteur d'activité" fullWidth [(selected)]="sector">
+            <nb-option *ngFor="let sctor of sectors"  value="{{sctor.designation}}">{{sctor.designation}}</nb-option>
             <nb-option value="Autre">Autre</nb-option>
         </nb-select> <input *ngIf="categorie=='Autre'"  type="text" nbInput placeholder="Libellé Categorie">
 
@@ -17,10 +17,10 @@
     <p-selectButton [options]="optionCanalDiffusion" [(ngModel)]="CanalDiffusion" optionLabel="label" optionValue="value">
     </p-selectButton>
         <br>
-        <input type="text" nbInput placeholder="Lien "><br>
+        <input type="text" nbInput placeholder="Lien "  [(ngModel)]="lien"><br>
 
 
-      <textarea fieldSize="medium" nbInput placeholder="Description de votre Action Marketing"></textarea>
+      <textarea fieldSize="medium" nbInput [(ngModel)]="description" placeholder="Description de votre Action Marketing"></textarea>
 
       
 
@@ -34,7 +34,7 @@
    <br>
     
 <div *ngIf="CanalDiffusion==optionCanalDiffusion[1]">
-    <textarea nbInput placeholder="Votre SMS d'envoie"></textarea>
+    <textarea nbInput placeholder="Votre SMS d'envoie"  [(ngModel)]="smsbody"></textarea>
 
 </div>
 
@@ -64,7 +64,7 @@
     </div>
 
 
-
+<button (click)="submit()" name="submit" type="submit" value="submit"></button>
 
    <!--  
     <div class="smartphone" *ngIf="CanalDiffusion!=optionCanalDiffusion[1] && CanalDiffusion!=optionCanalDiffusion[2]">

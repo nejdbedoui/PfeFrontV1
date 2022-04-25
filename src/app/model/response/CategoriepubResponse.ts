@@ -1,7 +1,7 @@
-import { Categoriepub } from "../Categoriepub";
+import { CategoriePub } from "../CategoriePub";
 
-export class CategoriepubResponse{
+export class CategoriePubResponse{
     result: number;
     errorDescription: string;
-    objectResponse:Categoriepub[];
+    objectResponse:CategoriePub[];
 }

@@ -1,5 +1,5 @@
-export class Categoriepub{
-    idCategorie: string;
-    libelle: string;
-    objectResponse:String;
+export class CategoriePub{
+      idCategorie:String;
+      libelle:String;
+      description:String;
 }
