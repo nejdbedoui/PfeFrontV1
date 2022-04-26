@@ -13,6 +13,8 @@ import { CreateActionComponent } from './gestion-action-marketing/create-action/
 import { BreadCrumbModule } from '../../bread-crumb/bread-crumb.module';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {TooltipModule} from 'primeng/tooltip';
+import { DataTablesModule } from 'angular-datatables';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent],
@@ -34,6 +36,8 @@ import {TooltipModule} from 'primeng/tooltip';
     InputTextareaModule,
     TooltipModule,
     GestionpubRoutingRoutingModule,
+    DataTablesModule,
+    TableModule,
     
   
   ]
