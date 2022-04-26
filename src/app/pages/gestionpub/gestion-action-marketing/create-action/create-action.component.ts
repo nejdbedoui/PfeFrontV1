@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionMarketing } from '../../../../model/ActionMarketing';
 import { CategoriePub } from '../../../../model/CategoriePub';
+import { PopulationCible } from '../../../../model/PopulationCible';
 import { Sector } from '../../../../model/Sector';
 import { ActionMarketingEndPointServiceService } from '../../../../service/bp-api-action-marketing/action-marketing-end-point/action-marketing-end-point-service.service';
 import { CategoriePubEndPointServiceService } from '../../../../service/bp-api-action-marketing/categorie-pub-end-point/categorie-pub-end-point-service.service';
+import { PopulationCibleEndPointServiceService } from '../../../../service/bp-api-action-marketing/population-cible-end-point/population-cible-end-point-service.service';
 import { SectorEndPointService } from '../../../../service/bp-api-pos/sector-end-point/sector-end-point.service';
 
 @Component({
@@ -29,8 +31,9 @@ export class CreateActionComponent implements OnInit {
   lien:String;
   description:String;
   smsbody:String;
+  populationCible:PopulationCible;
   id: string = localStorage.getItem("UserId")
-  constructor( private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
+  constructor( private _populationCibleService:PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
     this.optionCanalDiffusion = [{ label: 'Mobile', value: 'mobile' }, { label: 'SMS', value: 'sms' }, { label: 'TV', value: 'tv' }];
     this.CanalDiffusion = this.optionCanalDiffusion[0];
     this.optionContenue = [{ label: 'image', value: 'image' }, { label: 'video', value: 'video' }];
@@ -53,10 +56,19 @@ export class CreateActionComponent implements OnInit {
       }
     });
   }
-  submit() {
+
+ CreatePopulationCible(populationCible:PopulationCible){
+  return this._populationCibleService.CreatePopulationCible(populationCible);
+}
+  async submit() {
     this.categorie=new CategoriePub();
-    this.categorie.libelle=this.sector;// hedhi badelha c bon base 3abitha 
+    this.categorie.libelle=this.sector;
     this.action = new ActionMarketing();
+    var response =await this.CreatePopulationCible(this.populationCible).toPromise();
+    if(response.result==1){
+      this.action.idPopulationCible=response.objectResponse.idPopulationCible;
+    }
+    
     console.log(this.categorie)
       this.action.idCategorie=this.sector;
       this.action.url=this.lien;

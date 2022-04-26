@@ -32,7 +32,46 @@
         </div>
       </div>
     </div>
-
+    <p-table  [columns]="cols" [loading]="loading"  [rowsPerPageOptions]="[20,30,50]"  #dta [value]="ActionsMarketing" [rows]="20" [paginator]="true" [responsive]="true" autoLayout ="true" [globalFilterFields]="['description','dateCreation']">
+      <ng-template pTemplate="caption">
+        
+          <div style="text-align: right">        
+              <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+              <input type="text" pInputText size="50" placeholder="Chercher" (input)="dta.filterGlobal($event.target.value, 'contains')" style="width:40%; min-height: 34px;">
+          </div>
+      </ng-template>  
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Description</th>
+            <th>Contenue</th>
+            <th>Image ou Video</th>
+            <th>Date Debut</th>
+            <th>Date fin</th>
+            <th  >Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-Action>
+          <tr >
+            <td>{{Action.description}}</td>
+            <td>{{Action.typeContenue}}</td>
+            <td><img [src]="Action.url" [alt]="Action.typeContenue" width="100" class="shadow-4" /></td>
+            <td>{{Action.dateDebut |date:'dd-MM-yyyy'}}</td>
+            <td>{{Action.dateFin |date:'dd-MM-yyyy'}}</td>
+          <td ></td>
+        </tr>
+        </ng-template>
+        <ng-template  pTemplate="emptymessage" let-Action>
+          <tr>
+              <td >
+                  <div style="display: flex;
+                  justify-content: center;">
+                      La liste est vide
+                  </div>
+                  
+              </td>
+          </tr>
+      </ng-template>
+      </p-table>
     
 
   </nb-card-body>
