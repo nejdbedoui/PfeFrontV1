@@ -5,47 +5,52 @@
         </div>
     </nb-card-header>
     <nb-card-body>
+        <form [formGroup]="ActionForm" (ngSubmit)="createRDV()">
 <div name="Categorie">
-
-        <nb-select placeholder="Secteur d'activité" fullWidth [(selected)]="sector">
+    <div class="form-group">
+        <nb-select placeholder="Secteur d'activité" fullWidth formComntrolName="SecteurActivite">
             <nb-option *ngFor="let sctor of sectors"  value="{{sctor.idCategorie}}">{{sctor.libelle}}</nb-option>
             <nb-option value="Autre">Autre</nb-option>
         </nb-select> <input *ngIf="categorie=='Autre'"  type="text" nbInput placeholder="Libellé Categorie">
-
+</div>
     </div>       
         
-    <p-selectButton [options]="optionCanalDiffusion" [(ngModel)]="CanalDiffusion" optionLabel="label" optionValue="value">
+    <p-selectButton [options]="optionCanalDiffusion" formComntrolName="CanalDiffusion" optionLabel="label" optionValue="value">
     </p-selectButton>
         <br>
-        <input type="text" nbInput placeholder="Lien "  [(ngModel)]="lien"><br>
+        <input type="text" nbInput placeholder="Lien "  formComntrolName="LienPub">
+        <label *ngIf=" isSubmitted && (formControls.LienPub.errors )" class="label-has-error">
+            <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Nombre de personnes </label>
+        <br>
 
 
-      <textarea fieldSize="medium" nbInput [(ngModel)]="description" placeholder="Description de votre Action Marketing"></textarea>
+
+      <textarea fieldSize="medium" nbInput formComntrolName="Description" placeholder="Description de votre Action Marketing"></textarea>
 
       
 
       <br>
         
-      <input nbInput placeholder="Pick Date" [nbDatepicker]="datedeb"  >
-      <nb-datepicker #datedeb (dateChange)="selectdatedebut($event)"></nb-datepicker>
+      <input nbInput placeholder="Pick Date" formComntrolName="dateDebutPub"  >
+      <nb-datepicker #datedeb ></nb-datepicker>
 
-      <input nbInput placeholder="Form Picker" [nbDatepicker]="datefn">
-      <nb-datepicker #datefn (dateChange)="selectdatefin($event)"></nb-datepicker>
+      <input nbInput placeholder="Form Picker" formComntrolName="dateFinPub">
+      <nb-datepicker #datefn ></nb-datepicker>
    <br>
     
 <div *ngIf="CanalDiffusion==optionCanalDiffusion[1]">
-    <textarea nbInput placeholder="Votre SMS d'envoie"  [(ngModel)]="smsbody"></textarea>
+    <textarea nbInput placeholder="Votre SMS d'envoie"  formComntrolName="SMSBody"></textarea>
 
 </div>
 
 
 <div *ngIf="CanalDiffusion!=optionCanalDiffusion[1]">
-    <nb-checkbox (checkedChange)="setpopup()">Pop UP</nb-checkbox>
-    <nb-checkbox (checkedChange)="setnotif()">Notification</nb-checkbox>
-    <nb-checkbox (checkedChange)="setbanner()">Bannier</nb-checkbox>
+    <ng-container *ngFor="let choice of checks; let i=index">
+    <nb-checkbox (change)="onCheckChange($event,i)" [value]="choice.value">{{choice.Libelle}}</nb-checkbox>
+</ng-container>
     <br>
 
-        <p-selectButton [options]="optionContenue" [(ngModel)]="contenue" optionLabel="label" optionValue="value">
+        <p-selectButton [options]="optionContenue" formComntrolName="TypeContenue" optionLabel="label" optionValue="value">
         </p-selectButton>
         <div class="upload" *ngIf="contenue==optionContenue[0]">
             <h5>choisissez votre image</h5>
@@ -64,7 +69,11 @@
     </div>
 
 
-<button (click)="submit()" name="submit" type="submit" value="submit"></button>
+<button  name="submit" type="submit" value="submit"></button>
+
+
+<button (click)="test()"  type="button" >TEST NA</button>
+</form>
 
    <!--  
     <div class="smartphone" *ngIf="CanalDiffusion!=optionCanalDiffusion[1] && CanalDiffusion!=optionCanalDiffusion[2]">

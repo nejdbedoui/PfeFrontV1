@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActionMarketing } from '../../../../model/ActionMarketing';
 import { CategoriePub } from '../../../../model/CategoriePub';
 import { PopulationCible } from '../../../../model/PopulationCible';
@@ -14,6 +15,7 @@ import { SectorEndPointService } from '../../../../service/bp-api-pos/sector-end
   styleUrls: ['./create-action.component.scss']
 })
 export class CreateActionComponent implements OnInit {
+  ActionForm:FormGroup;
 
   sector: string;
   optionContenue: any[];
@@ -33,7 +35,7 @@ export class CreateActionComponent implements OnInit {
   smsbody:String;
   populationCible:PopulationCible;
   id: string = localStorage.getItem("UserId")
-  constructor( private _populationCibleService:PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
+  constructor(private _FormBuilder:FormBuilder, private _populationCibleService:PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
     this.optionCanalDiffusion = [{ label: 'Mobile', value: 'mobile' }, { label: 'SMS', value: 'sms' }, { label: 'TV', value: 'tv' }];
     this.CanalDiffusion = this.optionCanalDiffusion[0];
     this.optionContenue = [{ label: 'image', value: 'image' }, { label: 'video', value: 'video' }];
@@ -42,8 +44,70 @@ export class CreateActionComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.InstanciateForm();
     this.getAllSectors();
+  }
+//
+
+checks = [
+  {Libelle : "Pop Up",value:0},
+  {Libelle : "Notification",value:0},
+  {Libelle : "Banner",value:0}
+];
+  InstanciateForm(){
+    this.ActionForm = this._FormBuilder.group({
+      SecteurActivite:[null,[Validators.required]],
+      CanalDiffusion:[null,[Validators.required]],
+      LienPub:['',[Validators.required]],
+      Description:['',[Validators.required]],
+      dateDebutPub:[null,[Validators.required]],
+      dateFinPub:[null,[Validators.required]],
+      myChoices: [new FormArray([]),[Validators.required]],
+      Atatchement:[null,[Validators.required]],
+      SMSBody:['',[Validators.required]],
+      TypeContenue:[null,[Validators.required]]
+
+
+    });
+  }
+  get formControls() { return this.ActionForm.controls; }
+
+  onCheckChange(event:any,index:number) {
+    const formArray: FormArray = this.ActionForm.get('myChoices') as FormArray;
+  
+    
+
+    /* Selected */
+    if(event.target.checked){
+     
+      // Add a new control in the arrayForm
+      if(index==0)
+      formArray.push(new FormControl(0));
+      else if(index==1)
+        formArray.push(new FormControl(1));
+        else if(index==2)
+        formArray.push(new FormControl(2));
+      
+    }
+    /* unselected */
+    else{
+      // find the unselected element
+      let i: number = 0;
+  
+      formArray.controls.forEach((ctrl: FormControl) => {
+        if(ctrl.value == index) {
+          // Remove the unselected element from the arrayForm
+          formArray.removeAt(i);
+          return;
+        }
+  
+        i++;
+      });
+    }
+  }
+  isSubmitted:boolean = false;
+  test(){
+    this.isSubmitted=!this.isSubmitted;
   }
 
   uploadedFiles: any[] = [];
