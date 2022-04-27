@@ -57,19 +57,34 @@ checks = [
   InstanciateForm(){
     this.ActionForm = this._FormBuilder.group({
       SecteurActivite:[null,[Validators.required]],
-      CanalDiffusion:[null,[Validators.required]],
+      CanalDiffusion:[[],[Validators.required]],
       LienPub:['',[Validators.required]],
-      Description:['',[Validators.required]],
+      Description:['',[]],
       dateDebutPub:[null,[Validators.required]],
       dateFinPub:[null,[Validators.required]],
-      myChoices: [new FormArray([]),[Validators.required]],
+      myChoices: [new FormArray([]),[]],
       Atatchement:[null,[Validators.required]],
-      SMSBody:['',[Validators.required]],
-      TypeContenue:[null,[Validators.required]]
+      SMSBody:['',[]],
+      TypeContenue:[null,[]]
 
 
     });
+    this.ActionForm.get('CanalDiffusion').setValue([this.optionCanalDiffusion[1]]);
+    this.ActionForm.get('CanalDiffusion').valueChanges
+  .subscribe(value => {
+    console.log(value);
+    if(value.value == 'sms') {
+      this.ActionForm.get('SMSBody').setValidators(Validators.required);
+      this.ActionForm.get('TypeContenue').setValidators(null);
+      this.ActionForm.get('myChoices').setValidators(null);
+    } else {
+      this.ActionForm.get('SMSBody').setValidators(null);
+      this.ActionForm.get('TypeContenue').setValidators(Validators.required);
+      this.ActionForm.get('myChoices').setValidators(Validators.required);
+    }
+  });
   }
+
   get formControls() { return this.ActionForm.controls; }
 
   onCheckChange(event:any,index:number) {
@@ -108,6 +123,11 @@ checks = [
   isSubmitted:boolean = false;
   test(){
     this.isSubmitted=!this.isSubmitted;
+    console.log(this.ActionForm)
+    console.log(this.ActionForm.value.SMSBody)
+  }
+  tests(event){
+    console.log(event)
   }
 
   uploadedFiles: any[] = [];
