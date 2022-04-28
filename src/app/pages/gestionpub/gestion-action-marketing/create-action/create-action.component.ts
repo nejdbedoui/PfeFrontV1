@@ -15,7 +15,8 @@ import { SectorEndPointService } from '../../../../service/bp-api-pos/sector-end
   styleUrls: ['./create-action.component.scss']
 })
 export class CreateActionComponent implements OnInit {
-  ActionForm:FormGroup;
+  ActionFormstep1:FormGroup;
+  ActionFormstep2:FormGroup;
 
   sector: string;
   optionContenue: any[];
@@ -39,7 +40,6 @@ export class CreateActionComponent implements OnInit {
   constructor(private _FormBuilder:FormBuilder, private _populationCibleService:PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
 
     this.optionCanalDiffusion = [{ label: 'Mobile', value: 'mobile' }, { label: 'SMS', value: 'sms' }, { label: 'TV', value: 'tv' }];
-    this.CanalDiffusion = this.optionCanalDiffusion[0];
     this.optionContenue = [{ label: 'image', value: 'image' }, { label: 'video', value: 'video' }];
     this.contenue = this.optionContenue[0];
 
@@ -57,40 +57,45 @@ checks = [
   {Libelle : "Banner",value:0}
 ];
   InstanciateForm(){
-    this.ActionForm = this._FormBuilder.group({
+    this.ActionFormstep1 = this._FormBuilder.group({
       SecteurActivite:[null,[Validators.required]],
       CanalDiffusion:[[],[Validators.required]],
-      LienPub:['',[Validators.required]],
-      Description:['',[]],
+      
       dateDebutPub:[null,[Validators.required]],
       dateFinPub:[null,[Validators.required]],
+    })
+    
+    this.ActionFormstep2=this._FormBuilder.group({
+      LienPub:['',[Validators.required]],
+      Description:['',[]],
       myChoices: [new FormArray([]),[]],
       Atatchement:[null,[Validators.required]],
       SMSBody:['',[]],
       TypeContenue:[null,[]]
-
-
-    });
-    this.ActionForm.get('CanalDiffusion').setValue([this.optionCanalDiffusion[1]]);
-    this.ActionForm.get('CanalDiffusion').valueChanges
+    })
+    
+    
+    ;
+    this.ActionFormstep1.get('CanalDiffusion').setValidators(Validators.required);
+    this.ActionFormstep1.get('CanalDiffusion').valueChanges
   .subscribe(value => {
     console.log(value);
     if(value.value == 'sms') {
-      this.ActionForm.get('SMSBody').setValidators(Validators.required);
-      this.ActionForm.get('TypeContenue').setValidators(null);
-      this.ActionForm.get('myChoices').setValidators(null);
+      this.ActionFormstep1.get('SMSBody').setValidators(Validators.required);
+      this.ActionFormstep1.get('TypeContenue').setValidators(null);
+      this.ActionFormstep1.get('myChoices').setValidators(null);
     } else {
-      this.ActionForm.get('SMSBody').setValidators(null);
-      this.ActionForm.get('TypeContenue').setValidators(Validators.required);
-      this.ActionForm.get('myChoices').setValidators(Validators.required);
+      this.ActionFormstep1.get('SMSBody').setValidators(null);
+      this.ActionFormstep1.get('TypeContenue').setValidators(Validators.required);
+      this.ActionFormstep1.get('myChoices').setValidators(Validators.required);
     }
   });
   }
 
-  get formControls() { return this.ActionForm.controls; }
+  get formControls() { return this.ActionFormstep1.controls; }
 
   onCheckChange(event:any,index:number) {
-    const formArray: FormArray = this.ActionForm.get('myChoices') as FormArray;
+    const formArray: FormArray = this.ActionFormstep1.get('myChoices') as FormArray;
   
     
 
@@ -125,8 +130,8 @@ checks = [
   isSubmitted:boolean = false;
   test(){
     this.isSubmitted=!this.isSubmitted;
-    console.log(this.ActionForm)
-    console.log(this.ActionForm.value.SMSBody)
+    console.log(this.ActionFormstep1)
+    console.log(this.ActionFormstep1.value.SMSBody)
   }
   tests(event){
     console.log(event)

@@ -42,22 +42,27 @@
       </ng-template>  
         <ng-template pTemplate="header">
           <tr>
-            <th>Description</th>
-            <th>Contenue</th>
             <th>Image ou Video</th>
+            
             <th>Date Debut</th>
             <th>Date fin</th>
+            <th>Statut</th>
             <th  >Action</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-Action>
           <tr >
-            <td>{{Action.description}}</td>
-            <td>{{Action.typeContenue}}</td>
             <td><img [src]="Action.url" [alt]="Action.typeContenue" width="100" class="shadow-4" /></td>
+            
+           
+           
             <td>{{Action.dateDebut |date:'dd-MM-yyyy'}}</td>
             <td>{{Action.dateFin |date:'dd-MM-yyyy'}}</td>
-          <td ></td>
+            <td>{{Action.Statut}}</td>
+          <td >
+            <i  class="fas fa-check cursor buttonround editbutton" nbTooltip="Envoyer Bon Commande" nbTooltipPlacement="bottom"></i>
+            <i  class="fa fa-folder-open cursor buttonround editbutton" nbTooltip="Envoyer Bon Commande" nbTooltipPlacement="bottom"></i>
+          </td>
         </tr>
         </ng-template>
         <ng-template  pTemplate="emptymessage" let-Action>

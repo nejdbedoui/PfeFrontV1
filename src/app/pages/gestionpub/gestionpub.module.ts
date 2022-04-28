@@ -8,24 +8,33 @@ import { CommonModule } from '@angular/common';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DropdownModule} from 'primeng/dropdown';
-import { NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbIconModule, NbInputModule, NbSelectModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbIconModule, NbInputModule, NbSelectModule, NbStepperModule } from '@nebular/theme';
 import { CreateActionComponent } from './gestion-action-marketing/create-action/create-action.component';
 import { BreadCrumbModule } from '../../bread-crumb/bread-crumb.module';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {TooltipModule} from 'primeng/tooltip';
 import { DataTablesModule } from 'angular-datatables';
 import { TableModule } from 'primeng/table';
+import {ButtonModule} from 'primeng/button';
+import { MenuModule } from 'primeng/menu';
+import { ModifierActionComponent } from './gestion-action-marketing/modifier-action/modifier-action.component';
+import { DetailsActionComponent } from './gestion-action-marketing/details-action/details-action.component';
+
 
 @NgModule({
-  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent],
+  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, ModifierActionComponent, DetailsActionComponent],
   imports: [
     CommonModule,
+    MenuModule,
     NbSelectModule,
     FileUploadModule,
+    NbStepperModule,
     HttpClientModule,
     NbIconModule,
     BreadCrumbModule,
+    ButtonModule,
     NbCheckboxModule,
+    SelectButtonModule,
     NbButtonModule,
     NbInputModule,
     NbDatepickerModule,

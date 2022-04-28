@@ -26,6 +26,7 @@ export class GestionActionMarketingComponent implements OnInit {
   ngOnInit() {
     this.getAllActionsMarketing();
     
+    
   }
 
  getAllActionsMarketing(){
