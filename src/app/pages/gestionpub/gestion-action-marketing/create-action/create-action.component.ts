@@ -23,13 +23,13 @@ export class CreateActionComponent implements OnInit {
   banner: boolean = false;
   popup: boolean = false;
   notification: boolean = false;
-  sectors: Sector[];
+  sectors: CategoriePub[];
   action: ActionMarketing;
   categorie: CategoriePub;
   lien:String;
   description:String;
   smsbody:String;
-  id: string = localStorage.getItem("UserId")
+  id: string = localStorage.getItem("partenaireid")
   constructor(private _SectorService: SectorEndPointService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
     this.optionCanalDiffusion = [{ label: 'Mobile', value: 'mobile' }, { label: 'SMS', value: 'sms' }, { label: 'TV', value: 'tv' }];
     this.CanalDiffusion = this.optionCanalDiffusion[0];
@@ -46,7 +46,7 @@ export class CreateActionComponent implements OnInit {
   uploadedFiles: any[] = [];
 
   getAllSectors() {
-    this._SectorService.findAllSectorByFActif(1).subscribe(response => {
+    this._Categoriepubendpointservice.findAllCategoriePub().subscribe(response => {
       if (response.result == 1) {
         this.sectors = response.objectResponse;
 
@@ -54,13 +54,11 @@ export class CreateActionComponent implements OnInit {
     });
   }
   submit() {
-    this.categorie=new CategoriePub();
-    this.categorie.libelle=this.sector;// hedhi badelha c bon base 3abitha 
     this.action = new ActionMarketing();
-    console.log(this.categorie)
-    this._Categoriepubendpointservice.CreateCategoriePub(this.categorie).subscribe(val=>{
-      this.action.idCategorie=val.objectResponse.idCategorie
+      this.action.idCategorie=this.sector;
       this.action.url=this.lien;
+      this.action.idPartenaire=this.id;
+      this.action.urlContenue=["https://img-19.commentcamarche.net/cI8qqj-finfDcmx6jMK6Vr-krEw=/1500x/smart/b829396acc244fd484c5ddcdcb2b08f3/ccmcms-commentcamarche/20494859.jpg"];
       this.action.description=this.description;
       this.action.dateDebut=this.datedebut;
       this.action.dateFin=this.datefin;
@@ -89,10 +87,10 @@ export class CreateActionComponent implements OnInit {
       this.ajouteraction(this.action);
       }
       
-    }
+    
      
       
-      )
+      
 
    
   }

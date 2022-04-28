@@ -25,19 +25,19 @@ export class PopulationCibleEndPointServiceService {
   }
   
   findByidPopulationCible(idPopulationCible:String){
-    return this.httpclient.get<OnePopulationCibleResponse>(environment.backend_url_Pos+"findByIdPopulationCible/"+idPopulationCible,{ headers: this.header }); 
+    return this.httpclient.get<OnePopulationCibleResponse>(environment.backend_url_Publicite+"findByIdPopulationCible/"+idPopulationCible,{ headers: this.header }); 
   }
   
   findAllPopulationCible(){
-    return this.httpclient.get<PopulationCibleResponse>(environment.backend_url_Pos+"findAllPopulationCible/",{ headers: this.header }); 
+    return this.httpclient.get<PopulationCibleResponse>(environment.backend_url_Publicite+"findAllPopulationCible/",{ headers: this.header }); 
   }
   
   deletePopulationCible(idPopulationCible:String){
-    return this.httpclient.delete<any>(environment.backend_url_Pos+"DeletePopulationCible/"+idPopulationCible,{ headers: this.header });
+    return this.httpclient.delete<any>(environment.backend_url_Publicite+"DeletePopulationCible/"+idPopulationCible,{ headers: this.header });
   
   }
   updatePopulationCible(populationCible:PopulationCible){
-    return this.httpclient.put<OnePopulationCibleResponse>(environment.backend_url_Pos+"UpdatePopulationCible/",populationCible,{ headers: this.header });
+    return this.httpclient.put<OnePopulationCibleResponse>(environment.backend_url_Publicite+"UpdatePopulationCible/",populationCible,{ headers: this.header });
   }
   
 }

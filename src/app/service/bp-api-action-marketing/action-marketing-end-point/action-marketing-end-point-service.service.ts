@@ -24,24 +24,24 @@ CreateActionMarketing(Action:ActionMarketing){
 
 }
 findByidPartenaireAllActionMarketing(idPartenaire:String){
-  return this.httpclient.get<ActionMarketingResponse>(environment.backend_url_Pos+"findAllByIdPartenaire/"+idPartenaire,{ headers: this.header }); 
+  return this.httpclient.get<ActionMarketingResponse>(environment.backend_url_Publicite+"findAllByIdPartenaire/"+idPartenaire,{ headers: this.header }); 
 
 }
 
 findByidActionMarketing(idAction:String){
-  return this.httpclient.get<OneActionMarketingResponse>(environment.backend_url_Pos+"findByIdActionMarketing/"+idAction,{ headers: this.header }); 
+  return this.httpclient.get<OneActionMarketingResponse>(environment.backend_url_Publicite+"findByIdActionMarketing/"+idAction,{ headers: this.header }); 
 }
 
 findAllActionMarketing(){
-  return this.httpclient.get<ActionMarketingResponse>(environment.backend_url_Pos+"findAllActionMarketing/",{ headers: this.header }); 
+  return this.httpclient.get<ActionMarketingResponse>(environment.backend_url_Publicite+"findAllActionMarketing/",{ headers: this.header }); 
 }
 
 deleteActionMarketing(idAction:String){
-  return this.httpclient.delete<any>(environment.backend_url_Pos+"DeleteActionMarketing/"+idAction,{ headers: this.header });
+  return this.httpclient.delete<any>(environment.backend_url_Publicite+"DeleteActionMarketing/"+idAction,{ headers: this.header });
 
 }
 updateActionMarketing(Action:ActionMarketing){
-  return this.httpclient.put<OneActionMarketingResponse>(environment.backend_url_Pos+"UpdateActionMarketing/",Action,{ headers: this.header });
+  return this.httpclient.put<OneActionMarketingResponse>(environment.backend_url_Publicite+"UpdateActionMarketing/",Action,{ headers: this.header });
 }
 
 

@@ -8,7 +8,7 @@
 <div name="Categorie">
 
         <nb-select placeholder="Secteur d'activité" fullWidth [(selected)]="sector">
-            <nb-option *ngFor="let sctor of sectors"  value="{{sctor.designation}}">{{sctor.designation}}</nb-option>
+            <nb-option *ngFor="let sctor of sectors"  value="{{sctor.idCategorie}}">{{sctor.libelle}}</nb-option>
             <nb-option value="Autre">Autre</nb-option>
         </nb-select> <input *ngIf="categorie=='Autre'"  type="text" nbInput placeholder="Libellé Categorie">
 
