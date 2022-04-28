@@ -7,9 +7,11 @@
     <nb-card-body>
         <form [formGroup]="ActionForm" (ngSubmit)="test()">
 <div name="Categorie">
+
     <div class="form-group">
         <nb-select placeholder="Secteur d'activité" fullWidth formControlName="SecteurActivite">
             <nb-option *ngFor="let sctor of sectors"  [value]="sctor.idCategorie">{{sctor.libelle}}</nb-option>
+
         </nb-select> <input *ngIf="categorie=='Autre'"  type="text" nbInput placeholder="Libellé Categorie">
         <label *ngIf=" isSubmitted && (formControls.SecteurActivite.errors )" class="label-has-error">
             <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Secteur </label>

@@ -33,9 +33,11 @@ export class CreateActionComponent implements OnInit {
   lien:String;
   description:String;
   smsbody:String;
+
   populationCible:PopulationCible;
   id: string = localStorage.getItem("UserId")
   constructor(private _FormBuilder:FormBuilder, private _populationCibleService:PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
+
     this.optionCanalDiffusion = [{ label: 'Mobile', value: 'mobile' }, { label: 'SMS', value: 'sms' }, { label: 'TV', value: 'tv' }];
     this.CanalDiffusion = this.optionCanalDiffusion[0];
     this.optionContenue = [{ label: 'image', value: 'image' }, { label: 'video', value: 'video' }];
@@ -141,6 +143,7 @@ checks = [
     });
   }
 
+
  CreatePopulationCible(populationCible:PopulationCible){
   return this._populationCibleService.CreatePopulationCible(populationCible);
 }
@@ -154,8 +157,11 @@ checks = [
     }
     
     console.log(this.categorie)
+
       this.action.idCategorie=this.sector;
       this.action.url=this.lien;
+      this.action.idPartenaire=this.id;
+      this.action.urlContenue=["https://img-19.commentcamarche.net/cI8qqj-finfDcmx6jMK6Vr-krEw=/1500x/smart/b829396acc244fd484c5ddcdcb2b08f3/ccmcms-commentcamarche/20494859.jpg"];
       this.action.description=this.description;
       this.action.dateDebut=this.datedebut;
       this.action.dateFin=this.datefin;
