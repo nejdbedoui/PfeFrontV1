@@ -1,5 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { PopulationCible } from '../../../model/PopulationCible';
 import { OnePopulationCibleResponse } from '../../../model/response/OnePopulationCibleResponse';
@@ -39,5 +40,10 @@ export class PopulationCibleEndPointServiceService {
   updatePopulationCible(populationCible:PopulationCible){
     return this.httpclient.put<OnePopulationCibleResponse>(environment.backend_url_Publicite+"UpdatePopulationCible/",populationCible,{ headers: this.header });
   }
-  
+  upload(file: File) {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    return this.httpclient.put<any>(environment.backend_url_Publicite+"UpdatePopulationCible/",formData,{ headers: this.header });
+ 
+  }
 }

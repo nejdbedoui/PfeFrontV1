@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ActionMarketing } from '../../../model/ActionMarketing';
 import { ActionMarketingResponse } from '../../../model/response/ActionMarketingResponse';
@@ -44,5 +45,15 @@ updateActionMarketing(Action:ActionMarketing){
   return this.httpclient.put<OneActionMarketingResponse>(environment.backend_url_Publicite+"UpdateActionMarketing/",Action,{ headers: this.header });
 }
 
+ uplodeimage(file:File,uuid:string){
+    let myNewFile = new File([file], uuid+file.name, {type: file.type});
+    let formdata: FormData = new FormData(); 
+      formdata.append('file', myNewFile);
+      return this.httpclient.post<any>(environment.backend_url_Publicite+"Addtostorage/",formdata,{ headers: this.header });
+  }
 
+
+  findfileByid(idAction:String){
+    return this.httpclient.get<Storage>(environment.backend_url_Publicite+"finditembyid/"+idAction,{ headers: this.header }); 
+  }
 }
