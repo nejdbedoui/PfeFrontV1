@@ -1,175 +1,24 @@
-<nb-card>
-    <nb-card-header>
-        <div class="row">
-            <div class="col-md-6"><span style="font-size: 20px;">Ajouter Action Marketing</span></div>
-        </div>
-    </nb-card-header>
-    <nb-card-body>
-        <form [formGroup]="ActionFormstep1" (ngSubmit)="test()">
-            <div name="Categorie">
+<div class="upload" >
+    <h5>choisissez votre image</h5>
+    <p-fileUpload chooseLabel="Choisir image" name="demo[]" [fileLimit]="1" [showUploadButton]="true"
+     url="./upload.php" (onUpload)="onUpload($event)" multiple="multiple" accept="image/*" maxFileSize="1000000">
+    </p-fileUpload>
+</div>
+<h5>Advanced</h5>
+<p-fileUpload name="demo[]"  (onUpload)="onUpload($event)"
+        multiple="multiple" accept="image/*" maxFileSize="1000000">
+        <ng-template pTemplate="content">
+           
+                <p *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</p>
+           
+        </ng-template>
+</p-fileUpload>
 
-                <div class="form-group">
-                    <nb-select size="large" placeholder="Secteur d'activité" fullWidth formControlName="SecteurActivite">
-                        <nb-option *ngFor="let sctor of sectors" [value]="sctor.idCategorie">{{sctor.libelle}}
-                        </nb-option>
-                      
-                    </nb-select> <input *ngIf="categorie=='Autre'" type="text"   nbInput placeholder="Libellé Categorie">
-                    <label *ngIf=" isSubmitted && (formControls.SecteurActivite.errors )" class="label-has-error">
-                        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Secteur </label>
-                </div>
-            </div>
+<h5>Basic with Auto</h5>
+<p-fileUpload #fubauto mode="basic" name="demo[]" url="http://localhost:8080/v1/Addtostorage/" accept="image/*" maxFileSize="1000000" (onUpload)="onUpload($event)" [auto]="true" chooseLabel="Browse"></p-fileUpload>
 
-            <p-selectButton [options]="optionCanalDiffusion" formControlName="CanalDiffusion" optionLabel="label"
-                optionValue="value">
-            </p-selectButton>
-            <br>
-            <label *ngIf=" isSubmitted && (formControls.CanalDiffusion.errors )" class="label-has-error">
-                <i class="fas fa-exclamation-circle"></i> Veuillez Choisir une Canale </label>
-            <br>
-            <input type="text" nbInput placeholder="Lien " formControlName="LienPub">
-            <br>
-            <label *ngIf=" isSubmitted && (formControls.LienPub.errors )" class="label-has-error">
-                <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Lien du pub </label>
-            <br>
+<img alt="sample" [src]="image1" />
 
-
-
-            <textarea fieldSize="medium" nbInput formControlName="Description"
-                placeholder="Description de votre Action Marketing"></textarea>
-
-
-
-            <br>
-
-            <input nbInput placeholder="Pick Date" formControlName="dateDebutPub">
-            <nb-datepicker #datedeb></nb-datepicker>
-            <br>
-            <label *ngIf=" isSubmitted && (formControls.dateDebutPub.errors )" class="label-has-error">
-                <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date du debut </label>
-
-            <input nbInput placeholder="Form Picker" formControlName="dateFinPub">
-            <nb-datepicker #datefn></nb-datepicker>
-            <br>
-            <label *ngIf=" isSubmitted && (formControls.dateFinPub.errors )" class="label-has-error">
-                <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date fin </label>
-            <br>
-
-            <div *ngIf="ActionFormstep1.value.CanalDiffusion==optionCanalDiffusion[1]">
-                <textarea nbInput placeholder="Votre SMS d'envoie" formControlName="SMSBody"></textarea>
-                <br>
-                <label *ngIf=" isSubmitted && (formControls.SMSBody.errors )" class="label-has-error">
-                    <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la contenue du sms </label>
-
-            </div>
-
-
-            <div
-                *ngIf="ActionFormstep1.value.CanalDiffusion==optionCanalDiffusion[0] || ActionFormstep1.value.CanalDiffusion==optionCanalDiffusion[2]">
-                <ng-container *ngFor="let choice of checks; let i=index">
-                    <nb-checkbox (change)="onCheckChange($event,i)" [value]="choice.value">{{choice.Libelle}}
-                    </nb-checkbox>
-                </ng-container>
-                <br>
-
-                <p-selectButton [options]="optionContenue" formControlName="TypeContenue" optionLabel="label"
-                    optionValue="value">
-                </p-selectButton>
-                <div class="upload" *ngIf="contenue==optionContenue[0]">
-                    <h5>choisissez votre image</h5>
-                    <p-fileUpload chooseLabel="Choisir image" name="demo1" [fileLimit]="1" [showUploadButton]="true"
-                        (onSelect)="onUpload($event)" multiple="multiple" accept="image/*" maxFileSize="1000000">
-                    </p-fileUpload>
-                </div>
-
-                <div *ngIf="contenue==optionContenue[1]">
-                    <h5>choisissez votre Video</h5>
-                    <p-fileUpload chooseLabel="Choisir video" styleClass="upload" name="demo2" [fileLimit]="1"
-                        [showUploadButton]="false" (onSelect)="onUpload($event)" multiple="multiple" accept="video/*"
-                        maxFileSize="100000000">
-                    </p-fileUpload>
-                </div>
-            </div>
-
-
-            <button type="submit" nbButton status="success" class="button-style" style="float: right;"
-                [shape]="'round'">Enregistrer</button>
-
-
-            <button (click)="test()" type="button">TEST NA</button>
-        </form>
-
-        <!--  
-    <div class="smartphone" *ngIf="CanalDiffusion!=optionCanalDiffusion[1] && CanalDiffusion!=optionCanalDiffusion[2]">
-      <div class="content">
-        <div *ngIf="notification" class="notification" ></div>
-        <div *ngIf="popup && (notification || banner)"  class="popup1"></div>
-        <div *ngIf="popup && !notification && !banner"  class="popup2"></div>
-        <div *ngIf="banner && !notification "  class="banner2"></div>
-        <div *ngIf="banner && notification "  class="banner"></div>
-      </div>
-    </div><br> -->
-
-    <nb-card>
-        <nb-card-body>
-          <nb-stepper #stepper>
-            <nb-step [stepControl]="ActionFormstep1" label="First step">
-              <form [formGroup]="ActionFormstep1" class="step-container">  
-               
-
-                    <div class="form-group">
-                        <nb-select size="large" placeholder="Secteur d'activité" fullWidth formControlName="SecteurActivite">
-                            <nb-option *ngFor="let sctor of sectors" [value]="sctor.idCategorie">{{sctor.libelle}}
-                            </nb-option>
-                          
-                        </nb-select> <input *ngIf="categorie=='Autre'" type="text" nbInput placeholder="Libellé Categorie">
-                        <label *ngIf=" isSubmitted && (formControls.SecteurActivite.errors )" class="label-has-error">
-                            <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Secteur </label>
-                    </div>
-                
-
-                    <p-selectButton [options]="optionCanalDiffusion" formControlName="CanalDiffusion" optionLabel="label"
-                    optionValue="value">
-                </p-selectButton>
-                <br>
-                <label *ngIf=" isSubmitted && (formControls.CanalDiffusion.errors )" class="label-has-error">
-                    <i class="fas fa-exclamation-circle"></i> Veuillez Choisir une Canale </label>
-
-            <input nbInput fieldSize="large" placeholder="Date debut de l'action" [nbDatepicker]="datedeb"  formControlName="dateDebutPub">
-            <nb-datepicker #datedeb></nb-datepicker>
-            <br>
-            <label *ngIf=" isSubmitted && (formControls.dateDebutPub.errors )" class="label-has-error">
-                <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date du debut </label>
-
-            <input nbInput fieldSize="large" placeholder="Date fin de l'action" [nbDatepicker]="datefn" formControlName="dateFinPub">
-            <nb-datepicker #datefn></nb-datepicker>
-            <br>
-            <label *ngIf=" isSubmitted && (formControls.dateFinPub.errors )" class="label-has-error">
-                <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date fin </label>
-            <br>
-            <br>
-                <button type="submit" nbButton nbStepperNext>next</button>
-              </form>
-            </nb-step>
-            <nb-step label="Second step">
-              <form [formGroup]="ActionFormstep1" class="step-container">
-               
-                <button nbButton nbStepperPrevious>prev</button>
-                <button nbButton nbStepperNext>next</button>
-             </form>
-            </nb-step>
-            <nb-step  label="Third step">
-              <form [formGroup]="ActionFormstep1" class="step-container">
-              
-                <button nbButton nbStepperPrevious>prev</button>
-                <button nbButton nbStepperNext>Confirm</button>
-             </form>
-            </nb-step>
-            <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">
-              <div class="step-container">
-                <h3>Wizard completed!</h3>
-                <button nbButton (click)="stepper.reset()">Try again</button>
-              </div>
-            </nb-step>
-          </nb-stepper>
-        </nb-card-body>
-      </nb-card>
+<video width="400" controls>
+        <source type="video/mp4" src="data:video/mp4;{{image2}}">
+    </video>

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Injectable, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { ActionMarketing } from '../../../../model/ActionMarketing';
 import { CategoriePub } from '../../../../model/CategoriePub';
 import { PopulationCible } from '../../../../model/PopulationCible';
@@ -14,7 +15,12 @@ import { SectorEndPointService } from '../../../../service/bp-api-pos/sector-end
   templateUrl: './create-action.component.html',
   styleUrls: ['./create-action.component.scss']
 })
+
+@Injectable()
 export class CreateActionComponent implements OnInit {
+  @ViewChild('videoPlayer',{static: false}) videoPlayer: ElementRef;
+
+  
   ActionFormstep1:FormGroup;
   ActionFormstep2:FormGroup;
 
@@ -34,23 +40,59 @@ export class CreateActionComponent implements OnInit {
   lien:String;
   description:String;
   smsbody:String;
-
+  uploadedFiles: any[] = [];
   populationCible:PopulationCible;
-  id: string = localStorage.getItem("UserId")
+  id: string = localStorage.getItem("UserId");
+  fileInfos: Storage;
+  image1:any
+  image2:any
+
+
   constructor(private _FormBuilder:FormBuilder, private _populationCibleService:PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
 
     this.optionCanalDiffusion = [{ label: 'Mobile', value: 'mobile' }, { label: 'SMS', value: 'sms' }, { label: 'TV', value: 'tv' }];
     this.optionContenue = [{ label: 'image', value: 'image' }, { label: 'video', value: 'video' }];
     this.contenue = this.optionContenue[0];
-
+    
+     
+     
   }
+
+ 
 
   ngOnInit() {
-    this.InstanciateForm();
     this.getAllSectors();
-  }
+     this.getfile();
+  
 //
+}
+getfile(){
+  this._Actionmarketingendpointservice.findfileByid("626c1aeb0f1eac1778610aba").subscribe( val=>
+    {  
+      console.log(val.objectResponse);
+    this.image1='data:image/png;base64,' +val.objectResponse.imagedata
+  
+  }
+      
+    );
+    this._Actionmarketingendpointservice.findfileByid("626c1a7a0f1eac1778610ab9").subscribe( val=>
+      {  
+        console.log(val.objectResponse);
+      this.image2='data:video/mp4;base64,'+val.objectResponse.imagedata
+      var video = document.createElement('video');
+      document.body.appendChild(video);
+      video.src = this.image2;
+    }
+        
+      );
+}
+public getImage(): Observable<string> {
+  return Observable.create(this.image1);
+}
 
+onUpload(event) {
+  console.log("nejd") 
+}
 checks = [
   {Libelle : "Pop Up",value:0},
   {Libelle : "Notification",value:0},
@@ -58,36 +100,36 @@ checks = [
 ];
   InstanciateForm(){
     this.ActionFormstep1 = this._FormBuilder.group({
-      SecteurActivite:[null,[Validators.required]],
-      CanalDiffusion:[[],[Validators.required]],
+      SecteurActivite:[null,[]],
+      CanalDiffusion:[[],[]],
       
-      dateDebutPub:[null,[Validators.required]],
-      dateFinPub:[null,[Validators.required]],
+      dateDebutPub:[null,[]],
+      dateFinPub:[null,[]],
     })
     
     this.ActionFormstep2=this._FormBuilder.group({
-      LienPub:['',[Validators.required]],
+      LienPub:['',[]],
       Description:['',[]],
       myChoices: [new FormArray([]),[]],
-      Atatchement:[null,[Validators.required]],
+      Atatchement:[null,[]],
       SMSBody:['',[]],
       TypeContenue:[null,[]]
     })
     
     
     ;
-    this.ActionFormstep1.get('CanalDiffusion').setValidators(Validators.required);
+    this.ActionFormstep1.get('CanalDiffusion').setValidators(null);
     this.ActionFormstep1.get('CanalDiffusion').valueChanges
   .subscribe(value => {
     console.log(value);
     if(value.value == 'sms') {
-      this.ActionFormstep1.get('SMSBody').setValidators(Validators.required);
+      this.ActionFormstep1.get('SMSBody').setValidators(null);
       this.ActionFormstep1.get('TypeContenue').setValidators(null);
       this.ActionFormstep1.get('myChoices').setValidators(null);
     } else {
       this.ActionFormstep1.get('SMSBody').setValidators(null);
-      this.ActionFormstep1.get('TypeContenue').setValidators(Validators.required);
-      this.ActionFormstep1.get('myChoices').setValidators(Validators.required);
+      this.ActionFormstep1.get('TypeContenue').setValidators(null);
+      this.ActionFormstep1.get('myChoices').setValidators(null);
     }
   });
   }
@@ -137,7 +179,7 @@ checks = [
     console.log(event)
   }
 
-  uploadedFiles: any[] = [];
+ 
 
   getAllSectors() {
     this._Categoriepubendpointservice.findAllCategoriePub().subscribe(response => {
@@ -211,12 +253,7 @@ checks = [
       console.log(val)
     ) 
   }
-  onUpload(event) {
-    for (let file of event.files) {
-      this.uploadedFiles.push(file);
-      console.log(event);
-    }
-  }
+ 
   selectdatedebut(event) {
     this.datedebut = event;
   }
