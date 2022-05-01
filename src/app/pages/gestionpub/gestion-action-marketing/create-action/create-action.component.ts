@@ -4,12 +4,10 @@ import { Observable } from 'rxjs';
 import { ActionMarketing } from '../../../../model/ActionMarketing';
 import { CategoriePub } from '../../../../model/CategoriePub';
 import { PopulationCible } from '../../../../model/PopulationCible';
-import { Sector } from '../../../../model/Sector';
 import { ActionMarketingEndPointServiceService } from '../../../../service/bp-api-action-marketing/action-marketing-end-point/action-marketing-end-point-service.service';
 import { CategoriePubEndPointServiceService } from '../../../../service/bp-api-action-marketing/categorie-pub-end-point/categorie-pub-end-point-service.service';
 import { PopulationCibleEndPointServiceService } from '../../../../service/bp-api-action-marketing/population-cible-end-point/population-cible-end-point-service.service';
-import { SectorEndPointService } from '../../../../service/bp-api-pos/sector-end-point/sector-end-point.service';
-
+import * as _ from 'lodash';
 @Component({
   selector: 'ngx-create-action',
   templateUrl: './create-action.component.html',
@@ -37,9 +35,9 @@ export class CreateActionComponent implements OnInit {
   sectors: CategoriePub[];
   action: ActionMarketing;
   categorie: CategoriePub;
-  lien:String;
-  description:String;
-  smsbody:String;
+  lien:string;
+  description:string;
+  smsbody:string;
   uploadedFiles: any[] = [];
   populationCible:PopulationCible;
   id: string = localStorage.getItem("UserId");
@@ -48,6 +46,9 @@ export class CreateActionComponent implements OnInit {
   image2:any
 
 
+  imageError: string;
+  isImageSaved: boolean;
+  cardImageBase64: string;
   constructor(private _FormBuilder:FormBuilder, private _populationCibleService:PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
 
     this.optionCanalDiffusion = [{ label: 'Mobile', value: 'mobile' }, { label: 'SMS', value: 'sms' }, { label: 'TV', value: 'tv' }];
@@ -82,6 +83,8 @@ getfile(){
       var video = document.createElement('video');
       document.body.appendChild(video);
       video.src = this.image2;
+      console.log(val.objectResponse.imagedata)
+
     }
         
       );
@@ -214,9 +217,11 @@ checks = [
       this.action.dateFin=this.datefin;
       this.action.dateCreation=new Date();
       if(this.CanalDiffusion==this.optionCanalDiffusion[1]){
+        this.action.libelleCanalDiffusion="SMS";
         this.action.smsBody=this.smsbody;
         this.ajouteraction(this.action);
       }else if(this.CanalDiffusion==this.optionCanalDiffusion[0]){
+        this.action.libelleCanalDiffusion="Mobile";
         let canal="";
         if(this.banner)
           canal=canal+"bannier";
@@ -226,14 +231,14 @@ checks = [
         
         if(this.notification)
         canal=canal+",notification";
-        this.action.libelleCanalDiffusion=canal;
+        this.action.typeAffichageMobile=canal;
         if(this.contenue==this.optionContenue[0])
         this.action.typeAffichageMobile="image"
         else
         this.action.typeAffichageMobile="video"
         this.ajouteraction(this.action);
       }else{
-
+        this.action.libelleCanalDiffusion="TV";
       this.ajouteraction(this.action);
       }
       
@@ -269,4 +274,64 @@ checks = [
   setbanner() {
     this.banner = !this.banner;
   }
+
+
+
+  
+  fileChangeEvent(fileInput: any) {
+    this.imageError = null;
+    if (fileInput.target.files && fileInput.target.files[0]) {
+        // Size Filter Bytes
+        const max_size = 20971520;
+        const allowed_types = ['image/png', 'image/jpeg'];
+        const max_height = 15200;
+        const max_width = 25600;
+
+        if (fileInput.target.files[0].size > max_size) {
+            this.imageError =
+                'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+
+            return false;
+        }
+
+        if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
+            this.imageError = 'Only Images are allowed ( JPG | PNG )';
+            return false;
+        }
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            const image = new Image();
+            image.src = e.target.result;
+            image.onload = rs => {
+                const img_height = rs.currentTarget['height'];
+                const img_width = rs.currentTarget['width'];
+
+                console.log(img_height, img_width);
+
+
+                if (img_height > max_height && img_width > max_width) {
+                    this.imageError =
+                        'Maximum dimentions allowed ' +
+                        max_height +
+                        '*' +
+                        max_width +
+                        'px';
+                    return false;
+                } else {
+                    const imgBase64Path = e.target.result;
+                    this.cardImageBase64 = imgBase64Path;
+                    this.isImageSaved = true;
+                    // this.previewImagePath = imgBase64Path;
+                }
+            };
+        };
+
+        reader.readAsDataURL(fileInput.target.files[0]);
+    }
+}
+
+removeImage() {
+    this.cardImageBase64 = null;
+    this.isImageSaved = false;
+}
 }

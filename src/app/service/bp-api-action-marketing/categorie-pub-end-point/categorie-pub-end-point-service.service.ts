@@ -23,7 +23,7 @@ CreateCategoriePub(CategoriePub:CategoriePub){
 
 }
 
-findByidCategoriePub(idCategoriePub:String){
+findByidCategorie(idCategoriePub:String){
   return this.httpclient.get<OneCategoriePubResponse>(environment.backend_url_Publicite+"findByIdCategorie/"+idCategoriePub,{ headers: this.header }); 
 }
 

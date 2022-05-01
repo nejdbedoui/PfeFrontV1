@@ -1,1 +1,32 @@
-<p>details-action works!</p>
+<ngx-bread-crumb></ngx-bread-crumb>
+<nb-card>
+    <nb-card-header>
+        <div class="row">
+            <div class="col-md-6"><span style="font-size: 20px;">Details Action Marketing</span></div>
+            <div class="col-md-6"><span style="font-size: 20px;">Statut : {{action.statut}}</span></div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+
+        <div class="row" *ngIf="showmedia">
+
+            <div class="col-sm-3 media">
+
+                <img [src]="action.url" alt="Aspect ratio image">
+
+            </div>
+           
+            <div class="col-sm-9 ">
+                <p class="big">
+                    <span class="bold">Titre </span><br>{{action.Titre}} 50% pizza 4 fromage <br> <br>
+                    <span class="bold">Desription  </span> <br> {{action.description}}<br> <br>
+                    <span class="bold">Periode d'affichage  </span> <br>Du <u>{{action.dateDebut |date:'dd/MM/yyyy'}}</u> jusqu'a <u>{{action.dateFin |date:'dd/MM/yyyy'}}</u><br> <br>
+                    <span class="bold">Canal de diffusion  </span> <br>Cette action vas étre afficher sur des {{action.libelleCanalDiffusion}}<br> <br>
+                    <span class="bold">Categorie du contenue  </span> <br> {{categorie.libelle}}<br> <br>
+                    <span class="bold">Type d'affichage  </span> <br> <span>Cette action vas étre afficher sou format d'une {{action.typeAffichageMobile}} </span><br> <br>
+                </p>
+            </div>
+        </div>
+
+    </nb-card-body>
+</nb-card>
