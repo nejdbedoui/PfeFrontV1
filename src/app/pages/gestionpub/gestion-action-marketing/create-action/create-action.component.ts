@@ -269,4 +269,12 @@ export class CreateActionComponent implements OnInit {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
   }
+
+  onUpload(event){
+console.log(event.files)
+      this._Actionmarketingendpointservice.uplodeimage(event.files[0]).subscribe(response=>{
+        console.log(response)
+      });
+  
+  }
 }
