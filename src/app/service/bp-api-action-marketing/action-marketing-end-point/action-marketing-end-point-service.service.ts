@@ -20,6 +20,7 @@ export class ActionMarketingEndPointServiceService {
       'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT'}
 );
 
+
 CreateActionMarketing(Action:ActionMarketing){
   return this.httpclient.post<OneActionMarketingResponse>(environment.backend_url_Publicite+"CreateActionMarketing/",Action,{ headers: this.header });
 
@@ -45,12 +46,13 @@ updateActionMarketing(Action:ActionMarketing){
   return this.httpclient.put<OneActionMarketingResponse>(environment.backend_url_Publicite+"UpdateActionMarketing/",Action,{ headers: this.header });
 }
 
- uplodeimage(file:File,uuid:string){
-    let myNewFile = new File([file], uuid+file.name, {type: file.type});
+ uplodeimage(file:File){
+  let myNewFile = new File([file], file.name, {type: file.type});
     let formdata: FormData = new FormData(); 
-      formdata.append('file', myNewFile);
-      return this.httpclient.post<any>(environment.backend_url_Publicite+"Addtostorage/",formdata,{ headers: this.header });
+    formdata.append('file', myNewFile);
+      return this.httpclient.post<any>(environment.backend_url_Publicite+"Addtostorage/",formdata);
   }
+  
 
 
   findfileByid(idAction:String){
