@@ -44,10 +44,7 @@ export class CreateActionComponent implements OnInit {
 
   ngOnInit() {
     this.getAllSectors();
-    this.InstanciateForm();
-    this.getAllSectors();
-
-    //
+    this.InstanciateForm(); 
   }
 
 
