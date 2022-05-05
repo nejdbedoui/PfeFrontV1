@@ -3,45 +3,46 @@
     <nb-card-header>
         <div class="row">
             <div class="col-md-6"><span style="font-size: 20px;">Details Action Marketing</span></div>
-            <div *ngIf="showmedia" class="col-md-6"><span style="float: right"> Statut : {{action.statut}}&nbsp;&nbsp;</span></div>
+            <div *ngIf="showmedia" class="col-md-6"><span style="float: right"> Statut :
+                    {{action.statut}}&nbsp;&nbsp;</span></div>
         </div>
     </nb-card-header>
     <nb-card-body>
 
         <div class="row" *ngIf="showmedia">
-            
-                <div class="col-sm-3 media">
 
-                    <img [src]="action.url" alt="Aspect ratio image">
+            <div class="col-sm-3 media">
 
+                <img [src]="action.url" alt="Aspect ratio image">
+
+            </div>
+
+            <div *ngIf="!activer" class="col-sm-9 ">
+                <div style="float: right">
+
+                    <button *ngIf="action.statut == '0'" nbButton outline status="success" (click)="confirm()">Confirmer</button>
                 </div>
+                <p class="big">
+                    <span class="bold">Titre </span><br>{{action.Titre}} 50% pizza 4 fromage <br> <br>
 
-                <div *ngIf="!activer" class="col-sm-9 ">
-                    <div style="float: right">
-
-                        <button nbButton outline status="success">Confirmer</button>
-                    </div>
-                    <p class="big">
-                        <span class="bold">Titre </span><br>{{action.Titre}} 50% pizza 4 fromage <br> <br>
-                   
 
                     <span class="bold">Desription </span> <br> {{action.description}}<br> <br>
 
-                  
 
 
-                    <span class="bold">Frequence </span> <br> {{action.frequence}}<br> <br>
 
-                  
+                    <span class="bold">Frequence </span> <br> Cette action vas etre afficher {{action.frequence}} fois par jour<br> <br>
+
+
 
 
                     <span class="bold">Categorie du contenue </span> <br> {{categorie.libelle}}<br> <br>
-                   
+
 
                     <span class="bold">Periode d'affichage </span> <br>Du <u>{{action.dateDebut |date:'dd/MM/yyyy'}}</u>
                     jusqu'a <u>{{action.dateFin |date:'dd/MM/yyyy'}}</u><br> <br>
 
-                 
+
 
 
 
@@ -52,59 +53,59 @@
 
                     <span class="bold">Canal de diffusion </span> <br>Cette action vas étre afficher sur des
                     {{action.libelleCanalDiffusion}}
-                    </p>
-                    <div style="float: right">
-
-
-                        <button nbButton outline (click)="modifier()" status="warning">Modifier</button>
-                        <button nbButton (click)="delete()" outline status="danger">Supprimer</button>
-                        <button type="submit" nbButton status="success" class="button-style" style="float: right;"
-                            [shape]="'round'">Enregistrer</button>
-
-                    </div>
-
+                </p>
+                <div style="float: right" *ngIf="action.statut == '0'">
+                    <button nbButton outline (click)="modifier()" status="warning">Modifier</button>
+                    <button nbButton (click)="delete()" outline status="danger">Supprimer</button>
+                    
                 </div>
 
-                <div *ngIf="activer" class="col-sm-9 ">
-                    <form [formGroup]="ActionForm" (ngSubmit)="submit()">
+            </div>
+
+            <div *ngIf="activer" class="col-sm-9 ">
+                <form [formGroup]="ActionForm" (ngSubmit)="submit()">
+                   
                     <input type="text" nbInput placeholder="Titre" formControlName="titre">
                     <label *ngIf=" isSubmitted && (formControls.titre.errors )" class="label-has-error">
                         <i class="fas fa-exclamation-circle"></i> Veuillez Saisir un Titre </label>
 
-                        <textarea fieldSize="medium" nbInput formControlName="Description"
+                    <textarea fieldSize="medium" nbInput formControlName="Description"
                         placeholder="Description de votre Action Marketing"></textarea>
                     <label *ngIf=" isSubmitted && (formControls.Description.errors )" class="label-has-error">
                         <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une Description </label>
 
-                        <input type="number" nbInput placeholder="Frequence" formControlName="Frequence">
-                        <label *ngIf=" isSubmitted && (formControls.Frequence.errors )" class="label-has-error">
-                            <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une frequence </label>
+                    <input type="number" nbInput placeholder="Frequence" formControlName="Frequence">
+                    <label *ngIf=" isSubmitted && (formControls.Frequence.errors )" class="label-has-error">
+                        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une frequence </label>
 
-                            <nb-select placeholder="Secteur d'activité" fullWidth formControlName="SecteurActivite">
-                                <nb-option *ngFor="let sctor of sectors" [value]="sctor.idCategorie">{{sctor.libelle}}
-                                </nb-option>
-                                <nb-option value="autre">Autre</nb-option>
-                            </nb-select> <input *ngIf="SecteurActivite=='Autre'" type="text" nbInput
-                                placeholder="Libellé Categorie">
-                            <label *ngIf=" isSubmitted && (formControls.SecteurActivite.errors )" class="label-has-error">
-                                <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Secteur </label>
+                    <nb-select placeholder="Secteur d'activité" fullWidth formControlName="SecteurActivite">
+                        <nb-option *ngFor="let sctor of sectors" [value]="sctor.idCategorie">{{sctor.libelle}}
+                        </nb-option>
+                        <nb-option value="autre">Autre</nb-option>
+                    </nb-select> <input *ngIf="SecteurActivite=='Autre'" type="text" nbInput
+                        placeholder="Libellé Categorie">
+                    <label *ngIf=" isSubmitted && (formControls.SecteurActivite.errors )" class="label-has-error">
+                        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Secteur </label>
 
-                                <input nbInput [nbDatepicker]="datedeb" placeholder="Pick Date" formControlName="dateDebutPub">
-                                <nb-datepicker #datedeb></nb-datepicker>
-                                <label *ngIf=" isSubmitted && (formControls.dateDebutPub.errors )" class="label-has-error">
-                                    <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date du debut </label>
-        
-                                <input nbInput [nbDatepicker]="datefn" placeholder="Form Picker" formControlName="dateFinPub">
-                                <nb-datepicker #datefn></nb-datepicker>
-                                <label *ngIf=" isSubmitted && (formControls.dateFinPub.errors )" class="label-has-error">
-                                    <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date fin </label>
-                                </form>
-                                <button nbButton outline (click)="modifier()" status="warning">Modifier</button>
-                </div>
+                    <input nbInput [nbDatepicker]="datedeb" placeholder="Pick Date" formControlName="dateDebutPub">
+                    <nb-datepicker #datedeb></nb-datepicker>
+                    <label *ngIf=" isSubmitted && (formControls.dateDebutPub.errors )" class="label-has-error">
+                        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date du debut </label>
+
+                    <input nbInput [nbDatepicker]="datefn" placeholder="Form Picker" formControlName="dateFinPub">
+                    <nb-datepicker #datefn></nb-datepicker>
+                    <label *ngIf=" isSubmitted && (formControls.dateFinPub.errors )" class="label-has-error">
+                        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date fin </label>
+                   
+                </form>
+                <button nbButton outline (click)="modifier()" status="warning">Modifier</button>
+                <button *ngIf="activer" type="submit" (click)="submit()" nbButton status="success" class="button-style"
+                        style="float: right;" [shape]="'round'">Enregistrer</button>
+            </div>
 
 
 
-          
+
         </div>
 
     </nb-card-body>
