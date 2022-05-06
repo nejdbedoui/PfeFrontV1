@@ -3,11 +3,11 @@ export class ActionMarketing{
       idPartenaire:string;
       idCategorie:string;
       idPopulationCible:String;
+      idStorage:string;
       titre:string;
       libelleCanalDiffusion:string;//tv mobile sms
       typeContenue:string; //image video
-      urlContenue:string[];
-      url:string;
+      externUrl:string;
       description:string;
       smsBody:string;
       dateDebut:Date;

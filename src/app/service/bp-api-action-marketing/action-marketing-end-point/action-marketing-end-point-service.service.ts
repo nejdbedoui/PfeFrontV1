@@ -58,4 +58,7 @@ updateActionMarketing(Action:ActionMarketing){
   findfileByid(idAction:String){
     return this.httpclient.get<Storage>(environment.backend_url_Publicite+"finditembyid/"+idAction,{ headers: this.header }); 
   }
+
+
+  
 }

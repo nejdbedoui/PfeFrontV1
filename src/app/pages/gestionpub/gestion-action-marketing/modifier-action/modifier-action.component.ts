@@ -113,7 +113,7 @@ export class ModifierActionComponent implements OnInit {
     this.action.dateDebut = this.ActionForm.value.dateDebutPub;
     this.action.dateFin = this.ActionForm.value.dateFinPub;
     this.action.dateCreation = new Date();
-    this.action.url = this.ActionForm.value.LienPub;
+    this.action.externUrl = this.ActionForm.value.LienPub;
     this.action.frequence=this.ActionForm.value.Frequence;
     this.action.libelleCanalDiffusion=this.ActionForm.value.CanalDiffusion ;
     
@@ -121,7 +121,7 @@ export class ModifierActionComponent implements OnInit {
       this.action.smsBody = this.ActionForm.value.SMSBody;
     //  this.ajouteraction(this.action);
     } else if (this.ActionForm.value.CanalDiffusion =="mobile") {
-      this.action.urlContenue = ["https://img-19.commentcamarche.net/cI8qqj-finfDcmx6jMK6Vr-krEw=/1500x/smart/b829396acc244fd484c5ddcdcb2b08f3/ccmcms-commentcamarche/20494859.jpg"];
+      this.action.externUrl = "https://img-19.commentcamarche.net/cI8qqj-finfDcmx6jMK6Vr-krEw=/1500x/smart/b829396acc244fd484c5ddcdcb2b08f3/ccmcms-commentcamarche/20494859.jpg";
       
       this.action.typeAffichageMobile = this.ActionForm.value.myChoices;
       this.action.typeContenue=this.ActionForm.value.TypeContenue;
@@ -129,7 +129,7 @@ export class ModifierActionComponent implements OnInit {
      
      // this.ajouteraction(this.action);
     } else {
-      this.action.urlContenue = ["https://img-19.commentcamarche.net/cI8qqj-finfDcmx6jMK6Vr-krEw=/1500x/smart/b829396acc244fd484c5ddcdcb2b08f3/ccmcms-commentcamarche/20494859.jpg"];
+      this.action.externUrl = "https://img-19.commentcamarche.net/cI8qqj-finfDcmx6jMK6Vr-krEw=/1500x/smart/b829396acc244fd484c5ddcdcb2b08f3/ccmcms-commentcamarche/20494859.jpg";
     //  this.ajouteraction(this.action);
     }
     console.log(this.action);
