@@ -29,13 +29,27 @@ export class GestionActionMarketingComponent implements OnInit {
     
   }
 
+  getAllStorage(){
+    return this._actionMarketingService.findAllStorage();
+  }
+
+  
+listeStorages:Storage[];
  getAllActionsMarketing(){
   this.loading = true;
-   this._actionMarketingService.findAllActionMarketing().subscribe(response=>{
+   this._actionMarketingService.findAllActionMarketing().subscribe(async response=>{
      
      if (response.result==1){
+     var respon = await this.getAllStorage().toPromise();
+
        this.ActionsMarketing = response.objectResponse;
-       console.log(response)
+       this.ActionsMarketing.forEach(value=>{
+         respon.objectResponse.forEach(val=>{
+           if (value.idStorage == val.idStorage){
+             value.url = val.url;
+           }
+         })
+       });
        this.loading = false;
 
      }
@@ -43,7 +57,9 @@ export class GestionActionMarketingComponent implements OnInit {
   this.loading = false;
 
      }
+     console.log(this.ActionsMarketing)
    });
+   
  }
 
   uploadedFiles: any[] = [];
