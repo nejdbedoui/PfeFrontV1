@@ -76,9 +76,13 @@
 
 
 <div *ngIf="ActionForm.value.CanalDiffusion=='mobile' || ActionForm.value.CanalDiffusion=='tv'">
-    <ng-container *ngFor="let choice of checks; let i=index">
-    <nb-checkbox (change)="onCheckChange($event,i)" [value]="choice.value">{{choice.Libelle}}</nb-checkbox>
-</ng-container>
+  
+
+<nb-select placeholder="type Affichage" fullWidth formControlName="myChoices">
+    <nb-option *ngFor="let type of optionaffichage"  [value]="type.value">{{type.label}}</nb-option>
+    </nb-select>
+    <label *ngIf=" isSubmitted && (formControls.myChoices.errors )" class="label-has-error">
+        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la type d'affichage </label>
    
 <nb-select placeholder="Type contenue" fullWidth formControlName="TypeContenue">
     <nb-option *ngFor="let contenue of optionContenue"  [value]="contenue.value">{{contenue.label}}</nb-option>
@@ -90,7 +94,7 @@
         <div class="upload" *ngIf="ActionForm.value.TypeContenue=='image'">
             <h5>choisissez votre image</h5>
             <p-fileUpload chooseLabel="Choisir image" name="demo1" [fileLimit]="1" [showUploadButton]="true"
-                (onSelect)="onUpload($event)" multiple="multiple" accept="image/*" maxFileSize="1000000">
+                (onSelect)="select($event)" multiple="multiple" accept="image/*" maxFileSize="10000000">
             </p-fileUpload>
         </div>
 
@@ -111,7 +115,7 @@
 </form>
 
 <video width="320" height="240" controls>
-        <source src="https://firebasestorage.googleapis.com/v0/b/pfe2022-fbd5d.appspot.com/o/3967c342-c8dc-4300-9e87-68386ff1a979.MP4?alt=media" type="video/mp4">
+        <source src="https://firebasestorage.googleapis.com/v0/b/pfe2022-fbd5d.appspot.com/o/627431b41ffbe12930fff248?alt=media" type="video/mp4">
       Your browser does not support the video tag.
       </video>
     
