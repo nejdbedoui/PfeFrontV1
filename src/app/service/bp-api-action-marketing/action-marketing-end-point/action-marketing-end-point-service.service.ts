@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { ActionMarketing } from '../../../model/ActionMarketing';
 import { ActionMarketingResponse } from '../../../model/response/ActionMarketingResponse';
 import { OneActionMarketingResponse } from '../../../model/response/OneActionMarketingResponse';
+import { StorageResponse } from '../../../model/response/StorageResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,8 @@ updateActionMarketing(Action:ActionMarketing){
     return this.httpclient.get<Storage>(environment.backend_url_Publicite+"finditembyid/"+idAction,{ headers: this.header }); 
   }
 
+  findAllStorage(){
+    return this.httpclient.get<StorageResponse>(environment.backend_url_Publicite+"findAllStorage/",{ headers: this.header }); 
+  }
 
-  
 }
