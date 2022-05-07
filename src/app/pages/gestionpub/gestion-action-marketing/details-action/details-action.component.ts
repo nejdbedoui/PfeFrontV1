@@ -25,7 +25,7 @@ export class DetailsActionComponent implements OnInit {
   optionContenue: any[];
   optionCanalDiffusion: any[];
   sectors: CategoriePub[];
-
+url:any;
   constructor(private _FormBuilder: FormBuilder, private _GlobalService: GlobalServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService, private _router: Router, private _actionMarketingService: ActionMarketingEndPointServiceService, private route: ActivatedRoute, private _partenaireservice: PartenaireBpriceEndPointService) {
     this.optionCanalDiffusion = [{ label: 'Mobile', value: 'mobile' }, { label: 'SMS', value: 'sms' }, { label: 'TV', value: 'tv' }];
     this.optionContenue = [{ label: 'Image', value: 'image' }, { label: 'Video', value: 'video' }];
@@ -41,13 +41,19 @@ export class DetailsActionComponent implements OnInit {
         this._Categoriepubendpointservice.findByidCategorie(val1.objectResponse.idCategorie).subscribe(val3 => {
           if (val3.result == 1)
             this.categorie = val3.objectResponse
-          this.showmedia = true;
+         
           console.log(this.action)
           this.InstanciateForm();
+          this._actionMarketingService.findfileByid(this.action.idStorage).subscribe(val=>{
+            this.url=val.objectResponse.url;
+            this.showmedia = true;
+          })
         }
         )
       }
     });
+
+
 
   }
 
