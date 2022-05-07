@@ -46,7 +46,7 @@ listeStorages:Storage[];
        this.ActionsMarketing.forEach(value=>{
          respon.objectResponse.forEach(val=>{
            if (value.idStorage == val.idStorage){
-             value.url = val.url;
+             value.externUrl = val.url;
            }
          })
        });
