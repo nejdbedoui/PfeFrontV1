@@ -1,13 +1,15 @@
 import { Component, Injectable, OnInit} from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActionMarketing } from '../../../../model/ActionMarketing';
-import { CategoriePub } from '../../../../model/CategoriePub';
 import { PopulationCible } from '../../../../model/PopulationCible';
 import { ActionMarketingEndPointServiceService } from '../../../../service/bp-api-action-marketing/action-marketing-end-point/action-marketing-end-point-service.service';
 import { CategoriePubEndPointServiceService } from '../../../../service/bp-api-action-marketing/categorie-pub-end-point/categorie-pub-end-point-service.service';
 import { PopulationCibleEndPointServiceService } from '../../../../service/bp-api-action-marketing/population-cible-end-point/population-cible-end-point-service.service';
 import * as _ from 'lodash';
 import { GlobalServiceService } from '../../../../service/GlobalService/global-service.service';
+import { PartenaireBpriceEndPointService } from '../../../../service/bp-api-pos/partenaire-bprice-end-point/partenaire-bprice-end-point.service';
+import { PartenaireBprice } from '../../../../model/PartenaireBprice';
+import { Sector } from '../../../../model/Sector';
 @Component({
   selector: 'ngx-create-action',
   templateUrl: './create-action.component.html',
@@ -26,9 +28,8 @@ export class CreateActionComponent implements OnInit {
   banner: boolean = false;
   popup: boolean = false;
   notification: boolean = false;
-  sectors: CategoriePub[];
+  sectors: Sector[];
   action: ActionMarketing;
-  categorie: CategoriePub;
   uploadedFiles: any[] = [];
   populationCible: PopulationCible;
   id: string = localStorage.getItem("partenaireid");
@@ -36,22 +37,28 @@ export class CreateActionComponent implements OnInit {
   isImageSaved: boolean;
   cardImageBase64: string;
 file:any;
+partenaire:PartenaireBprice;
 checks = [
   { Libelle: "Pop Up", value: 0 },
   { Libelle: "Notification", value: 0 },
   { Libelle: "Banner", value: 0 }
 ];
 
-  constructor(private _GlobalService: GlobalServiceService,private _FormBuilder: FormBuilder, private _populationCibleService: PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
-    this.optionCanalDiffusion = [{ label: 'Mobile', value: 'mobile' }, { label: 'SMS', value: 'sms' }, { label: 'TV', value: 'tv' }];
-    this.optionContenue = [{ label: 'Image', value: 'image' }, { label: 'Video', value: 'video' }];
-    this.optionaffichage = [{ label: 'Pop Up', value: '0' }, { label: 'Bannier', value: '1' },{ label: 'Notification', value: '2' }];
+  constructor(private _Partenaire:PartenaireBpriceEndPointService,private _GlobalService: GlobalServiceService,private _FormBuilder: FormBuilder, private _populationCibleService: PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
+    this.optionCanalDiffusion = [{ label: 'Mobile', value: 0 }, { label: 'SMS', value: 1 }, { label: 'TV', value: 2 }];
+    this.optionContenue = [{ label: 'Image', value: 0 }, { label: 'Video', value: 1 }];
+    this.optionaffichage = [{ label: 'Pop Up', value: 0 }, { label: 'Bannier', value: 1 },{ label: 'Notification', value: 2 }];
   }
 
 
 
   ngOnInit() {
-    this.getAllSectors();
+    this._Partenaire.findByIdPartenaire(this.id).subscribe(val=>
+      {
+        this.getAllSectors(val.objectResponse.idSector);
+      }
+      )
+    
     this.InstanciateForm(); 
   }
 
@@ -73,11 +80,11 @@ checks = [
 
 
     });
-    this.ActionForm.get('CanalDiffusion').setValue("");
+    this.ActionForm.get('CanalDiffusion').setValue(null);
     this.ActionForm.get('CanalDiffusion').valueChanges
       .subscribe(value => {
         console.log(value);
-        if (value.value == 'sms') {
+        if (value.value == 1) {
           this.ActionForm.get('SMSBody').setValidators(Validators.required);
           this.ActionForm.get('TypeContenue').setValidators(null);
           this.ActionForm.get('myChoices').setValidators(null);
@@ -101,8 +108,6 @@ checks = [
     if(this.ActionForm.valid){
 
       console.log("yes")
-    this.categorie = new CategoriePub();
-    this.categorie.libelle = this.sector;
     this.action = new ActionMarketing();
 
 
@@ -111,9 +116,9 @@ checks = [
     //   this.action.idPopulationCible = response.objectResponse.idPopulationCible;
     // }
 
-    console.log(this.categorie)
+
     this.action.idPartenaire = this.id;
-    this.action.idCategorie = this.ActionForm.value.SecteurActivite;
+    this.action.idCategorie = this.partenaire.idSector;
     this.action.titre=this.ActionForm.value.titre;
     this.action.description = this.ActionForm.value.Description;
     this.action.dateDebut = this.ActionForm.value.dateDebutPub;
@@ -123,10 +128,10 @@ checks = [
     this.action.frequence=this.ActionForm.value.Frequence;
     this.action.libelleCanalDiffusion=this.ActionForm.value.CanalDiffusion ;
   
-    if (this.ActionForm.value.CanalDiffusion =="sms") {
+    if (this.ActionForm.value.CanalDiffusion ==1) {
       this.action.smsBody = this.ActionForm.value.SMSBody;
      this.ajouteraction(this.action);
-    } else if (this.ActionForm.value.CanalDiffusion =="mobile") {
+    } else if (this.ActionForm.value.CanalDiffusion ==0) {
       this.action.externUrl = "https://img-19.commentcamarche.net/cI8qqj-finfDcmx6jMK6Vr-krEw=/1500x/smart/b829396acc244fd484c5ddcdcb2b08f3/ccmcms-commentcamarche/20494859.jpg";
       
       this.action.typeAffichageMobile = this.ActionForm.value.myChoices;
@@ -163,11 +168,11 @@ checks = [
 
 
 
-  getAllSectors() {
-    this._Categoriepubendpointservice.findAllCategoriePub().subscribe(response => {
+  getAllSectors(id) {
+    this._Categoriepubendpointservice.findAllCategoriePub(id).subscribe(response => {
       if (response.result == 1) {
         this.sectors = response.objectResponse;
-
+        console.log(response.objectResponse)
       }
     });
   }

@@ -1,7 +1,11 @@
 export class ActionMarketingDTO {
-    idActionMarketing: string;
+  idActionMarketing: string;
     url: string;
+    canal:number;
     dateDebut: Date;
     dateFin: Date;
+    dateCreation:Date;
+    statut:number;
+    type:string;
   }
   

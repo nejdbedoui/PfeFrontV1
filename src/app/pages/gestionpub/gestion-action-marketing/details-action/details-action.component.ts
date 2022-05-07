@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActionMarketing } from '../../../../model/ActionMarketing';
-import { CategoriePub } from '../../../../model/CategoriePub';
 import { PartenaireBprice } from '../../../../model/PartenaireBprice';
+import { Sector } from '../../../../model/Sector';
 import { ActionMarketingEndPointServiceService } from '../../../../service/bp-api-action-marketing/action-marketing-end-point/action-marketing-end-point-service.service';
 import { CategoriePubEndPointServiceService } from '../../../../service/bp-api-action-marketing/categorie-pub-end-point/categorie-pub-end-point-service.service';
 import { PartenaireBpriceEndPointService } from '../../../../service/bp-api-pos/partenaire-bprice-end-point/partenaire-bprice-end-point.service';
@@ -19,25 +19,26 @@ export class DetailsActionComponent implements OnInit {
   action: ActionMarketing;
   showmedia: boolean = false;
   partenair: PartenaireBprice;
-  categorie: CategoriePub;
+  categorie: Sector;
   activer: boolean = false;
   ActionForm: FormGroup;
   optionContenue: any[];
   optionCanalDiffusion: any[];
-  sectors: CategoriePub[];
+  sectors: Sector[];
 url:any;
+id=this.route.snapshot.paramMap.get('id');
   constructor(private _FormBuilder: FormBuilder, private _GlobalService: GlobalServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService, private _router: Router, private _actionMarketingService: ActionMarketingEndPointServiceService, private route: ActivatedRoute, private _partenaireservice: PartenaireBpriceEndPointService) {
-    this.optionCanalDiffusion = [{ label: 'Mobile', value: 'mobile' }, { label: 'SMS', value: 'sms' }, { label: 'TV', value: 'tv' }];
-    this.optionContenue = [{ label: 'Image', value: 'image' }, { label: 'Video', value: 'video' }];
+    this.optionCanalDiffusion = [{ label: 'Mobile', value: 0 }, { label: 'SMS', value: 1 }, { label: 'TV', value: 2 }];
+    this.optionContenue = [{ label: 'Image', value: 0 }, { label: 'Video', value: 1 }];
 
   }
 
   ngOnInit() {
-    this.getAllSectors();
-    this._actionMarketingService.findByidActionMarketing(this.route.snapshot.paramMap.get('id')).subscribe(val1 => {
+    
+    this._actionMarketingService.findByidActionMarketing(this.id).subscribe(val1 => {
       if (val1.result == 1) {
         this.action = val1.objectResponse
-
+        
         this._Categoriepubendpointservice.findByidCategorie(val1.objectResponse.idCategorie).subscribe(val3 => {
           if (val3.result == 1)
             this.categorie = val3.objectResponse
@@ -47,12 +48,17 @@ url:any;
           this._actionMarketingService.findfileByid(this.action.idStorage).subscribe(val=>{
             this.url=val.objectResponse.url;
             this.showmedia = true;
+           
           })
         }
         )
       }
     });
-
+this._partenaireservice.findByIdPartenaire(this.id).subscribe(val=>
+  {
+    this.getAllSectors(val.objectResponse.idSector);
+  }
+  )
 
 
   }
@@ -71,7 +77,7 @@ url:any;
   }
 
   confirm() {
-    this.action.statut = "1";
+    this.action.statut = 1;
     this._actionMarketingService.updateActionMarketing(this.action).subscribe(val => {
       if (val.result == 1) {
         this._GlobalService.showToast("success", "success", "Action confirmer")
@@ -81,8 +87,8 @@ url:any;
     )
   }
 
-  getAllSectors() {
-    this._Categoriepubendpointservice.findAllCategoriePub().subscribe(response => {
+  getAllSectors(id) {
+    this._Categoriepubendpointservice.findAllCategoriePub(id).subscribe(response => {
       if (response.result == 1) {
         this.sectors = response.objectResponse;
 
@@ -94,7 +100,7 @@ url:any;
   InstanciateForm() {
 
     this.ActionForm = this._FormBuilder.group({
-      SecteurActivite: [this.categorie.libelle, [Validators.required]],
+      SecteurActivite: [this.categorie.designation, [Validators.required]],
       CanalDiffusion: [this.action.libelleCanalDiffusion, [Validators.required]],
       LienPub: [this.action.externUrl, [Validators.required]],
       titre: [this.action.titre, [Validators.required]],
@@ -122,10 +128,10 @@ url:any;
     this.action.titre = this.ActionForm.value.titre;
 
 
-    if (this.ActionForm.value.CanalDiffusion == "sms") {
+    if (this.ActionForm.value.CanalDiffusion == 1) {
       this.action.smsBody = this.ActionForm.value.SMSBody;
 
-    } else if (this.ActionForm.value.CanalDiffusion == "mobile") {
+    } else if (this.ActionForm.value.CanalDiffusion == 0) {
 
       this.action.typeAffichageMobile = this.ActionForm.value.myChoices;
       this.action.typeContenue = this.ActionForm.value.TypeContenue;

@@ -5,15 +5,15 @@ export class ActionMarketing{
       idPopulationCible:String;
       idStorage:string;
       titre:string;
-      libelleCanalDiffusion:string;//tv mobile sms
-      typeContenue:string; //image video
+      libelleCanalDiffusion:number;//tv mobile sms
+      typeContenue:number; //image video
       externUrl:string;
       description:string;
       smsBody:string;
       dateDebut:Date;
       dateFin:Date;
       frequence:number;
-      typeAffichageMobile:string;//pop up banniere notification
-      statut:string;//crée ,accepter ,refuser ,en cours diffusion
+      typeAffichageMobile:number;//pop up banniere notification
+      statut:number;//crée ,accepter ,refuser ,en cours diffusion
       dateCreation:Date;
 }

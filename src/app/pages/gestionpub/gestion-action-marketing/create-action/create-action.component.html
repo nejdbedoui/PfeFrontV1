@@ -23,8 +23,7 @@
                 
 
         <nb-select placeholder="Secteur d'activité" fullWidth formControlName="SecteurActivite">
-            <nb-option *ngFor="let sctor of sectors"  [value]="sctor.idCategorie">{{sctor.libelle}}</nb-option>
-            <nb-option value="autre" >Autre</nb-option>
+            <nb-option *ngFor="let sctor of sectors"  [value]="sctor.idClientType">{{sctor.designation}}</nb-option>
         </nb-select> <input *ngIf="SecteurActivite=='Autre'"  type="text" nbInput placeholder="Libellé Categorie">
         <label *ngIf=" isSubmitted && (formControls.SecteurActivite.errors )" class="label-has-error">
             <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Secteur </label>
@@ -67,7 +66,7 @@
         <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date fin </label>
    <br>
     
-<div *ngIf="ActionForm.value.CanalDiffusion=='sms'">
+<div *ngIf="ActionForm.value.CanalDiffusion==1">
     <textarea nbInput placeholder="Votre SMS d'envoie"  formControlName="SMSBody"></textarea>
     <label *ngIf=" isSubmitted && (formControls.SMSBody.errors )" class="label-has-error">
         <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la contenue du sms </label>
@@ -75,7 +74,7 @@
 </div>
 
 
-<div *ngIf="ActionForm.value.CanalDiffusion=='mobile' || ActionForm.value.CanalDiffusion=='tv'">
+<div *ngIf="ActionForm.value.CanalDiffusion==0 || ActionForm.value.CanalDiffusion==2">
   
 
 <nb-select placeholder="type Affichage" fullWidth formControlName="myChoices">
@@ -91,14 +90,14 @@
         <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la contenue de l'action</label>
 
         
-        <div class="upload" *ngIf="ActionForm.value.TypeContenue=='image'">
+        <div class="upload" *ngIf="ActionForm.value.TypeContenue== 0">
             <h5>choisissez votre image</h5>
             <p-fileUpload chooseLabel="Choisir image" name="demo1" [fileLimit]="1" [showUploadButton]="true"
                 (onSelect)="select($event)" multiple="multiple" accept="image/*" maxFileSize="10000000">
             </p-fileUpload>
         </div>
 
-        <div *ngIf="contenue=='video'">
+        <div *ngIf="ActionForm.value.TypeContenue== 1">
             <h5>choisissez votre Video</h5>
             <p-fileUpload chooseLabel="Choisir video" styleClass="upload" name="demo2" [fileLimit]="1"
                 [showUploadButton]="false" (onSelect)="onUpload($event)" multiple="multiple" accept="video/*"
