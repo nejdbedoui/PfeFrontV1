@@ -17,12 +17,11 @@ import { DataTablesModule } from 'angular-datatables';
 import { TableModule } from 'primeng/table';
 import {ButtonModule} from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
-import { ModifierActionComponent } from './gestion-action-marketing/modifier-action/modifier-action.component';
 import { DetailsActionComponent } from './gestion-action-marketing/details-action/details-action.component';
 
 
 @NgModule({
-  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, ModifierActionComponent, DetailsActionComponent],
+  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, DetailsActionComponent],
   imports: [
     CommonModule,
     MenuModule,

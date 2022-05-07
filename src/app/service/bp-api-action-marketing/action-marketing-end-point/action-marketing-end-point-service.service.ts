@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ActionMarketing } from '../../../model/ActionMarketing';
+import { ActionMarketingDTO } from '../../../model/dto/ActionmarketingDTO';
+import { ActionMarketingDTOResponse } from '../../../model/response/ActionMarketingDTOResponse';
 import { ActionMarketingResponse } from '../../../model/response/ActionMarketingResponse';
 import { OneActionMarketingResponse } from '../../../model/response/OneActionMarketingResponse';
 import { StorageResponse } from '../../../model/response/StorageResponse';
@@ -64,4 +66,9 @@ updateActionMarketing(Action:ActionMarketing){
     return this.httpclient.get<StorageResponse>(environment.backend_url_Publicite+"findAllStorage/",{ headers: this.header }); 
   }
 
+
+
+  findAllActionMarketingDTOByIdPartenaire(id:String){
+    return this.httpclient.get<ActionMarketingDTOResponse>(environment.backend_url_Publicite+"findAllActionMarketingDTOByIdPartenaire/"+id,{ headers: this.header });
+  }
 }

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionMarketing } from '../../../model/ActionMarketing';
-import { Sector } from '../../../model/Sector';
+import { ActionMarketingDTO } from '../../../model/dto/ActionmarketingDTO';
 import { ActionMarketingEndPointServiceService } from '../../../service/bp-api-action-marketing/action-marketing-end-point/action-marketing-end-point-service.service';
-import { SectorEndPointService } from '../../../service/bp-api-pos/sector-end-point/sector-end-point.service';
 
 @Component({
   selector: 'ngx-gestion-action-marketing',
@@ -16,18 +15,36 @@ export class GestionActionMarketingComponent implements OnInit {
   stateOptions: any[];
   value1: string = "";
   loading:boolean = false;
-  ActionsMarketing: ActionMarketing[];
+  ActionsMarketing: ActionMarketingDTO[];
+  id: string = localStorage.getItem("partenaireid");
   constructor(private route: Router,private _actionMarketingService:ActionMarketingEndPointServiceService) { 
-    this.stateOptions = [{label: 'image', value: 'image'}, {label: 'video', value: 'video'}];
+    this.stateOptions = [{label: 'image', value: 0}, {label: 'video', value: 1}];
 
 
  }
 
   ngOnInit() {
+    console.log(this.id);
     this.getAllActionsMarketing();
     
-    
+   
   }
+
+  getStatusAction(stat:number){
+    if(stat==0)
+    return "Crée"
+    else if(stat==1)
+    return "En Attente"
+    else if(stat==2)
+    return "Confirmé"
+    else if(stat==3)
+    return "Refusé"
+    else if(stat==4)
+    return "En Cours"
+    else if(stat==5)
+    return "Terminée"
+  }
+
 
   getAllStorage(){
     return this._actionMarketingService.findAllStorage();
@@ -37,28 +54,14 @@ export class GestionActionMarketingComponent implements OnInit {
 listeStorages:Storage[];
  getAllActionsMarketing(){
   this.loading = true;
-   this._actionMarketingService.findAllActionMarketing().subscribe(async response=>{
-     
-     if (response.result==1){
-     var respon = await this.getAllStorage().toPromise();
-
-       this.ActionsMarketing = response.objectResponse;
-       this.ActionsMarketing.forEach(value=>{
-         respon.objectResponse.forEach(val=>{
-           if (value.idStorage == val.idStorage){
-             value.externUrl = val.url;
-           }
-         })
-       });
-       this.loading = false;
-
-     }
-     else{
-  this.loading = false;
-
-     }
-     console.log(this.ActionsMarketing)
-   });
+   this._actionMarketingService.findAllActionMarketingDTOByIdPartenaire(this.id).subscribe(val=>
+    {
+      if(val.result==1){
+        this.ActionsMarketing=val.objectResponse;
+        this.loading = false;
+      }
+    }
+    )
    
  }
 

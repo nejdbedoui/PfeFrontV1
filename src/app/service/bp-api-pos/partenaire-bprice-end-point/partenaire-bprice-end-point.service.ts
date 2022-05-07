@@ -24,7 +24,7 @@ CreatePartenaireBprice(partenaireBprice:PartenaireBprice){
 }
 
 findByIdPartenaire(id:string){
-  return this.httpclient.get<OnePartenaireBpriceResponse>(environment.backend_url_Pos+"findByIdPartenaire/"+id,{ headers: this.header });
+  return this.httpclient.get<OnePartenaireBpriceResponse>(environment.backend_url_Publicite+"findByIdPartenaire/"+id,{ headers: this.header });
 }
 
 }
