@@ -1,0 +1,76 @@
+<ngx-bread-crumb></ngx-bread-crumb>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-6"><span style="font-size: 20px;">Gestion Action Marketing</span></div>
+      <div class="col-md-6"><span style="float: right"> Action Marketing&nbsp;&nbsp;</span></div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="button" *ngIf="!affichefilter" style="float: right;background: #79008e !important;" nbButton
+          [shape]="'round'" (click)="affichefilter=true"> Afficher plus de critéres de
+          recherche</button>&nbsp;&nbsp;
+        <button type="button" *ngIf="affichefilter" style="float: right" nbButton status="warning" [shape]="'round'"
+          (click)="affichefilter=false"> Cacher les critères de
+          recherche</button>&nbsp;&nbsp;
+      </div>
+    </div>
+    <br>
+
+
+   
+    <p-table  [columns]="cols" [loading]="loading"  [rowsPerPageOptions]="[20,30,50]"  #dta [value]="ActionsMarketing" [rows]="20" [paginator]="true" [responsive]="true" autoLayout ="true" [globalFilterFields]="['description','dateCreation']">
+      <ng-template pTemplate="caption">
+        
+          <div style="text-align: right">        
+              <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+              <input type="text" pInputText size="50" placeholder="Chercher" (input)="dta.filterGlobal($event.target.value, 'contains')" style="width:40%; min-height: 34px;">
+          </div>
+      </ng-template>  
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Image ou Video</th>
+            
+            <th>Periode</th>
+            <th>Date de Creation</th>
+            <th>Canal</th>
+            <th>Statut</th>
+            <th>Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-Action>
+          <tr >
+            <td>
+              <img [src]="Action.url" [alt]="Action.type" width="100" height="100" class="shadow-4" /></td>
+            
+            <td> <span class="bold">{{Action.dateDebut |date:'dd/MM/yyyy'}}</span> - <span class="bold">{{Action.dateFin |date:'dd/MM/yyyy'}}</span></td>
+            <td><span class="bold">{{Action.dateCreation |date:'dd/MM/yyyy'}}</span></td>
+            <td>{{Action.canal}}</td>
+            <td>{{getStatusAction(Action.statut)}}</td>
+          <td >
+            <i *ngIf="Action.statut == '1'" class="fa fa-folder-open cursor buttonround editbutton" routerLink="detailsaction/{{Action.idActionMarketing}}" nbTooltip="Ouvrir action" nbTooltipPlacement="bottom"></i>
+            <button  *ngIf="Action.statut=='2'" (click)="GenerateContrat(Action)" class="btn btn-primary" style="background-color: white; border-color:white; color:#417bff"
+             pInputText
+            pTooltip="Générer PDF" tooltipPosition="bottom" placeholder="Bottom"><img
+              src="../../../assets/images/export-pdf.PNG" style="width: 30px" alt="pdf"></button>
+          </td>
+        </tr>
+        </ng-template>
+        <ng-template  pTemplate="emptymessage" let-Action>
+          <tr>
+              <td >
+                  <div style="display: flex;
+                  justify-content: center;">
+                      La liste est vide
+                  </div>
+                  
+              </td>
+          </tr>
+      </ng-template>
+      </p-table>
+    
+
+  </nb-card-body>
+</nb-card>

@@ -18,10 +18,12 @@ import { TableModule } from 'primeng/table';
 import {ButtonModule} from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { DetailsActionComponent } from './gestion-action-marketing/details-action/details-action.component';
+import { GestionActionMarketingAdminComponent } from './gestion-action-marketing-admin/gestion-action-marketing-admin.component';
+import { DetailActionComponent } from './gestion-action-marketing-admin/detail-action/detail-action.component';
 
 
 @NgModule({
-  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, DetailsActionComponent],
+  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, DetailsActionComponent, GestionActionMarketingAdminComponent, DetailActionComponent],
   imports: [
     CommonModule,
     MenuModule,

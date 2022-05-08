@@ -55,7 +55,10 @@ checks = [
   ngOnInit() {
     this._Partenaire.findByIdPartenaire(this.id).subscribe(val=>
       {
+        if(val.result==1){
+          this.partenaire=val.objectResponse;
         this.getAllSectors(val.objectResponse.idSector);
+        }
       }
       )
     
@@ -100,6 +103,7 @@ checks = [
 
 
    submit() {
+     console.log(this.partenaire);
 
 
   
