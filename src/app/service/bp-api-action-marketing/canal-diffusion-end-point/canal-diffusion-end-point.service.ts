@@ -39,4 +39,8 @@ findAllCanal(){
 findAllActiveCanal(){
   return this.httpclient.get<CanalDiffusionResponse>(environment.backend_url_Publicite+"findAllActiveCanal/",{ headers: this.header }); 
 }
+findCanalByLibelle(libelle:String){
+  return this.httpclient.get<OneCanalDiffusionResponse>(environment.backend_url_Publicite+"findCanalByLibelle/"+libelle,{ headers: this.header }); 
+
+}
 }

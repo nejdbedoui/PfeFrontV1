@@ -31,13 +31,11 @@
       </ng-template>  
         <ng-template pTemplate="header">
           <tr>
-            <th>Publicité</th>
+            <th>Image ou Video</th>
             
             <th>Periode</th>
             <th>Date de Creation</th>
-            <th>Canal</th>
             <th>Statut</th>
-            <th>Action</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-Action>
@@ -47,16 +45,12 @@
               <video preload="none" *ngIf="Action.typeitem == 1 "  width="150" height="100" controls>
                 <source [src]="Action.url" alt="Action.type">
               </video>
-              <span *ngIf="Action.typeitem==2">{{Action.smsBody}}</span>
             </td>
             
             <td> <span class="bold">{{Action.dateDebut |date:'dd/MM/yyyy'}}</span> - <span class="bold">{{Action.dateFin |date:'dd/MM/yyyy'}}</span></td>
             <td><span class="bold">{{Action.dateCreation |date:'dd/MM/yyyy'}}</span></td>
-            <td>{{Action.canal}}</td>
             <td>{{getStatusAction(Action.statut)}}</td>
-          <td >
-            <i  class="fa fa-folder-open cursor buttonround editbutton" routerLink="detailsaction/{{Action.idActionMarketing}}" nbTooltip="Ouvrir action" nbTooltipPlacement="bottom"></i>
-          </td>
+      
         </tr>
         </ng-template>
         <ng-template  pTemplate="emptymessage" let-Action>
