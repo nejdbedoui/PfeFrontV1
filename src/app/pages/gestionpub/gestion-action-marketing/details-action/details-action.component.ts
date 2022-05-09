@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActionMarketing } from '../../../../model/ActionMarketing';
+
 import { PartenaireBprice } from '../../../../model/PartenaireBprice';
 import { Sector } from '../../../../model/Sector';
 import { ActionMarketingEndPointServiceService } from '../../../../service/bp-api-action-marketing/action-marketing-end-point/action-marketing-end-point-service.service';
@@ -26,11 +27,11 @@ export class DetailsActionComponent implements OnInit {
   optionCanalDiffusion: any[];
   sectors: Sector[];
 url:any;
-id=this.route.snapshot.paramMap.get('id');
+id:string;
   constructor(private _FormBuilder: FormBuilder, private _GlobalService: GlobalServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService, private _router: Router, private _actionMarketingService: ActionMarketingEndPointServiceService, private route: ActivatedRoute, private _partenaireservice: PartenaireBpriceEndPointService) {
     this.optionCanalDiffusion = [{ label: 'Mobile', value: 0 }, { label: 'SMS', value: 1 }, { label: 'TV', value: 2 }];
     this.optionContenue = [{ label: 'Image', value: 0 }, { label: 'Video', value: 1 }];
-
+this.id=this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit() {
@@ -38,23 +39,23 @@ id=this.route.snapshot.paramMap.get('id');
     this._actionMarketingService.findByidActionMarketing(this.id).subscribe(val1 => {
       if (val1.result == 1) {
         this.action = val1.objectResponse
-        
+        console.log(this.action)
         this._Categoriepubendpointservice.findByidCategorie(val1.objectResponse.idCategorie).subscribe(val3 => {
           if (val3.result == 1)
             this.categorie = val3.objectResponse
          
-          console.log(this.action)
+          console.log(this.categorie)
           this.InstanciateForm();
           this._actionMarketingService.findfileByid(this.action.idStorage).subscribe(val=>{
             this.url=val.objectResponse.url;
+            
             this.showmedia = true;
-           
           })
         }
         )
       }
     });
-this._partenaireservice.findByIdPartenaire(this.id).subscribe(val=>
+this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid")).subscribe(val=>
   {
     this.getAllSectors(val.objectResponse.idSector);
   }
@@ -101,7 +102,7 @@ this._partenaireservice.findByIdPartenaire(this.id).subscribe(val=>
 
     this.ActionForm = this._FormBuilder.group({
       SecteurActivite: [this.categorie.designation, [Validators.required]],
-      CanalDiffusion: [this.action.libelleCanalDiffusion, [Validators.required]],
+      CanalDiffusion: [this.action.idCanaldiffusion, [Validators.required]],
       LienPub: [this.action.externUrl, [Validators.required]],
       titre: [this.action.titre, [Validators.required]],
       Description: [this.action.description, [Validators.required]],
@@ -133,7 +134,7 @@ this._partenaireservice.findByIdPartenaire(this.id).subscribe(val=>
 
     } else if (this.ActionForm.value.CanalDiffusion == 0) {
 
-      this.action.typeAffichageMobile = this.ActionForm.value.myChoices;
+      this.action.idFormatAffichage = this.ActionForm.value.myChoices;
       this.action.typeContenue = this.ActionForm.value.TypeContenue;
 
     } else {

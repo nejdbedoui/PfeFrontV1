@@ -6,116 +6,143 @@
         </div>
     </nb-card-header>
     <nb-card-body>
-        <form [formGroup]="ActionForm" (ngSubmit)="submit()">
+        <form *ngIf="showmedia" [formGroup]="ActionForm" (ngSubmit)="submit()">
 
 
-    <div class="form-group">
-        <input type="text" nbInput placeholder="Titre" formControlName="titre">
-        <label *ngIf=" isSubmitted && (formControls.titre.errors )" class="label-has-error">
-            <i class="fas fa-exclamation-circle"></i> Veuillez Saisir un Titre </label>
+            <div class="form-group">
+                <input type="text" nbInput placeholder="Titre" formControlName="titre">
+                <label *ngIf=" isSubmitted && (formControls.titre.errors )" class="label-has-error">
+                    <i class="fas fa-exclamation-circle"></i> Veuillez Saisir un Titre </label>
 
 
 
-            <input type="number" nbInput placeholder="Frequence" formControlName="Frequence">
-            <label *ngIf=" isSubmitted && (formControls.Frequence.errors )" class="label-has-error">
-                <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une frequence </label>
-
-                
-
-        <nb-select placeholder="Secteur d'activité" fullWidth formControlName="SecteurActivite">
-            <nb-option *ngFor="let sctor of sectors"  [value]="sctor.idClientType">{{sctor.designation}}</nb-option>
-        </nb-select> <input *ngIf="SecteurActivite=='Autre'"  type="text" nbInput placeholder="Libellé Categorie">
-        <label *ngIf=" isSubmitted && (formControls.SecteurActivite.errors )" class="label-has-error">
-            <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Secteur </label>
+                <input type="number" nbInput placeholder="Frequence" formControlName="Frequence">
+                <label *ngIf=" isSubmitted && (formControls.Frequence.errors )" class="label-has-error">
+                    <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une frequence </label>
 
 
-            <nb-select placeholder="canal diffusion" fullWidth formControlName="CanalDiffusion">
-                <nb-option *ngFor="let canal of optionCanalDiffusion"  [value]="canal.value">{{canal.label}}</nb-option>
+
+                <nb-select placeholder="Secteur d'activité" fullWidth formControlName="SecteurActivite">
+                    <nb-option *ngFor="let sector of sectors" [value]="sector.idClientType">{{sector.designation}}
+                    </nb-option>
+                </nb-select> <input *ngIf="SecteurActivite=='Autre'" type="text" nbInput
+                    placeholder="Libellé Categorie">
+                <label *ngIf=" isSubmitted && (formControls.SecteurActivite.errors )" class="label-has-error">
+                    <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Secteur </label>
+
+
+                <nb-select placeholder="canal diffusion" fullWidth formControlName="CanalDiffusion"
+                    (selectedChange)="formataffichage($event)">
+                    <nb-option *ngFor="let canal of canal" [value]="canal">{{canal.libelle}}</nb-option>
                 </nb-select>
                 <label *ngIf=" isSubmitted && (formControls.CanalDiffusion.errors )" class="label-has-error">
                     <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la canal de diffusion </label>
 
 
-</div>
-         
-        
 
-      
-        <input type="text" nbInput placeholder="Lien "  formControlName="LienPub">
-        <label *ngIf=" isSubmitted && (formControls.LienPub.errors )" class="label-has-error">
-            <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Lien du pub </label>
-        <br>
+                <nb-select placeholder="sexe" fullWidth formControlName="sexe">
+                    <nb-option *ngFor="let sexe of optionSexe" [value]="sexe.value">{{sexe.label}}</nb-option>
+                </nb-select>
+                <label *ngIf=" isSubmitted && (formControls.sexe.errors )" class="label-has-error">
+                    <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le sexe </label>
 
-
-
-      <textarea fieldSize="medium" nbInput formControlName="Description" placeholder="Description de votre Action Marketing"></textarea>
-      <label *ngIf=" isSubmitted && (formControls.Description.errors )" class="label-has-error">
-        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une Description </label>
-      
-
-      <br>
-        
-      <input nbInput [nbDatepicker]="datedeb" placeholder="Pick Date" formControlName="dateDebutPub"  >
-      <nb-datepicker #datedeb ></nb-datepicker>
-      <label *ngIf=" isSubmitted && (formControls.dateDebutPub.errors )" class="label-has-error">
-        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date du debut </label>
-
-      <input nbInput [nbDatepicker]="datefn" placeholder="Form Picker" formControlName="dateFinPub">
-      <nb-datepicker #datefn ></nb-datepicker>
-      <label *ngIf=" isSubmitted && (formControls.dateFinPub.errors )" class="label-has-error">
-        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date fin </label>
-   <br>
-    
-<div *ngIf="ActionForm.value.CanalDiffusion==1">
-    <textarea nbInput placeholder="Votre SMS d'envoie"  formControlName="SMSBody"></textarea>
-    <label *ngIf=" isSubmitted && (formControls.SMSBody.errors )" class="label-has-error">
-        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la contenue du sms </label>
-
-</div>
+                    
+            
+            </div>
 
 
-<div *ngIf="ActionForm.value.CanalDiffusion==0 || ActionForm.value.CanalDiffusion==2">
-  
+            <p-listbox [options]="villes" formControlName="ville" multiple="multiple" checkbox="checkbox" filter="filter" optionLabel="libelle">
+                <p-header>
+                  <i class="fa fa-car"></i>
+                  Cars
+                </p-header>
+              </p-listbox>
+              <label *ngIf=" isSubmitted && (formControls.sexe.errors )" class="label-has-error">
+                <i class="fas fa-exclamation-circle"></i> Veuillez choisir Ville(s) </label>
 
-<nb-select placeholder="type Affichage" fullWidth formControlName="myChoices">
-    <nb-option *ngFor="let type of optionaffichage"  [value]="type.value">{{type.label}}</nb-option>
-    </nb-select>
-    <label *ngIf=" isSubmitted && (formControls.myChoices.errors )" class="label-has-error">
-        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la type d'affichage </label>
-   
-<nb-select placeholder="Type contenue" fullWidth formControlName="TypeContenue">
-    <nb-option *ngFor="let contenue of optionContenue"  [value]="contenue.value">{{contenue.label}}</nb-option>
-    </nb-select>
-    <label *ngIf=" isSubmitted && (formControls.TypeContenue.errors )" class="label-has-error">
-        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la contenue de l'action</label>
-
-        
-        <div class="upload" *ngIf="ActionForm.value.TypeContenue== 0">
-            <h5>choisissez votre image</h5>
-            <p-fileUpload chooseLabel="Choisir image" name="demo1" [fileLimit]="1" [showUploadButton]="true"
-                (onSelect)="select($event)" multiple="multiple" accept="image/*" maxFileSize="10000000">
-            </p-fileUpload>
-        </div>
-
-        <div *ngIf="ActionForm.value.TypeContenue== 1">
-            <h5>choisissez votre Video</h5>
-            <p-fileUpload chooseLabel="Choisir video" styleClass="upload" name="demo2" [fileLimit]="1"
-                [showUploadButton]="false" (onSelect)="onUpload($event)" multiple="multiple" accept="video/*"
-                maxFileSize="100000000">
-            </p-fileUpload>
-        </div>
-    </div>
+              
 
 
-    <button  type="submit"   nbButton status="success" class="button-style"  style="float: right;" [shape]="'round'">Enregistrer</button>
+
+            <input type="text" nbInput placeholder="Lien " formControlName="LienPub">
+            <label *ngIf=" isSubmitted && (formControls.LienPub.errors )" class="label-has-error">
+                <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Lien du pub </label>
+            <br>
 
 
-<button (click)="test()"  type="button" >TEST NA</button>
-</form>
+
+            <textarea fieldSize="medium" nbInput formControlName="Description"
+                placeholder="Description de votre Action Marketing"></textarea>
+            <label *ngIf=" isSubmitted && (formControls.Description.errors )" class="label-has-error">
+                <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une Description </label>
 
 
-    
- <!-- <form>
+            <br>
+
+            <input nbInput [nbDatepicker]="datedeb" placeholder="Pick Date" formControlName="dateDebutPub">
+            <nb-datepicker #datedeb></nb-datepicker>
+            <label *ngIf=" isSubmitted && (formControls.dateDebutPub.errors )" class="label-has-error">
+                <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date du debut </label>
+
+            <input nbInput [nbDatepicker]="datefn" placeholder="Form Picker" formControlName="dateFinPub">
+            <nb-datepicker #datefn></nb-datepicker>
+            <label *ngIf=" isSubmitted && (formControls.dateFinPub.errors )" class="label-has-error">
+                <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date fin </label>
+            <br>
+
+            <div *ngIf="canal1=='SMS'">
+                <textarea nbInput placeholder="Votre SMS d'envoie" formControlName="SMSBody"></textarea>
+                <label *ngIf=" isSubmitted && (formControls.SMSBody.errors )" class="label-has-error">
+                    <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la contenue du sms </label>
+
+            </div>
+
+
+            <div *ngIf="canal1=='Mobile' || canal1=='TV'">
+
+
+                <nb-select placeholder="type Affichage" fullWidth formControlName="formataffichage">
+                    <nb-option *ngFor="let format of format" [value]="format.idFormatAffichage">{{format.libelle}}
+                    </nb-option>
+                </nb-select>
+                <label *ngIf=" isSubmitted && (formControls.formataffichage.errors )" class="label-has-error">
+                    <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la type d'affichage </label>
+
+                <nb-select placeholder="Type contenue" fullWidth formControlName="TypeContenue">
+                    <nb-option *ngFor="let contenue of optionContenue" [value]="contenue.value">{{contenue.label}}
+                    </nb-option>
+                </nb-select>
+                <label *ngIf=" isSubmitted && (formControls.TypeContenue.errors )" class="label-has-error">
+                    <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la contenue de l'action</label>
+
+
+                <div class="upload" *ngIf="ActionForm.value.TypeContenue== 0">
+                    <h5>choisissez votre image</h5>
+                    <p-fileUpload chooseLabel="Choisir image" name="demo1" [fileLimit]="1" [showUploadButton]="true"
+                        (onSelect)="select($event)" multiple="multiple" accept="image/*" maxFileSize="10000000">
+                    </p-fileUpload>
+                </div>
+
+                <div *ngIf="ActionForm.value.TypeContenue== 1">
+                    <h5>choisissez votre Video</h5>
+                    <p-fileUpload chooseLabel="Choisir video" styleClass="upload" name="demo2" [fileLimit]="1"
+                        [showUploadButton]="false" (onSelect)="select($event)" multiple="multiple" accept="video/*"
+                        maxFileSize="100000000">
+                    </p-fileUpload>
+                </div>
+            </div>
+
+
+            <button type="submit" nbButton status="success" class="button-style" style="float: right;"
+                [shape]="'round'">Enregistrer</button>
+
+
+            <button (click)="test()" type="button">TEST NA</button>
+        </form>
+
+
+
+        <!-- <form>
         <div class="form-group">
             <fieldset class="form-group">
     
@@ -141,5 +168,4 @@
         <a class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
     </form> -->
     </nb-card-body>
-    </nb-card>
-    
+</nb-card>

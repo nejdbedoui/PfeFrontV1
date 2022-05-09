@@ -17,6 +17,8 @@ export class GestionActionMarketingComponent implements OnInit {
   loading:boolean = false;
   ActionsMarketing: ActionMarketingDTO[];
   id: string = localStorage.getItem("partenaireid");
+  image:string="image";
+  video:string="video";
   constructor(private route: Router,private _actionMarketingService:ActionMarketingEndPointServiceService) { 
     this.stateOptions = [{label: 'image', value: 0}, {label: 'video', value: 1}];
 
