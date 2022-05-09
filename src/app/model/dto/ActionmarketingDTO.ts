@@ -7,5 +7,6 @@ export class ActionMarketingDTO {
     dateCreation:Date;
     statut:number;
     type:string;
+    typeitem:number;
   }
   

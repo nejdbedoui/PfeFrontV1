@@ -18,8 +18,12 @@ import { TableModule } from 'primeng/table';
 import {ButtonModule} from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { DetailsActionComponent } from './gestion-action-marketing/details-action/details-action.component';
+
+import {ListboxModule} from 'primeng/listbox';
+
 import { GestionActionMarketingAdminComponent } from './gestion-action-marketing-admin/gestion-action-marketing-admin.component';
-import { DetailActionComponent } from './gestion-action-marketing-admin/detail-action/detail-action.component';
+
+
 
 
 @NgModule({
@@ -27,6 +31,7 @@ import { DetailActionComponent } from './gestion-action-marketing-admin/detail-a
   imports: [
     CommonModule,
     MenuModule,
+    ListboxModule,
     NbSelectModule,
     FileUploadModule,
     NbStepperModule,

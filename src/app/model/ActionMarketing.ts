@@ -4,8 +4,9 @@ export class ActionMarketing{
       idCategorie:string;
       idPopulationCible:String;
       idStorage:string;
+      idCanaldiffusion:string;
+      idFormatAffichage:string;
       titre:string;
-      libelleCanalDiffusion:number;//tv mobile sms
       typeContenue:number; //image video
       externUrl:string;
       description:string;
@@ -13,7 +14,7 @@ export class ActionMarketing{
       dateDebut:Date;
       dateFin:Date;
       frequence:number;
-      typeAffichageMobile:number;//pop up banniere notification
       statut:number;//crée ,accepter ,refuser ,en cours diffusion
       dateCreation:Date;
 }
+
