@@ -15,7 +15,15 @@ export const MENU_ITEMSTABLEAU: NbMenuItem[] = [
     title: 'Publicité',
     icon: 'flip-2-outline',
     link: '/pages/gestionpub/gestionactionmarketing',
-  }
+  },
+  {
+    title: 'Administration Publicité',
+    icon: 'flip-2-outline',
+    link: '/pages/gestionpub/gestionactionmarketingadmin',
+  },
+
+
+
 ]
 
 
