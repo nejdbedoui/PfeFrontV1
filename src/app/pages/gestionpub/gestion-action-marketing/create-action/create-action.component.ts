@@ -50,6 +50,7 @@ export class CreateActionComponent implements OnInit {
 
 
   ngOnInit() {
+
     this._Partenaire.findByIdPartenaire(this.id).subscribe(val => {
       this.getAllSectors(val.objectResponse.idSector);
       this.partenaire = val.objectResponse;
@@ -65,6 +66,7 @@ export class CreateActionComponent implements OnInit {
       if (val.result == 1) {
         this.villes = val.objectResponse;
         console.log(this.villes)
+
       }
     })
   }
@@ -125,7 +127,9 @@ export class CreateActionComponent implements OnInit {
   get formControls() { return this.ActionForm.controls; }
 
 
+
   submit() {
+
 
 console.log(this.ActionForm)
 console.log(this.ActionForm.valid)

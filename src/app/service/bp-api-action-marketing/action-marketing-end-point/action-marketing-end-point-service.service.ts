@@ -13,6 +13,7 @@ import { StorageResponse } from '../../../model/response/StorageResponse';
   providedIn: 'root'
 })
 export class ActionMarketingEndPointServiceService {
+ 
 
   constructor(private httpclient:HttpClient) { }
   
@@ -71,4 +72,18 @@ updateActionMarketing(Action:ActionMarketing){
   findAllActionMarketingDTOByIdPartenaire(id:String){
     return this.httpclient.get<ActionMarketingDTOResponse>(environment.backend_url_Publicite+"findAllActionMarketingDTOByIdPartenaire/"+id,{ headers: this.header });
   }
+
+  findAllActionMarketingDTO(){
+    return this.httpclient.get<ActionMarketingDTOResponse>(environment.backend_url_Publicite+"findAllActionMarketingDTO/",{ headers: this.header });
+
+  }
+
+  findAllActionMarketingDTOWithStatutBiggerThan(statut:number){
+    return this.httpclient.get<ActionMarketingDTOResponse>(environment.backend_url_Publicite+"findAllActionMarketingDTOWithStatutBiggerThan/"+statut,{ headers: this.header });
+
+  }
+  GenerateContrat(action: ActionMarketingDTO) {
+    return this.httpclient.post<OneActionMarketingResponse>(environment.backend_url_Publicite+"CreateContratActionMarketing/",action,{ headers: this.header });
+  }
+
 }

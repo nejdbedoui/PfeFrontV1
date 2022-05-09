@@ -94,6 +94,11 @@ export class ChoosepointventeComponent implements OnInit {
     this.router.navigateByUrl("/pages/home");
   }
 
+  chooseAdminActionMarketing(){
+    this.router.navigateByUrl("/pages/gestionpub/gestionactionmarketingadmin");
+    localStorage.setItem("type", 'Administration')
+  }
+
   tableauboard() {
     //type ==0 for dashboard
     localStorage.setItem("type", '0')
