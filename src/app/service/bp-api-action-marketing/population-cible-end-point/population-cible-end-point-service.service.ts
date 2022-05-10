@@ -21,6 +21,7 @@ export class PopulationCibleEndPointServiceService {
   constructor(private httpclient:HttpClient) { }
 
   CreatePopulationCible(populationCible:PopulationCible){
+    console.log(populationCible)
     return this.httpclient.post<OnePopulationCibleResponse>(environment.backend_url_Publicite+"CreatePopulationCible/",populationCible,{ headers: this.header });
   
   }

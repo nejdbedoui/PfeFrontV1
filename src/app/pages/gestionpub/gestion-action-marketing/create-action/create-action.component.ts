@@ -25,8 +25,12 @@ import { Ville } from '../../../../model/Ville';
 @Injectable()
 export class CreateActionComponent implements OnInit {
 
-  isSubmitted: boolean = false;
-  ActionForm: FormGroup;
+  isSubmitted1: boolean = false;
+  isSubmitted2: boolean = false;
+  isSubmitted3: boolean = false;
+  ActionForm1: FormGroup;
+  ActionForm2: FormGroup;
+  ActionForm3: FormGroup;
   optionContenue: any[];
   sectors: Sector[];
   action: ActionMarketing;
@@ -40,7 +44,7 @@ export class CreateActionComponent implements OnInit {
   canal1: string;
   villes: Ville[];
   optionSexe:any[];
-
+  rangeValues: number[]
 
   constructor(private _villeEndpoint: VilleEndPointService, private _Canalservice: CanalDiffusionEndPointService, private _formataffichageservice: FormatAffichageEndPointService, private _Partenaire: PartenaireBpriceEndPointService, private _GlobalService: GlobalServiceService, private _FormBuilder: FormBuilder, private _populationCibleService: PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
     this.optionContenue = [{ label: 'Image', value: 0 }, { label: 'Video', value: 1 }];
@@ -80,98 +84,93 @@ export class CreateActionComponent implements OnInit {
   }
 
   formataffichage(type: CanalDiffusion) {
-    this.ActionForm.controls["formataffichage"].reset();
-    console.log(this.ActionForm.value.formataffichage)
+    if(this.ActionForm1.value.CanalDiffusion.libelle != "SMS"){
+    this.ActionForm2.controls["formataffichage"].reset();
     this._formataffichageservice.findAllActiveformat(type.libelle).subscribe(val => {
       if (val.result == 1) {
         this.format = val.objectResponse;
+        console.log(this.format)
       }
     })
+  }
   }
 
 
   InstanciateForm() {
-    this.ActionForm = this._FormBuilder.group({
-      SecteurActivite: [null, [Validators.required]],
-      CanalDiffusion: [new CanalDiffusion, [Validators.required]],
-      LienPub: ['', [Validators.required]],
-      titre: ['', [Validators.required]],
-      Description: ['', [Validators.required]],
-      dateDebutPub: [null, [Validators.required]],
-      dateFinPub: [null, [Validators.required]],
-      formataffichage: [null, []],
+    this.ActionForm1 = this._FormBuilder.group({
+      CanalDiffusion: [new CanalDiffusion, [Validators.required]],//
+      LienPub: ['', [Validators.required]],//
+      titre: ['', [Validators.required]],//
+      Description: ['', [Validators.required]],//
+      dateDebutPub: [null, [Validators.required]],//
+      dateFinPub: [null, [Validators.required]],//
+    });
+
+    this.ActionForm2 = this._FormBuilder.group({
+      formataffichage: ['', []],
       SMSBody: ['', []],
-      TypeContenue: [null, []],
+      TypeContenue: [3, []],
+    });
+
+    this.ActionForm3 = this._FormBuilder.group({
+      SecteurActivite: [null, [Validators.required]],
       Frequence: [null, [Validators.required]],
       sexe:[null,[Validators.required]],
-      ville:[[],[Validators.required]]
-
-
+      ville:[[null],[]]
     });
-    this.ActionForm.get('CanalDiffusion').setValue(null);
-    this.ActionForm.get('CanalDiffusion').valueChanges
-      .subscribe(value => {
-        this.canal1 = value.libelle;
-        if (value.libelle == "SMS") {
-          this.ActionForm.get('SMSBody').setValidators(Validators.required);
-          this.ActionForm.get('TypeContenue').setValidators(null);
-          this.ActionForm.get('formataffichage').setValidators(null);
-        } else {
-          this.ActionForm.get('SMSBody').setValidators(null);
-          this.ActionForm.get('TypeContenue').setValidators(Validators.required);
-          this.ActionForm.get('formataffichage').setValidators(null);
-        }
-      });
+
+
+   
   }
 
-  get formControls() { return this.ActionForm.controls; }
-
+  get formControls1() { return this.ActionForm1.controls; }
+  get formControls2() { return this.ActionForm2.controls; }
+  get formControls3() { return this.ActionForm3.controls; }
 
 
   submit() {
 
 
-console.log(this.ActionForm)
-console.log(this.ActionForm.valid)
-    this.isSubmitted = !this.isSubmitted;
-
-    if (this.ActionForm.valid) {
+    if (this.ActionForm1.valid && this.ActionForm2.valid && this.ActionForm2.valid) {
 
       console.log("yes")
       this.action = new ActionMarketing();
 
       this.action.idPartenaire = this.id;
       this.action.idCategorie = this.partenaire.idSector;
-      this.action.titre = this.ActionForm.value.titre;
-      this.action.description = this.ActionForm.value.Description;
-      this.action.dateDebut = this.ActionForm.value.dateDebutPub;
-      this.action.dateFin = this.ActionForm.value.dateFinPub;
+      this.action.titre = this.ActionForm1.value.titre;
+      this.action.description = this.ActionForm1.value.Description;
+      this.action.dateDebut = this.ActionForm1.value.dateDebutPub;
+      this.action.dateFin = this.ActionForm1.value.dateFinPub;
       this.action.dateCreation = new Date();
-      this.action.externUrl = this.ActionForm.value.LienPub;
-      this.action.frequence = this.ActionForm.value.Frequence;
+      this.action.externUrl = this.ActionForm1.value.LienPub;
+      this.action.frequence = this.ActionForm3.value.Frequence;
       this.populationCible=new PopulationCible;
-      this.populationCible.sexe=this.ActionForm.value.sexe
+      this.populationCible.sexe=this.ActionForm3.value.sexe
+      if(this.ActionForm3.value.ville != null){
           let stri=[];
-          this.ActionForm.value.ville.forEach(function(item:Ville){
+          this.ActionForm3.value.ville.forEach(function(item:Ville){
             stri.push(item.idVille);
-            console.log( stri)
+            
           });
-          this.populationCible.idville=stri;
+          this.populationCible.ville=stri;
+          console.log(this.populationCible)
+          this.populationCible.age='18'
+      
+}
+      this.action.idCanaldiffusion = this.ActionForm2.value.CanalDiffusion.idCanaldiffusion;
 
-
-      this.action.idCanaldiffusion = this.ActionForm.value.CanalDiffusion.idCanaldiffusion;
-
-      if (this.ActionForm.value.CanalDiffusion.libelle == "SMS") {
-        this.action.smsBody = this.ActionForm.value.SMSBody;
-        this.ajouteraction(this.action,this.populationCible);
-      } else if (this.ActionForm.value.CanalDiffusion.libelle == "Mobile") {
+      if (this.ActionForm2.value.CanalDiffusion.libelle == "SMS") {
+        this.action.smsBody = this.ActionForm2.value.SMSBody;
+     //   this.ajouteraction(this.action,this.populationCible);
+      } else if (this.ActionForm2.value.CanalDiffusion.libelle == "Mobile") {
        
-        this.action.idFormatAffichage = this.ActionForm.value.formataffichage;
-        this.action.typeContenue = this.ActionForm.value.TypeContenue;
+        this.action.idFormatAffichage = this.ActionForm2.value.formataffichage;
+        this.action.typeContenue = this.ActionForm2.value.TypeContenue;
 
 
-        this.ajouteractionavecmedia(this.action,this.populationCible);
-      } else if(this.ActionForm.value.CanalDiffusion.libelle =="TV") {
+       // this.ajouteractionavecmedia(this.action,this.populationCible);
+      } else if(this.ActionForm2.value.CanalDiffusion.libelle =="TV") {
        
       }
       console.log(this.action);
@@ -179,26 +178,41 @@ console.log(this.ActionForm.valid)
     }
   }
 
+step1(){
+  
+console.log(this.ActionForm2.value.TypeContenue)
+  if(this.ActionForm1.valid)
+  this.canal1=this.ActionForm1.value.CanalDiffusion.libelle
+  this.isSubmitted1 = true;
+}
 
-
-
-
-
-
-  test() {
-    
-    console.log( this.populationCible);
-    this.isSubmitted = !this.isSubmitted;
-    console.log(this.ActionForm)
-
+step2(){
+  if(this.ActionForm1.valid)
  
-
+  console.log(this.canal1)
+  if(this.ActionForm1.value.CanalDiffusion.libelle== "SMS"){
+    this.ActionForm2.get('SMSBody').setValidators(Validators.required);
+    this.ActionForm2.get('SMSBody').updateValueAndValidity();
+    this.ActionForm2.get('TypeContenue').clearValidators();
+    this.ActionForm2.get('TypeContenue').updateValueAndValidity();
+    this.ActionForm2.get('formataffichage').clearValidators();
+    this.ActionForm2.get('formataffichage').updateValueAndValidity();
+  }else if(this.ActionForm1.value.CanalDiffusion.libelle== "Mobile" || this.ActionForm1.value.CanalDiffusion.libelle== "TV"){
+    this.ActionForm2.get('SMSBody').clearValidators();
+          this.ActionForm2.get('SMSBody').updateValueAndValidity();
+          this.ActionForm2.get('TypeContenue').setValidators(Validators.required);
+          this.ActionForm2.get('TypeContenue').updateValueAndValidity();
+          this.ActionForm2.get('formataffichage').setValidators(Validators.required);
+          this.ActionForm2.get('formataffichage').updateValueAndValidity();
   }
+  this.isSubmitted2 = true;
+}
+step3(){
+  this.isSubmitted3 = true;
+}
 
 
-  tests(event) {
-    console.log(event)
-  }
+
 
 
 
@@ -212,9 +226,6 @@ console.log(this.ActionForm.valid)
   }
 
 
-  CreatePopulationCible(populationCible: PopulationCible) {
-    return this._populationCibleService.CreatePopulationCible(populationCible);
-  }
 
 
   ajouteractionavecmedia(action: ActionMarketing,populationCible:PopulationCible) {

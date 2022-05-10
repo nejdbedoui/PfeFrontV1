@@ -18,14 +18,13 @@ import { TableModule } from 'primeng/table';
 import {ButtonModule} from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { DetailsActionComponent } from './gestion-action-marketing/details-action/details-action.component';
-
 import {ListboxModule} from 'primeng/listbox';
-
 import { GestionActionMarketingAdminComponent } from './gestion-action-marketing-admin/gestion-action-marketing-admin.component';
 import { DetailActionComponent } from './gestion-action-marketing-admin/detail-action/detail-action.component';
 import { ActionMobileComponent } from './gestion-action-marketing-admin/action-mobile/action-mobile.component';
 import { ActionSmsComponent } from './gestion-action-marketing-admin/action-sms/action-sms.component';
 import { ActionTvComponent } from './gestion-action-marketing-admin/action-tv/action-tv.component';
+
 
 
 
@@ -57,9 +56,7 @@ import { ActionTvComponent } from './gestion-action-marketing-admin/action-tv/ac
     GestionpubRoutingRoutingModule,
     DataTablesModule,
     TableModule,
-    ReactiveFormsModule
-    
-  
+    ReactiveFormsModule  
   ]
 })
 export class GestionpubModule { }
