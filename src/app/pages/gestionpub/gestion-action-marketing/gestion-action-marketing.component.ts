@@ -21,6 +21,7 @@ export class GestionActionMarketingComponent implements OnInit {
   video:string="video";
   constructor(private route: Router,private _actionMarketingService:ActionMarketingEndPointServiceService) { 
     this.stateOptions = [{label: 'image', value: 0}, {label: 'video', value: 1}];
+    
 
 
  }
@@ -61,6 +62,7 @@ listeStorages:Storage[];
       if(val.result==1){
         this.ActionsMarketing=val.objectResponse;
         this.loading = false;
+        console.log(this.ActionsMarketing)
       }
     }
     )

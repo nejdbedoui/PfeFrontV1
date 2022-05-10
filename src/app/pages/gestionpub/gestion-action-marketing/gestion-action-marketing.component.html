@@ -42,10 +42,11 @@
       </ng-template>  
         <ng-template pTemplate="header">
           <tr>
-            <th>Image ou Video</th>
+            <th>Publicité</th>
             
             <th>Periode</th>
             <th>Date de Creation</th>
+            <th>Titre</th>
             <th>Canal</th>
             <th>Statut</th>
             <th>Action</th>
@@ -55,13 +56,15 @@
           <tr >
             <td>
               <img *ngIf="Action.typeitem == 0 "    [src]="Action.url" [alt]="Action.type" width="100" height="100" class="shadow-4" />
-              <video *ngIf="Action.typeitem == 1 "  width="150" height="100" controls>
+              <video preload="none" *ngIf="Action.typeitem == 1 "  width="150" height="100" controls>
                 <source [src]="Action.url" alt="Action.type">
               </video>
+              <span *ngIf="Action.typeitem==2">{{Action.smsBody}}</span>
             </td>
             
             <td> <span class="bold">{{Action.dateDebut |date:'dd/MM/yyyy'}}</span> - <span class="bold">{{Action.dateFin |date:'dd/MM/yyyy'}}</span></td>
             <td><span class="bold">{{Action.dateCreation |date:'dd/MM/yyyy'}}</span></td>
+            <td>{{Action.titre}}</td>
             <td>{{Action.canal}}</td>
             <td>{{getStatusAction(Action.statut)}}</td>
           <td >

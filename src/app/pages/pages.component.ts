@@ -2,7 +2,7 @@ import { PartenaireBpriceEndPointService } from './../service/bp-api-pos/partena
 import { PointVenteEndPointService } from './../service/bp-api-pos/point-vente-end-point/point-vente-end-point.service';
 import { Component, OnInit } from '@angular/core';
 
-import { MENU_ITEMSTABLEAU } from './pages-menu';
+import { MENU_ITEMSTABLEAU,MENU_ITEMSADMIN } from './pages-menu';
 import { UtilisateurEndPointService } from '../service/bp-api-admin/utilisateur-end-point/utilisateur-end-point.service';
 import { Access } from '../model/enum/Access';
 
@@ -26,9 +26,15 @@ export class PagesComponent implements OnInit {
   constructor(
     private utilisateurEndPointService: UtilisateurEndPointService) { }
   ngOnInit(): void {
-   
-        this.localMenu = MENU_ITEMSTABLEAU;
         this.getConnectedUser();
+
+        if(localStorage.getItem("type") == "Administration"){
+          this.localMenu = MENU_ITEMSADMIN;
+        }
+        else{
+          this.localMenu=MENU_ITEMSTABLEAU;
+        }
+
      
   }
 
@@ -45,6 +51,7 @@ export class PagesComponent implements OnInit {
           let settingPermissions = user.objectResponse.accessPermissions.settingsPermissions
           this.localMenu[0].children = this.localMenu[0].children.filter(m => settingPermissions.find(p => Access[p.functionName.toString()] == m.title && p.checked) != null)
         }
+      
       }
 
       console.log(this.localMenu);

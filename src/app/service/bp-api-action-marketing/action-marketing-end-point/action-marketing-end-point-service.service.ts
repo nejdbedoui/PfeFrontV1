@@ -82,6 +82,11 @@ updateActionMarketing(Action:ActionMarketing){
     return this.httpclient.get<ActionMarketingDTOResponse>(environment.backend_url_Publicite+"findAllActionMarketingDTOWithStatutBiggerThan/"+statut,{ headers: this.header });
 
   }
+
+  findAllActionMarketingByCanalDTO(idCanal:String){
+    return this.httpclient.get<ActionMarketingDTOResponse>(environment.backend_url_Publicite+"findAllActionMarketingByIdCanalDiffusionDTO/"+idCanal,{ headers: this.header });
+
+  }
   GenerateContrat(action: ActionMarketingDTO) {
     return this.httpclient.post<OneActionMarketingResponse>(environment.backend_url_Publicite+"CreateContratActionMarketing/",action,{ headers: this.header });
   }
