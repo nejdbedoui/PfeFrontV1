@@ -21,12 +21,16 @@ import { DetailsActionComponent } from './gestion-action-marketing/details-actio
 import {ListboxModule} from 'primeng/listbox';
 import { GestionActionMarketingAdminComponent } from './gestion-action-marketing-admin/gestion-action-marketing-admin.component';
 import { DetailActionComponent } from './gestion-action-marketing-admin/detail-action/detail-action.component';
+import { ActionMobileComponent } from './gestion-action-marketing-admin/action-mobile/action-mobile.component';
+import { ActionSmsComponent } from './gestion-action-marketing-admin/action-sms/action-sms.component';
+import { ActionTvComponent } from './gestion-action-marketing-admin/action-tv/action-tv.component';
+
 
 
 
 
 @NgModule({
-  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, DetailsActionComponent, GestionActionMarketingAdminComponent, DetailActionComponent],
+  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, DetailsActionComponent, GestionActionMarketingAdminComponent, DetailActionComponent, ActionMobileComponent, ActionSmsComponent, ActionTvComponent],
   imports: [
     CommonModule,
     MenuModule,

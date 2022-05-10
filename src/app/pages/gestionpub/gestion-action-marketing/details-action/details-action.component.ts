@@ -46,11 +46,13 @@ this.id=this.route.snapshot.paramMap.get('id');
          
           console.log(this.categorie)
           this.InstanciateForm();
+          if(val1.objectResponse.smsBody==null){
           this._actionMarketingService.findfileByid(this.action.idStorage).subscribe(val=>{
             this.url=val.objectResponse.url;
             
             this.showmedia = true;
           })
+        }
         }
         )
       }

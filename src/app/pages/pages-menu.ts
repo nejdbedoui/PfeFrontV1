@@ -7,19 +7,46 @@ export const MENU_ITEMSTABLEAU: NbMenuItem[] = [
 
   },
   {
+    title: 'Demande Action Marketing',
+    icon: 'flip-2-outline',
+    link: '/pages/gestionpub/gestionactionmarketing',
+  },
+
+
+
+
+]
+export const MENU_ITEMSADMIN: NbMenuItem[] = [
+  {
+    title: 'Home',
+    icon: 'home-outline',
+    link: '/pages/home',
+
+  },
+  {
     title: 'Action Marketing',
+    expanded: true,
     icon: 'flip-2-outline',
-    link: '/pages/gestionpub/gestionactionmarketing',
-  },
-  {
-    title: 'Publicité',
-    icon: 'flip-2-outline',
-    link: '/pages/gestionpub/gestionactionmarketing',
-  },
-  {
-    title: 'Administration Publicité',
-    icon: 'flip-2-outline',
-    link: '/pages/gestionpub/gestionactionmarketingadmin',
+
+    children: [
+      {
+        title: 'Demandes Actions Marketings`',
+        link: '/pages/gestionpub/gestionactionmarketingadmin',
+      },
+      {
+        title: 'Actions Mobile',
+        link: '/pages/gestionpub/gestionactionmarketingadmin/mobile',
+      },
+      {
+        title: 'Actions SMS`',
+        link: '/pages/gestionpub/gestionactionmarketingadmin/sms',
+      },
+      {
+        title: 'Actions TV',
+        link: '/pages/gestionpub/gestionactionmarketingadmin/tv',
+      },
+
+    ],
   },
 
 
