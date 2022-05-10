@@ -115,7 +115,7 @@ this._partenaireservice.findByIdPartenaire(this.id).subscribe(val=>
 
     this.ActionForm = this._FormBuilder.group({
       SecteurActivite: [this.categorie.designation, [Validators.required]],
-      CanalDiffusion: [this.action.libelleCanalDiffusion, [Validators.required]],
+      CanalDiffusion: [this.action.idCanaldiffusion, [Validators.required]],
       LienPub: [this.action.externUrl, [Validators.required]],
       titre: [this.action.titre, [Validators.required]],
       Description: [this.action.description, [Validators.required]],
@@ -147,7 +147,7 @@ this._partenaireservice.findByIdPartenaire(this.id).subscribe(val=>
 
     } else if (this.ActionForm.value.CanalDiffusion == 0) {
 
-      this.action.typeAffichageMobile = this.ActionForm.value.myChoices;
+      this.action.idFormatAffichage = this.ActionForm.value.myChoices;
       this.action.typeContenue = this.ActionForm.value.TypeContenue;
 
     } else {

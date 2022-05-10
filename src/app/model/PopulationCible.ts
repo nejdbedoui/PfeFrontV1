@@ -1,6 +1,6 @@
 export class PopulationCible{
       idPopulationCible:String;
       age:String;//30-40
-      sexe:String;//h,f,h-f
-      idville:String[];
+      sexe:number;//h,f,h-f
+      ville:Array<string>;
 }
