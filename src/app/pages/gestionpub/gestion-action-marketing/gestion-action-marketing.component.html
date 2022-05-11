@@ -43,11 +43,12 @@
         <ng-template pTemplate="header">
           <tr>
             <th>Publicité</th>
-            
-            <th>Periode</th>
-            <th>Date de Creation</th>
             <th>Titre</th>
             <th>Canal</th>
+            <th>Periode</th>
+            <th>Date de Creation</th>
+            
+           
             <th>Statut</th>
             <th>Action</th>
           </tr>
@@ -56,17 +57,18 @@
           <tr >
             <td>
 
-              <img *ngIf="Action.typeitem == 0"    [src]="Action.url" [alt]="Action.type" width="100" height="100" class="shadow-4" />
-              <video preload="none" *ngIf="Action.typeitem == 1 "  width="150" height="100" controls>
+              <img *ngIf="Action.typeitem == 0 && Action.canal != 'SMS'"    [src]="Action.url" [alt]="Action.type" width="100" height="100" class="shadow-4" />
+              <video preload="none" *ngIf="Action.typeitem == 1 && Action.canal != 'SMS'"  width="150" height="100" controls>
                 <source [src]="Action.url" alt="Action.type">
               </video>
-
+              <img *ngIf="Action.canal == 'SMS'" src="../../../assets/images/sms.png" width="100" height="100" alt="image sms"/>
             </td>
-            
-            <td> <span class="bold">{{Action.dateDebut |date:'dd/MM/yyyy'}}</span> - <span class="bold">{{Action.dateFin |date:'dd/MM/yyyy'}}</span></td>
-            <td><span class="bold">{{Action.dateCreation |date:'dd/MM/yyyy'}}</span></td>
             <td>{{Action.titre}}</td>
             <td>{{Action.canal}}</td>
+            <td> <span class="bold">{{Action.dateDebut |date:'dd/MM/yyyy'}}</span> - <span class="bold">{{Action.dateFin |date:'dd/MM/yyyy'}}</span></td>
+            <td><span class="bold">{{Action.dateCreation |date:'dd/MM/yyyy'}}</span></td>
+            
+           
             <td>{{getStatusAction(Action.statut)}}</td>
           <td >
             <i  class="fa fa-folder-open cursor buttonround editbutton" routerLink="detailsaction/{{Action.idActionMarketing}}" nbTooltip="Ouvrir action" nbTooltipPlacement="bottom"></i>

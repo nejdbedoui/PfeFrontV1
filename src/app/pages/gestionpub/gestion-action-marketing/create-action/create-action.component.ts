@@ -16,6 +16,8 @@ import { CanalDiffusion } from '../../../../model/Canaldiffusion';
 import { formataffichage } from '../../../../model/FormatAffichage';
 import { VilleEndPointService } from '../../../../service/bp-api-action-marketing/ville-end-point/ville-end-point.service';
 import { Ville } from '../../../../model/Ville';
+import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'ngx-create-action',
   templateUrl: './create-action.component.html',
@@ -36,7 +38,6 @@ export class CreateActionComponent implements OnInit {
   action: ActionMarketing;
   populationCible: PopulationCible;
   id: string = localStorage.getItem("partenaireid");
-  file: any;
   partenaire: PartenaireBprice;
   canal: CanalDiffusion[];
   format: formataffichage[];
@@ -45,8 +46,14 @@ export class CreateActionComponent implements OnInit {
   villes: Ville[];
   optionSexe:any[];
   rangeValues: number[]
-
-  constructor(private _villeEndpoint: VilleEndPointService, private _Canalservice: CanalDiffusionEndPointService, private _formataffichageservice: FormatAffichageEndPointService, private _Partenaire: PartenaireBpriceEndPointService, private _GlobalService: GlobalServiceService, private _FormBuilder: FormBuilder, private _populationCibleService: PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
+  imageError: string;
+  isImageSaved: boolean;
+  cardImageBase64: string;
+  file:any;
+afficherimage:boolean=false;
+disable:boolean=false;
+filterFn:any;
+  constructor(private sanitizer: DomSanitizer,private _router: Router,private _villeEndpoint: VilleEndPointService, private _Canalservice: CanalDiffusionEndPointService, private _formataffichageservice: FormatAffichageEndPointService, private _Partenaire: PartenaireBpriceEndPointService, private _GlobalService: GlobalServiceService, private _FormBuilder: FormBuilder, private _populationCibleService: PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
     this.optionContenue = [{ label: 'Image', value: 0 }, { label: 'Video', value: 1 }];
     this.optionSexe = [{ label: 'H/M', value: 0 }, { label: 'Homme', value: 1 },{ label: 'Femme', value: 2 }];
   }
@@ -54,7 +61,9 @@ export class CreateActionComponent implements OnInit {
 
 
   ngOnInit() {
-
+    let date1:Date=new Date();
+    date1.setDate( date1.getDate() + 3 );
+    this.filterFn = (date) => date > date1;
     this._Partenaire.findByIdPartenaire(this.id).subscribe(val => {
       this.getAllSectors(val.objectResponse.idSector);
       this.partenaire = val.objectResponse;
@@ -107,19 +116,20 @@ export class CreateActionComponent implements OnInit {
     });
 
     this.ActionForm2 = this._FormBuilder.group({
-      formataffichage: ['', []],
-      SMSBody: ['', []],
-      TypeContenue: [3, []],
+      formataffichage: ['', [Validators.required]],
+      SMSBody: ['', [Validators.required]],
+      TypeContenue: [0, [Validators.required]],
+
     });
 
     this.ActionForm3 = this._FormBuilder.group({
-      SecteurActivite: [null, [Validators.required]],
+      Secteurcible: [[], []],
       Frequence: [null, [Validators.required]],
       sexe:[null,[Validators.required]],
-      ville:[[null],[]]
+      ville:[[],[]]
     });
 
-
+    this.ActionForm1.get('CanalDiffusion').setValue(null);
    
   }
 
@@ -129,7 +139,7 @@ export class CreateActionComponent implements OnInit {
 
 
   submit() {
-
+this.disable=true;
 
     if (this.ActionForm1.valid && this.ActionForm2.valid && this.ActionForm2.valid) {
 
@@ -147,35 +157,53 @@ export class CreateActionComponent implements OnInit {
       this.action.frequence = this.ActionForm3.value.Frequence;
       this.populationCible=new PopulationCible;
       this.populationCible.sexe=this.ActionForm3.value.sexe
+      console.log(this.ActionForm3.value.ville)
       if(this.ActionForm3.value.ville != null){
           let stri=[];
           this.ActionForm3.value.ville.forEach(function(item:Ville){
-            stri.push(item.idVille);
+            if(item.idVille !=null){
+              stri.push(item.idVille);
+            }
+            
             
           });
           this.populationCible.ville=stri;
-          console.log(this.populationCible)
+          
           this.populationCible.age='18'
       
 }
-      this.action.idCanaldiffusion = this.ActionForm2.value.CanalDiffusion.idCanaldiffusion;
+if(this.ActionForm3.value.Secteurcible !=null){
+  let sec=[];
+  this.ActionForm3.value.Secteurcible.forEach(function(item:Sector){
+    if(item.idClientType != null){
+      sec.push(item.idClientType);
+    }
+    
+    
+  });
+  this.action.secteurcible=sec;
+  console.log(this.action.secteurcible)
+}
+      this.action.idCanaldiffusion = this.ActionForm1.value.CanalDiffusion.idCanaldiffusion;
 
-      if (this.ActionForm2.value.CanalDiffusion.libelle == "SMS") {
+      console.log(this.file)
+      if (this.ActionForm1.value.CanalDiffusion.libelle == "SMS") {
         this.action.smsBody = this.ActionForm2.value.SMSBody;
-     //   this.ajouteraction(this.action,this.populationCible);
-      } else if (this.ActionForm2.value.CanalDiffusion.libelle == "Mobile") {
+        this.ajouteraction(this.action,this.populationCible);
+      } else if (this.ActionForm1.value.CanalDiffusion.libelle == "Mobile") {
        
         this.action.idFormatAffichage = this.ActionForm2.value.formataffichage;
         this.action.typeContenue = this.ActionForm2.value.TypeContenue;
 
 
-       // this.ajouteractionavecmedia(this.action,this.populationCible);
-      } else if(this.ActionForm2.value.CanalDiffusion.libelle =="TV") {
+       this.ajouteractionavecmedia(this.action,this.populationCible);
+      } else if(this.ActionForm1.value.CanalDiffusion.libelle =="TV") {
        
       }
       console.log(this.action);
 
     }
+    
   }
 
 step1(){
@@ -184,12 +212,6 @@ console.log(this.ActionForm2.value.TypeContenue)
   if(this.ActionForm1.valid)
   this.canal1=this.ActionForm1.value.CanalDiffusion.libelle
   this.isSubmitted1 = true;
-}
-
-step2(){
-  if(this.ActionForm1.valid)
- 
-  console.log(this.canal1)
   if(this.ActionForm1.value.CanalDiffusion.libelle== "SMS"){
     this.ActionForm2.get('SMSBody').setValidators(Validators.required);
     this.ActionForm2.get('SMSBody').updateValueAndValidity();
@@ -205,10 +227,17 @@ step2(){
           this.ActionForm2.get('formataffichage').setValidators(Validators.required);
           this.ActionForm2.get('formataffichage').updateValueAndValidity();
   }
-  this.isSubmitted2 = true;
+}
+
+step2(){
+  if(this.file !=null){
+    this.isSubmitted2 = true;
+  }
+  
 }
 step3(){
   this.isSubmitted3 = true;
+  this.submit();
 }
 
 
@@ -224,7 +253,6 @@ step3(){
       }
     });
   }
-
 
 
 
@@ -249,7 +277,7 @@ step3(){
         )
       } else
         this._GlobalService.showToast("danger", "Erreur", response.errorDescription);
-
+        this.disable=false;
     });
     })
   
@@ -264,6 +292,7 @@ step3(){
           this._GlobalService.showToast("success", "success", "Action ajouter avec succés")
         } else
           this._GlobalService.showToast("danger", "Erreur", val.errorDescription);
+          this.disable=false;
       }
       )
 
@@ -272,6 +301,76 @@ step3(){
   }
 
   select(event) {
-    this.file = event.files[0];
+this.file=event.files[0];
+console.log(event.files[0])
+if(this.file!=null){
+  this.afficherimage=true;
+}else
+this.afficherimage=false;
+  }
+
+
+  transform(url) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  retour(){
+    this._router.navigateByUrl("pages/gestionpub/gestionactionmarketing");
+  }
+  fileChangeEvent(fileInput: any) {
+    this.imageError = null;
+    if (fileInput.target.files && fileInput.target.files[0]) {
+      // Size Filter Bytes
+      const max_size = 20971520;
+      const allowed_types = ['image/png', 'image/jpeg'];
+      const max_height = 15200;
+      const max_width = 25600;
+
+      if (fileInput.target.files[0].size > max_size) {
+        this.imageError =
+          'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+
+        return false;
+      }
+
+      if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
+        this.imageError = 'Only Images are allowed ( JPG | PNG )';
+        return false;
+      }
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const image = new Image();
+        image.src = e.target.result;
+        image.onload = rs => {
+          const img_height = rs.currentTarget['height'];
+          const img_width = rs.currentTarget['width'];
+
+          console.log(img_height, img_width);
+
+
+          if (img_height > max_height && img_width > max_width) {
+            this.imageError =
+              'Maximum dimentions allowed ' +
+              max_height +
+              '*' +
+              max_width +
+              'px';
+            return false;
+          } else {
+            const imgBase64Path = e.target.result;
+            this.cardImageBase64 = imgBase64Path;
+            this.isImageSaved = true;
+           
+          }
+        };
+      };
+
+      reader.readAsDataURL(fileInput.target.files[0]);
+    }
+  }
+
+  removeImage() {
+    this.cardImageBase64 = null;
+    this.isImageSaved = false;
   }
 }

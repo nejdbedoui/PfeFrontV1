@@ -6,6 +6,7 @@ export class ActionMarketing{
       idStorage:string;
       idCanaldiffusion:string;
       idFormatAffichage:string;
+      secteurcible:Array<string>;
       titre:string;
       typeContenue:number; //image video
       externUrl:string;

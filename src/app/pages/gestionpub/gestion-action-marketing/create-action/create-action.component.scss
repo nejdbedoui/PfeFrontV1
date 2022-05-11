@@ -143,3 +143,24 @@
     pointer-events: none;
     cursor: not-allowed!important;
 }
+label{
+    font-size: 14px; 
+}
+
+
+.div1{
+    display: flex;
+    margin:auto;
+background-color: rgb(206, 206, 206);
+width: 290px ; 
+    height: 490px; 
+ border-radius: 2%;
+
+}
+
+.image1{
+    margin:auto;
+    width: 290px ; 
+    height: 490px; 
+    object-fit: contain;
+}

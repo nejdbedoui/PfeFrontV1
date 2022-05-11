@@ -2,27 +2,39 @@
 <nb-card>
     <nb-card-header>
         <div class="row">
-            <div class="col-md-6"><span style="font-size: 20px;">Details Action Marketing</span></div>
+            <div class="col-md-6" >
+                <span *ngIf="showmedia && details.canaldifusion=='Mobile'" style="font-size: 20px;">Details Action Mobile</span>
+                <span *ngIf="showmedia && details.canaldifusion=='SMS'" style="font-size: 20px;">Details Action SMS</span>
+                <span *ngIf="showmedia && details.canaldifusion=='TV'" style="font-size: 20px;">Details Action TV</span>
+            </div>
             <div *ngIf="showmedia" class="col-md-6"><span style="float: right"> Statut :
-                    {{action.statut}}&nbsp;&nbsp;</span></div>
+                    {{getStatusAction(action.statut)}}&nbsp;&nbsp;</span></div>
         </div>
     </nb-card-header>
     <nb-card-body>
 
-        <div class="row" *ngIf="showmedia">
+        <div class="row" *ngIf="showmedia  ">
 
-            <div class="col-sm-3 media">
 
-                <img [src]="url" alt="Aspect ratio image">
+            
+            <div class="col-sm-3 media" >
 
+                <img *ngIf="details.canaldifusion =='Mobile' && details.typefile == 0" [src]="details.urlmedia" alt="Aspect ratio image">
+                <img *ngIf="details.canaldifusion =='SMS'" src="../../../assets/images/sms.png" alt="SMS">
+                <video preload="none" *ngIf="details.typefile == 1 && details.canaldifusion != 'SMS'"  width="150" height="100" controls>
+                    <source [src]="details.urlmedia" alt="Action.type">
+                  </video>
             </div>
 
-            <div *ngIf="!activer" class="col-sm-9 ">
-                <div style="float: right">
+            <div *ngIf="!activer" class="col-sm-4 ">
 
-                    <button *ngIf="action.statut == 0" nbButton outline status="success" (click)="confirm()">Confirmer</button>
-                </div>
+
+
+               
                 <p class="big">
+
+
+
                     <span class="bold">Titre </span><br>{{action.titre}} <br> <br>
 
 
@@ -31,36 +43,79 @@
 
 
 
-                    <span class="bold">Frequence </span> <br> Cette action vas etre afficher {{action.frequence}} fois par jour<br> <br>
+                    <span class="bold">Fréquence </span> <br> Cette action va être affichée {{action.frequence}} fois par jour<br> <br>
 
 
 
 
-                    <span class="bold">Categorie du contenue </span> <br> {{categorie.libelle}}<br> <br>
+                    <span class="bold">Catégorie du contenu </span> <br> {{details.sector}}<br> <br>
 
-
-                    <span class="bold">Periode d'affichage </span> <br>Du <u>{{action.dateDebut |date:'dd/MM/yyyy'}}</u>
-                    jusqu'a <u>{{action.dateFin |date:'dd/MM/yyyy'}}</u><br> <br>
-
-
-
-
-
-                    <span class="bold">Type d'affichage </span> <br> <span>Cette action vas étre afficher sou format
-                        d'une {{action.typeAffichageMobile}} </span><br> <br>
+                  
+                    <span class="bold">Période d'affichage </span> <br>Du <u>{{action.dateDebut |date:'dd/MM/yyyy'}}</u>
+                    au <u>{{action.dateFin |date:'dd/MM/yyyy'}}</u><br> <br>
 
 
 
-                    <span class="bold">Canal de diffusion </span> <br>Cette action vas étre afficher sur des
-                    {{action.libelleCanalDiffusion}}
+
+
                 </p>
-                <div style="float: right" *ngIf="action.statut == 0">
-                    <button nbButton outline (click)="modifier()" status="warning">Modifier</button>
-                    <button nbButton (click)="delete()" outline status="danger">Supprimer</button>
-                    
-                </div>
+
+
+
+
+
+
+
 
             </div>
+
+
+            <div *ngIf="!activer" class="col-sm-5 ">
+                <div style="float: right" *ngIf="action.statut == 0">
+                    <i  class="fa fa-check cursor buttonround editbutton" (click)="confirm()" nbTooltip="Confirmer" nbTooltipPlacement="bottom"></i>
+                    <i  class="fas fa-edit cursor buttonround affiche1button" (click)="modifier()" nbTooltip="Modifier" nbTooltipPlacement="bottom"></i>
+                    <i  class="fa fa-trash cursor buttonround deletebutton" (click)="delete()" nbTooltip="Supprimer" nbTooltipPlacement="bottom"></i>
+                     </div>
+                <p class="big"  *ngIf="details.canaldifusion !='SMS'">
+                <span class="bold">Ville ciblé </span> <br> <span *ngFor="let ville of details.ville">{{ville}} </span><br> <br>
+
+                <span class="bold">Sexe ciblé </span> <br> {{sexe(details.sexe)}}<br> <br>
+
+
+                <span class="bold">Format d'affichage </span> <br> <span>Cette action va être affichée sous format d'une {{details.formataffichage}} </span><br> <br>
+
+
+
+                <span class="bold">Canal de diffusion </span> <br>Cette action va être affichée sur {{details.canaldifusion}} <br> <br>
+
+                <span class="bold">Lien Extern </span> <br> <span><a [href]="action.externUrl" target="_blank">Click</a> </span><br> <br>
+
+            </p>
+
+            <p class="big"  *ngIf="details.canaldifusion=='SMS'">
+                <span class="bold">Ville ciblé </span> <br> <span *ngFor="let ville of details.ville">{{ville}} </span><br> <br>
+
+                <span class="bold">Sexe ciblé </span> <br> {{sexe(details.sexe)}}<br> <br>
+
+
+                <span class="bold">Message SMS </span> <br> <span>{{action.smsBody}} </span><br> <br>
+
+
+
+                <span class="bold">Lien Extern </span> <br> <span><a [href]="action.externUrl" target="_blank">Click</a> </span><br> <br>
+
+            </p>
+            </div>
+
+
+
+
+
+
+
+
+
+
 
             <div *ngIf="activer" class="col-sm-9 ">
                 <form [formGroup]="ActionForm" (ngSubmit)="submit()">
@@ -104,7 +159,8 @@
             </div>
 
 
-
+          
+ 
 
         </div>
 
