@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PointeVentePartenaireDTO } from '../../../../model/dto/PointeVentePartenaireDTO';
 import { ParametreActionMarketing } from '../../../../model/ParametreActionMarketing';
 import { PartenaireBprice } from '../../../../model/PartenaireBprice';
 import { ParametreActionEndPointServiceService } from '../../../../service/bp-api-action-marketing/parametre-action-end-point/parametre-action-end-point-service.service';
 import { PartenaireBpriceEndPointService } from '../../../../service/bp-api-pos/partenaire-bprice-end-point/partenaire-bprice-end-point.service';
+import { GlobalServiceService } from '../../../../service/GlobalService/global-service.service';
 
 @Component({
   selector: 'ngx-parametrage-action',
@@ -18,7 +19,7 @@ export class ParametrageActionComponent implements OnInit {
   checkedpartners:CheckedPartners[] = [];
   loading: boolean = true;
 
-  constructor(private _partenaireBPriceService:PartenaireBpriceEndPointService,private _parametreActionService:ParametreActionEndPointServiceService, private route: ActivatedRoute) { 
+  constructor(private _GlobalService: GlobalServiceService,private _router: Router,private _partenaireBPriceService:PartenaireBpriceEndPointService,private _parametreActionService:ParametreActionEndPointServiceService, private route: ActivatedRoute) { 
 
   }
 idAction:String;
@@ -60,7 +61,12 @@ OnSubmit(){
   if(parametre.listeidPartenaire.length>0){
     this._parametreActionService.CreateParametreActionMarketing(parametre,this.idAction).subscribe(response=>{
       if(response.result==1){
-        console.log(response);
+        if (response.result == 1) {
+          this._GlobalService.showToast("success", "success", "Action paramétrée avec succès")
+          this._router.navigateByUrl("pages/gestionpub/gestionactionmarketingadmin");
+        } else
+          this._GlobalService.showToast("danger", "Erreur", response.errorDescription)
+    
       }
     });
   }
