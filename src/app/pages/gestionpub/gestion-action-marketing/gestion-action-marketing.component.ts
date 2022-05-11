@@ -27,7 +27,6 @@ export class GestionActionMarketingComponent implements OnInit {
  }
 
   ngOnInit() {
-    console.log(this.id);
     this.getAllActionsMarketing();
     
    
@@ -48,10 +47,6 @@ export class GestionActionMarketingComponent implements OnInit {
     return "Terminée"
   }
 
-
-  getAllStorage(){
-    return this._actionMarketingService.findAllStorage();
-  }
 
   
 listeStorages:Storage[];
@@ -74,13 +69,6 @@ listeStorages:Storage[];
   ajouteraction() {
     this.route.navigateByUrl("/pages/gestionpub/gestionactionmarketing/ajouteraction");
   }
-  onUpload(event) {
-      for(let file of event.files) {
-          this.uploadedFiles.push(file);
-          
-      }
 
-      
-  }
 
 }

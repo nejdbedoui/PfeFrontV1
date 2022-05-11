@@ -24,15 +24,18 @@ import { DetailActionComponent } from './gestion-action-marketing-admin/detail-a
 import { ActionMobileComponent } from './gestion-action-marketing-admin/action-mobile/action-mobile.component';
 import { ActionSmsComponent } from './gestion-action-marketing-admin/action-sms/action-sms.component';
 import { ActionTvComponent } from './gestion-action-marketing-admin/action-tv/action-tv.component';
+import { ParametrageActionComponent } from './gestion-action-marketing-admin/parametrage-action/parametrage-action.component';
+import {CardModule} from 'primeng/card';
 
 
 
 
 
 @NgModule({
-  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, DetailsActionComponent, GestionActionMarketingAdminComponent, DetailActionComponent, ActionMobileComponent, ActionSmsComponent, ActionTvComponent],
+  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, DetailsActionComponent, GestionActionMarketingAdminComponent, DetailActionComponent, ActionMobileComponent, ActionSmsComponent, ActionTvComponent, ParametrageActionComponent],
   imports: [
     CommonModule,
+    CardModule,
     MenuModule,
     ListboxModule,
     NbSelectModule,
