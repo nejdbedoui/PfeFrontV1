@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DropdownModule} from 'primeng/dropdown';
-import { NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbIconModule, NbInputModule, NbSelectModule, NbStepperModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbIconModule, NbInputModule, NbSelectModule, NbSpinnerModule, NbStepperModule } from '@nebular/theme';
 import { CreateActionComponent } from './gestion-action-marketing/create-action/create-action.component';
 import { BreadCrumbModule } from '../../bread-crumb/bread-crumb.module';
 import {InputTextareaModule} from 'primeng/inputtextarea';
@@ -32,6 +32,7 @@ import { ActionTvComponent } from './gestion-action-marketing-admin/action-tv/ac
 @NgModule({
   declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, DetailsActionComponent, GestionActionMarketingAdminComponent, DetailActionComponent, ActionMobileComponent, ActionSmsComponent, ActionTvComponent],
   imports: [
+    NbSpinnerModule,
     CommonModule,
     MenuModule,
     ListboxModule,

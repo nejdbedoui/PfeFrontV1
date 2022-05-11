@@ -29,7 +29,7 @@ export class GestionActionMarketingComponent implements OnInit {
   ngOnInit() {
     console.log(this.id);
     this.getAllActionsMarketing();
-    
+
    
   }
 

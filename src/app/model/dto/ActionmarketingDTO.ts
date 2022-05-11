@@ -9,5 +9,7 @@ export class ActionMarketingDTO {
   type:string;
   typeitem:number;
   smsBody:String;
+  titre:String;
+  description:String;
   }
   
