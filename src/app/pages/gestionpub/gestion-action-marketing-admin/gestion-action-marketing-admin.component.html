@@ -43,11 +43,13 @@
         <ng-template pTemplate="body" let-Action>
           <tr >
             <td>
-              <img *ngIf="Action.typeitem == 0 "    [src]="Action.url" [alt]="Action.type" width="100" height="100" class="shadow-4" />
-              <video preload="none" *ngIf="Action.typeitem == 1 "  width="150" height="100" controls>
+              <img  *ngIf="Action.typeitem == 0 && Action.canal != 'SMS'"    [src]="Action.url" [alt]="Action.type" width="100" height="100" class="shadow-4" />
+              <video preload="none" *ngIf="Action.typeitem == 1 && Action.canal != 'SMS'"  width="150" height="100" controls>
                 <source [src]="Action.url" alt="Action.type">
               </video>
-              <span *ngIf="Action.typeitem==2">{{Action.smsBody}}</span>
+              <img *ngIf="Action.canal == 'SMS'" src="../../../assets/images/sms.png" width="100" height="100" alt="image sms"/>
+         
+             
             </td>
             
             <td> <span class="bold">{{Action.dateDebut |date:'dd/MM/yyyy'}}</span> - <span class="bold">{{Action.dateFin |date:'dd/MM/yyyy'}}</span></td>

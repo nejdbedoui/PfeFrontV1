@@ -271,6 +271,7 @@ step3(){
           
           if (val.result == 1) {
             this._GlobalService.showToast("success", "success", "Action ajouter avec succés")
+            this._router.navigateByUrl("pages/gestionpub/gestionactionmarketing");
           } else
             this._GlobalService.showToast("danger", "Erreur", val.errorDescription);
         }
@@ -290,6 +291,7 @@ step3(){
       this._Actionmarketingendpointservice.CreateActionMarketing(action).subscribe(val => {
         if (val.result == 1) {
           this._GlobalService.showToast("success", "success", "Action ajouter avec succés")
+          this._router.navigateByUrl("pages/gestionpub/gestionactionmarketing");
         } else
           this._GlobalService.showToast("danger", "Erreur", val.errorDescription);
           this.disable=false;
