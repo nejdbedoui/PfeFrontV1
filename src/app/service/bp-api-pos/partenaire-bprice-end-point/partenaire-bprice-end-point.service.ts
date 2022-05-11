@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PartenaireBpriceResponse } from '../../../model/response/PartenaireBpriceResponse';
 import { PartenaireBprice } from '../../../model/PartenaireBprice';
 import { OnePartenaireBpriceResponse } from '../../../model/response/OnePartenaireBpriceResponse';
+import { PointeVentePartenaireDTOResponse } from '../../../model/response/PointeVentePartenaireDTOResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -27,4 +28,10 @@ findByIdPartenaire(id:string){
   return this.httpclient.get<OnePartenaireBpriceResponse>(environment.backend_url_Publicite+"findByIdPartenaire/"+id,{ headers: this.header });
 }
 
+findAllPartenaireBpriceByFActif(factif:number){
+  return this.httpclient.get<PartenaireBpriceResponse>(environment.backend_url_Publicite+"findAllPartenaireBpriceByFActif/"+factif,{ headers: this.header });
+}
+findAllWithPointVentesByFActifDTO(factif:number){
+  return this.httpclient.get<PointeVentePartenaireDTOResponse>(environment.backend_url_Publicite+"findAllWithPointVentesByFActifDTO/"+factif,{ headers: this.header });
+}
 }

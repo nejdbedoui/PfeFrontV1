@@ -90,15 +90,9 @@ this._partenaireservice.findByIdPartenaire(this.id).subscribe(val=>
     }
   }
 
-  confirm() {
-    this.action.statut = 2;
-    this._actionMarketingService.updateActionMarketing(this.action).subscribe(val => {
-      if (val.result == 1) {
-        this._GlobalService.showToast("success", "success", "Action confirmer")
-      }
-
-    }
-    )
+  Parametrer() {
+    this._router.navigateByUrl("pages/gestionpub/gestionactionmarketingadmin/parametrage/"+this.action.idActionMarketing);
+    
   }
 
   getAllSectors(id) {

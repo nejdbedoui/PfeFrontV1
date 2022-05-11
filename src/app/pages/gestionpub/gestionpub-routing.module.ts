@@ -6,6 +6,7 @@ import { ActionSmsComponent } from './gestion-action-marketing-admin/action-sms/
 import { ActionTvComponent } from './gestion-action-marketing-admin/action-tv/action-tv.component';
 import { DetailActionComponent } from './gestion-action-marketing-admin/detail-action/detail-action.component';
 import { GestionActionMarketingAdminComponent } from './gestion-action-marketing-admin/gestion-action-marketing-admin.component';
+import { ParametrageActionComponent } from './gestion-action-marketing-admin/parametrage-action/parametrage-action.component';
 import { CreateActionComponent } from './gestion-action-marketing/create-action/create-action.component';
 import { DetailsActionComponent } from './gestion-action-marketing/details-action/details-action.component';
 import { GestionActionMarketingComponent } from './gestion-action-marketing/gestion-action-marketing.component';
@@ -26,6 +27,7 @@ const routes: Routes = [
       {path:'gestionactionmarketingadmin/mobile',component:ActionMobileComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketingadmin/sms',component:ActionSmsComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketingadmin/tv',component:ActionTvComponent,canActivate: [AuthGuardService]},
+      {path:'gestionactionmarketingadmin/parametrage/:id',component:ParametrageActionComponent,canActivate: [AuthGuardService]},
     ]
   },
 

@@ -1,0 +1,34 @@
+<ngx-bread-crumb></ngx-bread-crumb>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-6"><span style="font-size: 20px;">Paramétrage  d'une Action Marketing</span></div>
+      <div class="col-md-6"><span style="float: right"> Action Marketing&nbsp;&nbsp;</span></div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+
+    
+
+    <div style="display : flex;justify-content: between;flex-wrap: wrap;">
+    <ng-template ngFor let-part [ngForOf]="checkedpartners" let-i="index">
+        <p-card header="{{part.partenaire.abbreviation}}" subheader="{{part.partenaire.adresse}}" [style]="{height: '250px',width:'250px',margin:'10px'}" styleClass="ui-card-shadow">
+            <p-header>
+              <nb-checkbox status="primary" [(ngModel)]="part.checked" style="float:right"></nb-checkbox>
+            </p-header>
+            <div class="listepointvente">
+              <ul>
+                <li *ngFor="let point of part.partenaire.listePointVente">{{point.designation}}</li>
+              </ul>
+            </div>
+            <p-footer style="margin-bottom: 0px;" >
+
+            </p-footer>
+        </p-card>
+    </ng-template>
+    </div>
+
+    <button  type="button"(click)="OnSubmit()" *ngIf="!loading"   nbButton status="success" class="button-style"  style="float: right;" [shape]="'round'">Enregistrer</button>
+ 
+  </nb-card-body>
+</nb-card>
