@@ -45,7 +45,7 @@
             <th>Publicité</th>
             <th>Titre</th>
             <th>Canal</th>
-            <th>Periode</th>
+            <th>Periode de diffusion</th>
             <th>Date de Creation</th>
             
            
@@ -65,13 +65,13 @@
             </td>
             <td>{{Action.titre}}</td>
             <td>{{Action.canal}}</td>
-            <td> <span class="bold">{{Action.dateDebut |date:'dd/MM/yyyy'}}</span> - <span class="bold">{{Action.dateFin |date:'dd/MM/yyyy'}}</span></td>
-            <td><span class="bold">{{Action.dateCreation |date:'dd/MM/yyyy'}}</span></td>
+            <td> <span >{{Action.dateDebut |date:'dd/MM/yyyy'}}</span> - <span >{{Action.dateFin |date:'dd/MM/yyyy'}}</span></td>
+            <td><span >{{Action.dateCreation |date:'dd/MM/yyyy'}}</span></td>
             
            
             <td>{{getStatusAction(Action.statut)}}</td>
           <td >
-            <i  class="fa fa-folder-open cursor buttonround editbutton" routerLink="detailsaction/{{Action.idActionMarketing}}" nbTooltip="Ouvrir action" nbTooltipPlacement="bottom"></i>
+            <i  class="fa fa-eye cursor buttonround affiche3button" routerLink="detailsaction/{{Action.idActionMarketing}}" nbTooltip="Ouvrir action" nbTooltipPlacement="bottom"></i>
           </td>
         </tr>
         </ng-template>

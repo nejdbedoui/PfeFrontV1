@@ -68,25 +68,29 @@
 <br> <label *ngIf=" isSubmitted1 && (formControls1.CanalDiffusion.errors )" class="label-has-error">
     <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le canal de diffusion </label>
 
-</div>
-
-<div class="col-md-4">
-   Lien Extern :<input type="text" nbInput placeholder="page facebook,site web..." fullWidth formControlName="LienPub">
-    <br> <label *ngIf=" isSubmitted1 && (formControls1.LienPub.errors )" class="label-has-error">
-        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Lien extern </label>
-    
-        <br>
-    
-   Au :<input nbInput [nbDatepicker]="datefn" fullWidth placeholder="La Date de Fin de l'action" formControlName="dateFinPub">
+<br>
+    Au :<input nbInput [nbDatepicker]="datefn" fullWidth placeholder="La Date de Fin de l'action" formControlName="dateFinPub">
     <nb-datepicker [filter]="filterFn"  #datefn></nb-datepicker>
     <br>  <label *ngIf=" isSubmitted1 && (formControls1.dateFinPub.errors )" class="label-has-error">
         <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date fin </label>
-    <br>      
+
+</div>
+
+<div class="col-md-4">
+   Lien Externe :<input type="text" nbInput placeholder="page facebook,site web..." fullWidth formControlName="LienPub">
+    <br> <label *ngIf=" isSubmitted1 && (formControls1.LienPub.errors )" class="label-has-error">
+        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Lien externe </label>
+    
+        <br>
+    
+  
+  
+            
         
 
 </div>
 </div>
-            
+            <br>
 Description :<textarea fieldSize="medium" fullWidth nbInput formControlName="Description"
 placeholder="Description de votre Action Marketing"></textarea>
 <label *ngIf=" isSubmitted1 && (formControls1.Description.errors )" class="label-has-error">
@@ -235,14 +239,14 @@ placeholder="Description de votre Action Marketing"></textarea>
 
 
         <nb-step [stepControl]="ActionForm3" [label]="labelThree">
-          <ng-template #labelThree>paramétre</ng-template>
+          <ng-template #labelThree>paramètres</ng-template>
           <form  [formGroup]="ActionForm3" (ngSubmit)="step3()">
   
 <div class="row">
 
     <div class="col-md-6">
   
-            <input type="number" max="5" min="1" fullWidth nbInput placeholder="Frequence" formControlName="Frequence">
+            <input type="number" max="5" min="1" fullWidth nbInput placeholder="Fréquence de visualisation par jour" formControlName="Frequence">
             <br> <label *ngIf=" isSubmitted3 && (formControls3.Frequence.errors )" class="label-has-error">
                 <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une frequence </label>
                 <br>
@@ -252,7 +256,11 @@ placeholder="Description de votre Action Marketing"></textarea>
 
 
                 <br>
-                <p-listbox [options]="sectors" formControlName="Secteurcible" multiple="multiple" checkbox="checkbox" filter="filter" optionLabel="designation">
+                <p-listbox [options]="sectors"  formControlName="Secteurcible" multiple="multiple" checkbox="checkbox" filter="filter" optionLabel="designation">
+                    <p-header>
+                        <i class="fa fa-car"></i>
+                        Secteur 
+                      </p-header>
                 </p-listbox>
 
     </div>

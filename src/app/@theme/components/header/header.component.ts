@@ -197,6 +197,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateaccueil(){
     localStorage.removeItem("type")
     localStorage.removeItem("pointventeid")
+    localStorage.removeItem("partenaire2")
     this.router.navigateByUrl('/auth/choosepointvente');
 
   }
