@@ -37,7 +37,7 @@ export class CreateActionComponent implements OnInit {
   sectors: Sector[];
   action: ActionMarketing;
   populationCible: PopulationCible;
-  id: string = localStorage.getItem("partenaireid");
+  id: string = localStorage.getItem("partenaire2");
   partenaire: PartenaireBprice;
   canal: CanalDiffusion[];
   format: formataffichage[];
@@ -55,7 +55,7 @@ disable:boolean=false;
 filterFn:any;
   constructor(private sanitizer: DomSanitizer,private _router: Router,private _villeEndpoint: VilleEndPointService, private _Canalservice: CanalDiffusionEndPointService, private _formataffichageservice: FormatAffichageEndPointService, private _Partenaire: PartenaireBpriceEndPointService, private _GlobalService: GlobalServiceService, private _FormBuilder: FormBuilder, private _populationCibleService: PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
     this.optionContenue = [{ label: 'Image', value: 0 }, { label: 'Video', value: 1 }];
-    this.optionSexe = [{ label: 'H/M', value: 0 }, { label: 'Homme', value: 1 },{ label: 'Femme', value: 2 }];
+    this.optionSexe = [{ label: 'Homme / Femme', value: 0 }, { label: 'Homme', value: 1 },{ label: 'Femme', value: 2 }];
   }
 
 

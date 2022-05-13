@@ -712,6 +712,14 @@ body .ui-table .ui-table-thead > tr > th {
   padding-left: 10px;
   padding-right: 9px;
 }
+.affiche3button{
+  background-color: rgb(248, 172, 101);
+  border-radius: 50px !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 9px;
+}
 .affiche2button{
   background-color: rgb(98, 187, 223);
   border-radius: 50px !important;

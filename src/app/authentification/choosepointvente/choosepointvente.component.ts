@@ -4,6 +4,7 @@ import { PointVente } from '../../model/PointVente';
 import { Router } from '@angular/router';
 import { PartenaireBpriceEndPointService } from '../../service/bp-api-pos/partenaire-bprice-end-point/partenaire-bprice-end-point.service';
 import { UtilisateurEndPointService } from '../../service/bp-api-admin/utilisateur-end-point/utilisateur-end-point.service';
+import { PartenaireBprice } from '../../model/PartenaireBprice';
 
 @Component({
   selector: 'ngx-choosepointvente',
@@ -21,6 +22,7 @@ export class ChoosepointventeComponent implements OnInit {
   pointventesOnly: PointVente[] = []
   stockCentrales: PointVente[] = []
   sortOptions: any[];
+  partenaires:PartenaireBprice[]
   showParam: boolean = true;
   sortKey: string;
 
@@ -33,6 +35,12 @@ export class ChoosepointventeComponent implements OnInit {
       { label: 'tri croissant par description', value: '!year' },
       { label: 'tri décroissant par description', value: 'year' }
     ];
+    this._PartenaireBpriceEndPointService.findAllPartenaireBpriceByFActif(1).subscribe(val=>{
+      if(val.result==1){
+        this.partenaires=val.objectResponse;
+        console.log(this.partenaires)
+      }
+    })
     this._PartenaireBpriceEndPointService.findByIdPartenaire(localStorage.getItem("partenaireid")).subscribe(val => {
       console.log(val);
       this.logo = val.objectResponse != null ? val.objectResponse.logo != null ? val.objectResponse.logo : null : null
@@ -89,8 +97,14 @@ export class ChoosepointventeComponent implements OnInit {
     }
   }
 
+  choosepartenaire(partenair: PartenaireBprice) {
+    localStorage.setItem("partenaire2", partenair.idPartenaire)
+    this.router.navigateByUrl("/pages/home");
+  }
+
   choosepointvente(pointvente: PointVente) {
     localStorage.setItem("pointventeid", pointvente.idPointVente)
+    localStorage.setItem("partenaire2", pointvente.idPartenaire)
     this.router.navigateByUrl("/pages/home");
   }
 

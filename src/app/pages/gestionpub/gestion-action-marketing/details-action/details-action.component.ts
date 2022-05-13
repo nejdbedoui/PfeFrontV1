@@ -51,7 +51,7 @@ this.id=this.route.snapshot.paramMap.get('id');
       }
     });
 
-this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid")).subscribe(val=>
+this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaire2")).subscribe(val=>
   {
     this.getAllSectors(val.objectResponse.idSector);
   }

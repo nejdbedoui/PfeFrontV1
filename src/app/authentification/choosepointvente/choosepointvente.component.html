@@ -11,7 +11,7 @@
                                                         [src]="logo">
                                         </div>
                                         <div class="col-8">
-                                                <h3>Veuillez Choisir un Point de Vente</h3>
+                                                <h3>Veuillez Choisir un Partenaire<!-- Point de Vente --></h3>
                                         </div>
                                 </div>
                         </nb-card-header>
@@ -19,42 +19,37 @@
                                 <div class="container">
                                         <div class="row ">
                                                 <div class="col-sm-12">
-                                                        <legend>Liste des points de vente</legend>
+                                                        <legend>Liste des Partenaires <!-- points de vente --></legend>
                                                 </div>
                                         </div>
                                         <br>
                                         <div class="row " style="height: 350px;
                         overflow-y: auto;">
-                                                <div *ngFor="let pointvente of pointventesOnly; let i = index"
+                                                <div *ngFor="let partenaires of partenaires; let i = index"
                                                         class="col-sm-4" style="margin-bottom: 10px;">
                                                         <div style="padding:.5em;margin-bottom: 10px;"
                                                                 class="ui-g-12 ui-md-12 cursor"
-                                                                [ngStyle]="{'background-color':pointvente.typePv=='centraleStock'?'#d4bb0e':getcolor(i)}"
+                                                                [ngStyle]="{'background-color':partenaires.typePv=='centraleStock'?'#d4bb0e':getcolor(i)}"
                                                                 style="color: #FFFFFF;border-radius: 10px;"
-                                                                (click)="choosepointvente(pointvente)">
+                                                                (click)="choosepartenaire(partenaires)">
 
                                                                 <div class="col-sm-12"
-                                                                        *ngIf="pointvente.typePv!='centraleStock'">
+                                                                        >
                                                                         <i><img
                                                                                         src="../../../assets/images/supermarket.svg"></i>
-                                                                        &nbsp;&nbsp;Point de vente
-                                                                </div>
-                                                                <div class="col-sm-12"
-                                                                        *ngIf="pointvente.typePv=='centraleStock'">
-                                                                        <i class="fas fa-cubes"></i> &nbsp;&nbsp;Stock
-                                                                        Centrale
+                                                                        &nbsp;&nbsp;<!-- Point de vente --> Partenaire
                                                                 </div>
                                                                 <br>
                                                                 <div class="col-sm-12"
                                                                         style="color:#fff;font-size: 23px;">
-                                                                        {{pointvente.designation}}</div>
+                                                                        {{partenaires.raisonSociale}}</div>
                                                                 <br><br>
                                                                 <hr style="background-color: #fff;">
-                                                                <div style="color:#fff">{{pointvente.adresse}} </div>
+                                                                <div style="color:#fff">{{partenaires.adresse}} </div> 
                                                         </div>
                                                 </div>
 
-                                                <div 
+                                               <!--  <div 
                                                         class="col-sm-4" style="margin-bottom: 10px;">
                                                         <div style="padding:.5em;margin-bottom: 10px;"
                                                                 class="ui-g-12 ui-md-12 cursor"
@@ -70,11 +65,11 @@
                                                                 <br><br>
                                                       
                                                         </div>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-md-12">
                                                         <hr>
                                                 </div>
-                                                <div *ngFor="let pointvente of stockCentrales; let i = index"
+                                          <!--       <div *ngFor="let pointvente of stockCentrales; let i = index"
                                                         class="col-sm-4" style="margin-bottom: 10px;">
                                                         <div style="padding:.5em;margin-bottom: 10px;"
                                                                 class="ui-g-12 ui-md-12 cursor"
@@ -101,7 +96,7 @@
                                                                 <hr style="background-color: #fff;">
                                                                 <div style="color:#fff">{{pointvente.adresse}} </div>
                                                         </div>
-                                                </div>
+                                                </div> -->
 
                                         </div>
                                         <br>
@@ -109,7 +104,7 @@
                                         <div class="row">
                                                 <div class="col-sm-6">
                                                         <button class="btn col-sm-12 cursor" *ngIf="showParam"
-                                                                (click)="tableauboard()" style="zoom: 130%;justify-content: center;display: flex;background-color: #7366B2 ;color: #FFFFFF;    padding: 16px;
+                                                        (click)="chooseAdminActionMarketing()" style="zoom: 130%;justify-content: center;display: flex;background-color: #7366B2 ;color: #FFFFFF;    padding: 16px;
                                                 border-radius: 10px;">
                                                                 <i style="zoom: 50%;"><img
                                                                                 src="../../../assets/images/view.svg"></i>
