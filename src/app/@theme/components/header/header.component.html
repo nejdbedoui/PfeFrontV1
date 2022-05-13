@@ -13,8 +13,8 @@
   <!-- <nb-select *ngIf="afficheselect"  [(selected)]="currentpv" (selectedChange)="changepv($event)" status="primary">
     <nb-option *ngFor="let item of pointventes" [value]="item.idPointVente"> {{ item.designation }}</nb-option>
   </nb-select> -->
-  <div style="margin-left: 10px;padding-right: 40px; " *ngIf="pointvente!=null">
-    <span style="color: #8f9bb3;" *ngIf="pointvente!=null && pointvente.idPointVente!=null" >Partenaire : </span> {{pointvente.designation}}
+  <div style="margin-left: 10px;padding-right: 40px; " *ngIf="partenaire!=null">
+    <span style="color: #8f9bb3;" *ngIf="partenairename != null" >Partenaire : </span> {{partenairename}}
   </div>
   <button class="btn " *ngIf="afficheselect" style="background: #7366b2 0% 0% no-repeat padding-box;color:#fff" (click)="navigateaccueil()"><i class="fas fa-arrow-left"></i> Retour à la page d'accueil</button>
 
