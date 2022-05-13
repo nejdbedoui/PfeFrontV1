@@ -12,6 +12,7 @@ import { PointVenteEndPointService } from '../../../service/bp-api-pos/point-ven
 import { PointVente } from '../../../model/PointVente';
 import { LocalstorageService } from '../../../service/GlobalService/Localstorage/localstorage.service';
 import { PartenaireBpriceEndPointService } from '../../../service/bp-api-pos/partenaire-bprice-end-point/partenaire-bprice-end-point.service';
+import { PartenaireBprice } from '../../../model/PartenaireBprice';
 
 @Component({
   selector: 'ngx-header',
@@ -59,7 +60,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private _LocalstorageService:LocalstorageService,
               private _PartenaireBpriceEndPointService:PartenaireBpriceEndPointService) {
   }
-
+partenaire:Utilisateur;
   utilisateur:Utilisateur=new Utilisateur()
   username:string=""
   pointventes:PointVente[]=[]
@@ -70,7 +71,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   selectedOption;
   partenaireexist:boolean=true
   logo:string=null
+  partenairename:any;
   ngOnInit() {
+
+
+
     if(localStorage.getItem("partenaireid")==null){
       this.partenaireexist=false
     }else{
@@ -115,6 +120,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
         }
       })
+      this.getpartenaire();
     }
 
     
@@ -159,6 +165,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
 
       });
+  }
+
+
+  getpartenaire(){
+    if(localStorage.getItem("partenaire2")==null){
+      this.partenaireexist=false
+    }else{
+      this._UtilisateurEndPointService.findUtilisateurByIdUtilisateur(localStorage.getItem("UserId")).subscribe(val=>{      
+        if(val.result==1){
+          this.partenaire=val.objectResponse
+          this.partenairename=val.objectResponse.nom +" "+ val.objectResponse.prenom
+          console.log(this.partenaire)
+        }
+      })
+    }
   }
   changepv(event){
 
