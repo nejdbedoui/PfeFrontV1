@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -18,8 +19,12 @@ export class GestionActionMarketingAdminComponent implements OnInit {
   value1: string = "";
   loading:boolean = false;
   ActionsMarketing: ActionMarketingDTO[];
-  constructor(private route: Router,private _actionMarketingService:ActionMarketingEndPointServiceService,private _GlobalService: GlobalServiceService) { 
+  ListeCanalDiffusion:any[]=[];
+  ListeStatutAction:any[]=[];
+  constructor(private route: Router,private _actionMarketingService:ActionMarketingEndPointServiceService,private datePipe: DatePipe,private _GlobalService: GlobalServiceService) { 
     this.stateOptions = [{label: 'image', value: 0}, {label: 'video', value: 1}];
+
+    
 
 
  }
@@ -29,6 +34,8 @@ export class GestionActionMarketingAdminComponent implements OnInit {
     
    
   }
+
+
 
   getStatusAction(stat:number){
     if(stat==0)
@@ -56,8 +63,22 @@ listeStorages:Storage[];
   this.loading = true;
    this._actionMarketingService.findAllActionMarketingDTOWithStatutBiggerThan(0).subscribe(val=>
     {
+      console.log(val)
       if(val.result==1){
+
+        
         this.ActionsMarketing=val.objectResponse;
+        this.Actions = this.ActionsMarketing;
+        this.ActionsMarketing.filter(value=>{
+          if (this.ListeCanalDiffusion.indexOf(value.canal) === -1) {
+            this.ListeCanalDiffusion.push(value.canal);
+        }
+        if(this.ListeStatutAction.indexOf(value.statut)===-1){
+          this.ListeStatutAction.push(value.statut);
+        }
+        })
+      this.ListeCanalDiffusion.sort();
+      this.ListeStatutAction.sort();
         this.loading = false;
       }
     }
@@ -90,5 +111,57 @@ listeStorages:Storage[];
       
   }
 
+
+
+
+  //Filter
+CanalChoisi:String = 'default';
+StatutChoisi:number = -1;
+DateCreationChoisi:Date;
+  ChoisirCanalDiffusion(event){
+    this.CanalChoisi = event;
+    this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.DateCreationChoisi);
+
+  }
+  ChoisirStatutAction(event){
+    this.StatutChoisi = event;
+    this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.DateCreationChoisi);
+  }
+
+  ChoisirDateCreation(event){
+    this.DateCreationChoisi = event;
+    console.log(this.DateCreationChoisi)
+    this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.DateCreationChoisi);
+  }
+
+  Actions:ActionMarketingDTO[];
+Filtrer(CanalDiffusion:String,StatutAction:number,DateDebut:Date){
+
+    this.Actions = this.ActionsMarketing;
+    if (CanalDiffusion != "default")
+      this.Actions = this.Actions.filter(
+        item => item.canal == CanalDiffusion
+      );
+
+    if (StatutAction != -1)
+      this.Actions = this.Actions.filter(
+        item => item.statut == StatutAction
+      );
+      if (DateDebut != null)
+      this.Actions = this.Actions.filter(
+        item => this.format(new Date(item.dateCreation)) == this.format(DateDebut)
+      );
+
+}
+format(a) {
+  return this.datePipe.transform(a, 'dd/MM/yyyy')
+}
+
+clean() {
+  this.DateCreationChoisi = null;
+  this.CanalChoisi = "default";
+  this.StatutChoisi = -1;
+  this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.DateCreationChoisi);
+}
 
 }
