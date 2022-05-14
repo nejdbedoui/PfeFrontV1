@@ -3,9 +3,7 @@
     <nb-card-header>
         <div class="row">
             <div class="col-md-6" >
-                <span *ngIf="showmedia && details.canaldifusion=='Mobile'" style="font-size: 20px;">Details Action Mobile</span>
-                <span *ngIf="showmedia && details.canaldifusion=='SMS'" style="font-size: 20px;">Details Action SMS</span>
-                <span *ngIf="showmedia && details.canaldifusion=='TV'" style="font-size: 20px;">Details Action TV</span>
+                <span style="font-size: 20px;">Détail action Commerciale</span>
             </div>
             <div *ngIf="showmedia" class="col-md-6"><span style="float: right"> Statut :
                     {{getStatusAction(action.statut)}}&nbsp;&nbsp;</span></div>
@@ -21,7 +19,7 @@
 
                 <img *ngIf="details.canaldifusion =='Mobile' && details.typefile == 0" [src]="details.urlmedia" alt="Aspect ratio image">
                 <img *ngIf="details.canaldifusion =='SMS'" src="../../../assets/images/sms.png" alt="SMS">
-                <video preload="none" *ngIf="details.typefile == 1 && details.canaldifusion != 'SMS'"  width="150" height="100" controls>
+                <video style="border: 5px solid rgb(236, 236, 236);" preload="none" *ngIf="details.typefile == 1 && details.canaldifusion != 'SMS'"  width="280" height="400" controls>
                     <source [src]="details.urlmedia" alt="Action.type">
                   </video>
             </div>
@@ -71,8 +69,10 @@
 
 
             <div *ngIf="!activer" class="col-sm-5 ">
-                <div style="float: right" *ngIf="action.statut == 1">
-                    <i  class="fa fa-check cursor buttonround editbutton" (click)="Parametrer()" nbTooltip="Confirmer" nbTooltipPlacement="bottom"></i>
+                <div style="float: right" *ngIf="action.statut == 0">
+                    <i  class="fa fa-check cursor buttonround editbutton" (click)="confirm()" nbTooltip="Confirmer" nbTooltipPlacement="bottom"></i>
+                    <i  class="fas fa-edit cursor buttonround affiche1button" (click)="modifier()" nbTooltip="Modifier" nbTooltipPlacement="bottom"></i>
+                    <i  class="fa fa-trash cursor buttonround deletebutton" (click)="delete()" nbTooltip="Supprimer" nbTooltipPlacement="bottom"></i>
                      </div>
                 <p class="big"  *ngIf="details.canaldifusion !='SMS'">
                 <span class="bold">Ville ciblé </span> <br> <span *ngFor="let ville of details.ville">{{ville}} </span><br> <br>

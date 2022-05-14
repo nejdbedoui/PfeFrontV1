@@ -21,6 +21,7 @@ export class GestionActionMarketingAdminComponent implements OnInit {
   ActionsMarketing: ActionMarketingDTO[];
   ListeCanalDiffusion:any[]=[];
   ListeStatutAction:any[]=[];
+  ListePartenaire:any[]=[];
   constructor(private route: Router,private _actionMarketingService:ActionMarketingEndPointServiceService,private datePipe: DatePipe,private _GlobalService: GlobalServiceService) { 
     this.stateOptions = [{label: 'image', value: 0}, {label: 'video', value: 1}];
 
@@ -76,9 +77,13 @@ listeStorages:Storage[];
         if(this.ListeStatutAction.indexOf(value.statut)===-1){
           this.ListeStatutAction.push(value.statut);
         }
+        if(this.ListePartenaire.indexOf(value.nomPartenaire)===-1){
+          this.ListePartenaire.push(value.nomPartenaire);
+        }
         })
       this.ListeCanalDiffusion.sort();
       this.ListeStatutAction.sort();
+      this.ListePartenaire.sort();
         this.loading = false;
       }
     }
@@ -86,7 +91,7 @@ listeStorages:Storage[];
    
  }
 
-  uploadedFiles: any[] = [];
+ 
 
   ajouteraction() {
     this.route.navigateByUrl("/pages/gestionpub/gestionactionmarketing/ajouteraction");
@@ -102,14 +107,7 @@ listeStorages:Storage[];
       }
     });
   }
-  onUpload(event) {
-      for(let file of event.files) {
-          this.uploadedFiles.push(file);
-          
-      }
 
-      
-  }
 
 
 
@@ -117,25 +115,39 @@ listeStorages:Storage[];
   //Filter
 CanalChoisi:String = 'default';
 StatutChoisi:number = -1;
-DateCreationChoisi:Date;
+DateDebutChoisi:Date;
+DateFinChoisi:Date;
+PartenaireChoisi:String;
   ChoisirCanalDiffusion(event){
     this.CanalChoisi = event;
-    this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.DateCreationChoisi);
+    this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.PartenaireChoisi,this.DateDebutChoisi,this.DateFinChoisi);
 
   }
   ChoisirStatutAction(event){
     this.StatutChoisi = event;
-    this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.DateCreationChoisi);
+    this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.PartenaireChoisi,this.DateDebutChoisi,this.DateFinChoisi);
   }
 
-  ChoisirDateCreation(event){
-    this.DateCreationChoisi = event;
-    console.log(this.DateCreationChoisi)
-    this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.DateCreationChoisi);
+  ChoisirDateDebut(event){
+    this.DateDebutChoisi = event;
+    console.log(this.DateDebutChoisi)
+    this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.PartenaireChoisi,this.DateDebutChoisi,this.DateFinChoisi);
+  }
+  ChoisirDateFin(event){
+    this.DateFinChoisi = event;
+    console.log(this.DateFinChoisi)
+    this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.PartenaireChoisi,this.DateDebutChoisi,this.DateFinChoisi);
+
+  }
+  ChoisirPartenaire(event){
+    this.PartenaireChoisi = event;
+    console.log(this.PartenaireChoisi)
+    this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.PartenaireChoisi,this.DateDebutChoisi,this.DateFinChoisi);
+
   }
 
   Actions:ActionMarketingDTO[];
-Filtrer(CanalDiffusion:String,StatutAction:number,DateDebut:Date){
+Filtrer(CanalDiffusion:String,StatutAction:number,Partenaire:String,DateDebut:Date,DateFin:Date){
 
     this.Actions = this.ActionsMarketing;
     if (CanalDiffusion != "default")
@@ -147,21 +159,34 @@ Filtrer(CanalDiffusion:String,StatutAction:number,DateDebut:Date){
       this.Actions = this.Actions.filter(
         item => item.statut == StatutAction
       );
-      if (DateDebut != null)
+      if (Partenaire != "default")
+      this.Actions = this.Actions.filter(
+        item => item.nomPartenaire == Partenaire
+      );
+      if (DateDebut != null && DateFin==null)
       this.Actions = this.Actions.filter(
         item => this.format(new Date(item.dateCreation)) == this.format(DateDebut)
+      );
+      if (DateDebut != null && DateFin!=null)
+      this.Actions = this.Actions.filter(
+        item => this.format(new Date(item.dateCreation)) >= this.format(DateDebut) && this.format(new Date(item.dateCreation)) <= this.format(DateFin)
+      );
+      if (DateDebut == null && DateFin!=null)
+      this.Actions = this.Actions.filter(
+        item => this.format(new Date(item.dateCreation)) < this.format(DateDebut)
       );
 
 }
 format(a) {
   return this.datePipe.transform(a, 'dd/MM/yyyy')
 }
-
 clean() {
-  this.DateCreationChoisi = null;
+  this.DateDebutChoisi = null;
+  this.DateFinChoisi = null;
   this.CanalChoisi = "default";
   this.StatutChoisi = -1;
-  this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.DateCreationChoisi);
+  this.PartenaireChoisi = "default";
+  this.Filtrer(this.CanalChoisi,this.StatutChoisi,this.PartenaireChoisi,this.DateDebutChoisi,this.DateFinChoisi);
 }
 
 }

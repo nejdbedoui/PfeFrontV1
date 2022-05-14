@@ -11,6 +11,13 @@ export const MENU_ITEMSTABLEAU: NbMenuItem[] = [
     icon: 'flip-2-outline',
     link: '/pages/gestionpub/gestionactionmarketing',
   },
+  {
+    title: 'Gestion des Contrats',
+    icon: 'flip-2-outline',
+    link: '/pages/gestionpub/gestionacontrat',
+  },
+
+
 
 
 

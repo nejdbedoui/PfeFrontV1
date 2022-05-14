@@ -10,6 +10,7 @@ import { ParametrageActionComponent } from './gestion-action-marketing-admin/par
 import { CreateActionComponent } from './gestion-action-marketing/create-action/create-action.component';
 import { DetailsActionComponent } from './gestion-action-marketing/details-action/details-action.component';
 import { GestionActionMarketingComponent } from './gestion-action-marketing/gestion-action-marketing.component';
+import { GestionContractComponent } from './gestion-action-marketing/gestion-contract/gestion-contract.component';
 import { GestionpubComponent } from './gestionpub.component';
 
 
@@ -22,6 +23,7 @@ const routes: Routes = [
       {path:'gestionactionmarketing',component:GestionActionMarketingComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketing/ajouteraction',component:CreateActionComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketing/detailsaction/:id',component:DetailsActionComponent,canActivate: [AuthGuardService]},
+      {path:'gestionacontrat',component:GestionContractComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketingadmin',component:GestionActionMarketingAdminComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketingadmin/detailsaction/:id',component:DetailActionComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketingadmin/mobile',component:ActionMobileComponent,canActivate: [AuthGuardService]},
