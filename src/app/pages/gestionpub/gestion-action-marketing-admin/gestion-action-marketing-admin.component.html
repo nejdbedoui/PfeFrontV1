@@ -18,10 +18,53 @@
       </div>
     </div>
     <br>
+    <fieldset *ngIf="affichefilter">
+      <legend>Critéres de recherche</legend>
+
+      <div class="row" style="padding-bottom: 10px;">
+
+
+        <div class="col-sm-3 ">
+          <label class="label">Canal du Diffusion</label><br>
+          <nb-select fullWidth placeholder="Default" (selectedChange)="ChoisirCanalDiffusion($event)"
+            name="CanalDiffusion" >
+            <nb-option value="default">Default </nb-option>
+            <nb-option *ngFor="let canal of ListeCanalDiffusion" value="{{canal}}">{{canal}}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="col-sm-3 ">
+          <label class="label">Statut du la'Action</label><br>
+          <nb-select fullWidth placeholder="Default" (selectedChange)="ChoisirStatutAction($event)"
+            name="CanalDiffusion" >
+            <nb-option value=-1>Default </nb-option>
+            <nb-option *ngFor="let statut of ListeStatutAction" value="{{statut}}">{{getStatusAction(statut)}}
+            </nb-option>
+          </nb-select>
+        </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <label class="label">Date Début</label><br>
+            <input nbInput fullWidth placeholder="Default" [nbDatepicker]="picker">
+            <nb-datepicker (dateChange)="ChoisirDateCreation($event)" #picker></nb-datepicker>
+          </div>
+          <div class="col-sm-3">
+            <button nbButton type="button" status="danger" (click)="clean()"
+              style="background: #ff3d71; border-color: white;float:right;  margin-top: 13px; " [shape]="'round'">
+              <nb-icon icon="close-outline"></nb-icon>
+            </button>
+          </div>
+        </div>
+
+      
+      
+    </fieldset>
 
 
     
-    <p-table  [columns]="cols" [loading]="loading"  [rowsPerPageOptions]="[20,30,50]"  #dta [value]="ActionsMarketing" [rows]="20" [paginator]="true" [responsive]="true" autoLayout ="true" [globalFilterFields]="['description','dateCreation']">
+    <p-table  [columns]="cols" [loading]="loading"  [rowsPerPageOptions]="[20,30,50]"  #dta [value]="Actions" [rows]="20" [paginator]="true" [responsive]="true" autoLayout ="true" [globalFilterFields]="['description','dateCreation']">
       <ng-template pTemplate="caption">
         
           <div style="text-align: right">        
