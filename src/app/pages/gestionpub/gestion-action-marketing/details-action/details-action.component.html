@@ -69,11 +69,7 @@
 
 
             <div *ngIf="!activer" class="col-sm-5 ">
-                <div style="float: right" *ngIf="action.statut == 0">
-                    <i  class="fa fa-check cursor buttonround editbutton" (click)="confirm()" nbTooltip="Confirmer" nbTooltipPlacement="bottom"></i>
-                    <i  class="fas fa-edit cursor buttonround affiche1button" (click)="modifier()" nbTooltip="Modifier" nbTooltipPlacement="bottom"></i>
-                    <i  class="fa fa-trash cursor buttonround deletebutton" (click)="delete()" nbTooltip="Supprimer" nbTooltipPlacement="bottom"></i>
-                     </div>
+               
                 <p class="big"  *ngIf="details.canaldifusion !='SMS'">
                 <span class="bold">Ville ciblé </span> <br> <span *ngFor="let ville of details.ville">{{ville}} </span><br> <br>
 
@@ -161,6 +157,15 @@
  
 
         </div>
-
+        <div style="float: right" *ngIf="showmedia" >
+            <div *ngIf="action.statut == 0 ">
+            <button type="button"  style="float: right" nbButton status="danger" [shape]="'round'"
+            (click)="delete()">supprimer</button>
+            <button type="button"  style="float: right" nbButton status="warning" [shape]="'round'"
+            (click)="modifier()">Modifier</button>
+            <button type="button"  style="float: right ; background: #79008e !important;" nbButton  [shape]="'round'"
+            (click)="confirm()">Confirmer</button>
+             </div>
+      </div>
     </nb-card-body>
 </nb-card>
