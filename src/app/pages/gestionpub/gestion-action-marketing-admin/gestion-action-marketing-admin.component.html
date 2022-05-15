@@ -24,33 +24,47 @@
       <div class="row" style="padding-bottom: 10px;">
 
 
-        <div class="col-sm-3 ">
+        <div class="col-sm-4 ">
           <label class="label">Canal du Diffusion</label><br>
-          <nb-select fullWidth placeholder="Default" (selectedChange)="ChoisirCanalDiffusion($event)"
+          <nb-select fullWidth placeholder="Default" (selectedChange)="ChoisirCanalDiffusion($event)" [ngModel]="CanalChoisi"
             name="CanalDiffusion" >
             <nb-option value="default">Default </nb-option>
             <nb-option *ngFor="let canal of ListeCanalDiffusion" value="{{canal}}">{{canal}}
             </nb-option>
           </nb-select>
         </div>
-        <div class="col-sm-3 ">
-          <label class="label">Statut du la'Action</label><br>
-          <nb-select fullWidth placeholder="Default" (selectedChange)="ChoisirStatutAction($event)"
-            name="CanalDiffusion" >
+        <div class="col-sm-4 ">
+          <label class="label">Statut de l'action</label><br>
+          <nb-select fullWidth placeholder="Default" (selectedChange)="ChoisirStatutAction($event)"[ngModel]="StatutChoisi"
+            name="StatutAction" >
             <nb-option value=-1>Default </nb-option>
             <nb-option *ngFor="let statut of ListeStatutAction" value="{{statut}}">{{getStatusAction(statut)}}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="col-sm-4 ">
+          <label class="label">Nom du Partenaire</label><br>
+          <nb-select fullWidth placeholder="Default" (selectedChange)="ChoisirPartenaire($event)" [ngModel]="PartenaireChoisi"
+            name="PartenaireChoisi" >
+            <nb-option value="default">Default </nb-option>
+            <nb-option *ngFor="let Partenaire of ListePartenaire" value="{{Partenaire}}">{{Partenaire}}
             </nb-option>
           </nb-select>
         </div>
 
         </div>
         <div class="row">
-          <div class="col-sm-6 ">
+          <div class="col-sm-4 ">
             <label class="label">Date Début</label><br>
-            <input nbInput fullWidth placeholder="Default" [nbDatepicker]="picker">
-            <nb-datepicker (dateChange)="ChoisirDateCreation($event)" #picker></nb-datepicker>
+            <input nbInput fullWidth  [nbDatepicker]="picker" [ngModel]="DateDebutChoisi">
+            <nb-datepicker (dateChange)="ChoisirDateDebut($event)" #picker></nb-datepicker>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-4 ">
+            <label class="label">Date Fin</label><br>
+            <input nbInput fullWidth  [nbDatepicker]="picker1"  [ngModel]="DateFinChoisi">
+            <nb-datepicker (dateChange)="ChoisirDateFin($event)" #picker1></nb-datepicker>
+          </div>
+          <div class="col-sm-4">
             <button nbButton type="button" status="danger" (click)="clean()"
               style="background: #ff3d71; border-color: white;float:right;  margin-top: 13px; " [shape]="'round'">
               <nb-icon icon="close-outline"></nb-icon>
@@ -64,7 +78,7 @@
 
 
     
-    <p-table  [columns]="cols" [loading]="loading"  [rowsPerPageOptions]="[20,30,50]"  #dta [value]="Actions" [rows]="20" [paginator]="true" [responsive]="true" autoLayout ="true" [globalFilterFields]="['description','dateCreation']">
+    <p-table  [columns]="cols" [loading]="loading"  [rowsPerPageOptions]="[20,30,50]"  #dta [value]="Actions" [rows]="20" [paginator]="true" [responsive]="true" autoLayout ="true" [globalFilterFields]="['statut','dateCreation','titre']">
       <ng-template pTemplate="caption">
         
           <div style="text-align: right">        
@@ -75,10 +89,12 @@
         <ng-template pTemplate="header">
           <tr>
             <th>Publicité</th>
-            
-            <th>Periode</th>
-            <th>Date de Creation</th>
+            <th>Titre</th>
             <th>Canal</th>
+            <th>Periode de diffusion</th>
+            <th>Date de Creation</th>
+            
+           
             <th>Statut</th>
             <th>Action</th>
           </tr>
@@ -86,21 +102,22 @@
         <ng-template pTemplate="body" let-Action>
           <tr >
             <td>
-              <img  *ngIf="Action.typeitem == 0 && Action.canal != 'SMS'"    [src]="Action.url" [alt]="Action.type" width="100" height="100" class="shadow-4" />
+
+              <img *ngIf="Action.typeitem == 0 && Action.canal != 'SMS'"    [src]="Action.url" [alt]="Action.type" width="100" height="100" class="shadow-4" />
               <video preload="none" *ngIf="Action.typeitem == 1 && Action.canal != 'SMS'"  width="150" height="100" controls>
                 <source [src]="Action.url" alt="Action.type">
               </video>
               <img *ngIf="Action.canal == 'SMS'" src="../../../assets/images/sms.png" width="100" height="100" alt="image sms"/>
-         
-             
             </td>
-            
-            <td> <span class="bold">{{Action.dateDebut |date:'dd/MM/yyyy'}}</span> - <span class="bold">{{Action.dateFin |date:'dd/MM/yyyy'}}</span></td>
-            <td><span class="bold">{{Action.dateCreation |date:'dd/MM/yyyy'}}</span></td>
+            <td>{{Action.titre}}</td>
             <td>{{Action.canal}}</td>
+            <td> <span >{{Action.dateDebut |date:'dd/MM/yyyy'}}</span> - <span >{{Action.dateFin |date:'dd/MM/yyyy'}}</span></td>
+            <td><span >{{Action.dateCreation |date:'dd/MM/yyyy'}}</span></td>
+            
+           
             <td>{{getStatusAction(Action.statut)}}</td>
           <td >
-            <i  class="fa fa-folder-open cursor buttonround editbutton" routerLink="detailsaction/{{Action.idActionMarketing}}" nbTooltip="Ouvrir action" nbTooltipPlacement="bottom"></i>
+            <i  class="fa fa-eye cursor buttonround affiche3button" routerLink="detailsaction/{{Action.idActionMarketing}}" nbTooltip="Ouvrir action" nbTooltipPlacement="bottom"></i>
           </td>
         </tr>
         </ng-template>

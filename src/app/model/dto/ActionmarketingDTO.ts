@@ -11,5 +11,6 @@ export class ActionMarketingDTO {
   smsBody:String;
   titre:String;
   description:String;
+  nomPartenaire:String;
   }
   

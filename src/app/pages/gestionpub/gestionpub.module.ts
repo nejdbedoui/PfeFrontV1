@@ -26,13 +26,14 @@ import { ActionSmsComponent } from './gestion-action-marketing-admin/action-sms/
 import { ActionTvComponent } from './gestion-action-marketing-admin/action-tv/action-tv.component';
 import { ParametrageActionComponent } from './gestion-action-marketing-admin/parametrage-action/parametrage-action.component';
 import {CardModule} from 'primeng/card';
+import { GestionContractComponent } from './gestion-action-marketing/gestion-contract/gestion-contract.component';
 
 
 
 
 
 @NgModule({
-  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, DetailsActionComponent, GestionActionMarketingAdminComponent, DetailActionComponent, ActionMobileComponent, ActionSmsComponent, ActionTvComponent, ParametrageActionComponent],
+  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, DetailsActionComponent, GestionActionMarketingAdminComponent, DetailActionComponent, ActionMobileComponent, ActionSmsComponent, ActionTvComponent, ParametrageActionComponent, GestionContractComponent],
   imports: [
     NbSpinnerModule,
     CommonModule,
