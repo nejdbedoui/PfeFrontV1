@@ -35,6 +35,8 @@ this.id=this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit() {
+    this.InstanciateForm();
+
     
     this._actionMarketingService.findByidActionMarketing(this.id).subscribe(val1 => {
       if (val1.result == 1) {
@@ -44,6 +46,9 @@ this.id=this.route.snapshot.paramMap.get('id');
             this.details=result.objectResponse;
             this.showmedia=true;
             console.log(this.details)
+          }
+          else{
+            this.InstanciateForm();
           }
         })
       }
@@ -83,7 +88,7 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
 
 
   Parametrer() {
-    this._router.navigateByUrl("pages/gestionpub/gestionactionmarketingadmin/parametrage/"+this.action.idActionMarketing);
+    this._router.navigateByUrl("pages/gestionpub/gestionactionmarketing/"+this.action.idActionMarketing);
     
   }
 
@@ -100,24 +105,19 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
   InstanciateForm() {
 
     this.ActionForm = this._FormBuilder.group({
-      SecteurActivite: [this.categorie.designation, [Validators.required]],
-      CanalDiffusion: [this.action.idCanaldiffusion, [Validators.required]],
-      LienPub: [this.action.externUrl, [Validators.required]],
-      titre: [this.action.titre, [Validators.required]],
-      Description: [this.action.description, [Validators.required]],
-      dateDebutPub: [this.action.dateDebut, [Validators.required]],
-      dateFinPub: [this.action.dateFin, [Validators.required]],
-      myChoices: [new FormArray([]), []],
-      Atatchement: [null, [Validators.required]],
-      SMSBody: [this.action.smsBody, []],
-      TypeContenue: [this.action.typeContenue, []],
-      Frequence: [this.action.frequence, [Validators.required]],
-
-
+      LienExterne: ['this.action.externUrl', [Validators.required]],
+      dateDebutPub: ['this.action.dateDebut', [Validators.required]],
+      dateFinPub: ['this.action.dateFin', [Validators.required]],
+      populationcible:['this.action.dateFin', [Validators.required]],
+      secteurcible:['', [Validators.required]],
+      formataffichage: ['', [Validators.required]],
+      SMSBody: ['this.action.smsBody', []],
+      Frequence: ['this.action.frequence', [Validators.required]],
 
     });
-
   }
+
+ 
   get formControls() { return this.ActionForm.controls; }
   modifier() {
     this.activer = !this.activer;
@@ -141,7 +141,7 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
     }
     this._actionMarketingService.updateActionMarketing(this.action).subscribe(val => {
       if (val.result == 1) {
-        this._GlobalService.showToast("success", "success", "Action modifier avec succés")
+        this._GlobalService.showToast("success", "success", "Action Créer avec succés")
         this.modifier();
       }
     });

@@ -118,6 +118,11 @@
             <td>{{getStatusAction(Action.statut)}}</td>
           <td >
             <i  class="fa fa-eye cursor buttonround affiche3button" routerLink="detailsaction/{{Action.idActionMarketing}}" nbTooltip="Ouvrir action" nbTooltipPlacement="bottom"></i>
+            <button class="btn btn-primary"
+              style="background-color: white; border-color:white; float: right;color:#417bff; margin-top: -6px;"
+              (click)="GenerateContrat(Action) " pInputText pTooltip="Générer le Contrat"
+              tooltipPosition="bottom" placeholder="Bottom"><img src="../../../assets/images/export-pdf.PNG"
+                style="width: 30px" alt="pdf" *ngIf="Action.statut=='2'"></button>
           </td>
         </tr>
         </ng-template>

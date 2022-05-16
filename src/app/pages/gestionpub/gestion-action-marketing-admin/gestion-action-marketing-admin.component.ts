@@ -62,7 +62,7 @@ export class GestionActionMarketingAdminComponent implements OnInit {
 listeStorages:Storage[];
  getAllActionsMarketing(){
   this.loading = true;
-   this._actionMarketingService.findAllActionMarketingDTOWithStatutBiggerThan(0).subscribe(val=>
+   this._actionMarketingService.findAllActionMarketingDTOByStatut(1).subscribe(val=>
     {
       console.log(val)
       if(val.result==1){
@@ -100,7 +100,7 @@ listeStorages:Storage[];
     this._actionMarketingService.GenerateContrat(action).subscribe(response=>{
       if(response.result == 1){
         console.log(response.objectResponse);
-        this._GlobalService.showToast("success", "success", "Action confirmer")
+        this._GlobalService.showToast("success", "success", "Contrat générer avec succès")
       }
       else {
         this._GlobalService.showToast("danger", "Erreur", response.errorDescription)

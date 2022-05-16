@@ -70,29 +70,22 @@ listeStorages:Storage[];
    
  }
 
-  uploadedFiles: any[] = [];
 
-  ajouteraction() {
-    this.route.navigateByUrl("/pages/gestionpub/gestionactionmarketing/ajouteraction");
-  }
-  GenerateContrat(action:ActionMarketingDTO){
-    this._actionMarketingService.GenerateContrat(action).subscribe(response=>{
-      if(response.result == 1){
-        console.log(response.objectResponse);
-        this._GlobalService.showToast("success", "success", "Action confirmer")
-      }
-      else {
-        this._GlobalService.showToast("danger", "Erreur", response.errorDescription)
-      }
-    });
-  }
-  onUpload(event) {
-      for(let file of event.files) {
-          this.uploadedFiles.push(file);
-          
-      }
 
-      
-  }
+ GenerateContrat(action:ActionMarketingDTO){
+  this._actionMarketingService.GenerateContrat(action).subscribe(response=>{
+    if(response.result == 1){
+      console.log(response.objectResponse);
+      this._GlobalService.showToast("success", "success", "Contrat générer avec succès")
+    }
+    else if(response.result==5) {
+      console.log("ALREADY EXISTS")
+    }
+    else {
+      this._GlobalService.showToast("danger", "Erreur", response.errorDescription)
+    }
+  });
+}
+  
 
 }

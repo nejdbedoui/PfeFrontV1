@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Contrat } from '../../../../model/Contrat';
 import { ContractEndPointServiceService } from '../../../../service/bp-api-action-marketing/contrat-end-point/contract-end-point-service.service';
 import { GlobalServiceService } from '../../../../service/GlobalService/global-service.service';
@@ -10,7 +11,7 @@ import { GlobalServiceService } from '../../../../service/GlobalService/global-s
 })
 export class GestionContractComponent implements OnInit {
 
-  constructor(private _contratServiceEndPoint:ContractEndPointServiceService,  private _GlobalService: GlobalServiceService) { }
+  constructor(private _contratServiceEndPoint:ContractEndPointServiceService,  private _GlobalService: GlobalServiceService,private _router: Router) { }
 partenaire:String;
 ListeContrat:Contrat[];
 affichefilter:boolean = false;
@@ -38,18 +39,24 @@ this._contratServiceEndPoint.findAllContratActionMarketingByPartenaireId(this.pa
   }
 });
 }
-
+RedirectToAction(contrat:Contrat){
+  this._router.navigateByUrl("pages/gestionpub/gestionactionmarketing/detailsaction/"+contrat.idActionMarketing);
+}
 GestionContrat(contrat:Contrat,statut:number){
 contrat.statutContrat = statut;
 this._contratServiceEndPoint.UpdateContrat(contrat).subscribe(response=>{
-  console.log(response)
 
 if(response.result==1){
   this._GlobalService.showToast("success", "success", "Contrat modifier avec succés")
 }
+else if(response.result==5){
+console.log("ALREADY EXISTS");
+}
 else{
-
-}});
+  console.log("NOPE")
+}
+});
 }
 
 }
+
