@@ -1,5 +1,5 @@
 export class DetailsActionDTO{
-    age:String;
+    age:number[];
     sexe:number;
     ville:Array<string>;
     namefile:string;

@@ -1,4 +1,4 @@
-import { DetailsActionDTO } from "../DetailsActionDTO";
+import { DetailsActionDTO } from "../dto/DetailsActionDTO";
 
 export class OneDetailsActionDTO{
     result: number;

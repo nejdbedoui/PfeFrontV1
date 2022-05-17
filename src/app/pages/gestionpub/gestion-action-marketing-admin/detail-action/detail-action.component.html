@@ -5,14 +5,14 @@
             <div class="col-md-6" >
                 <span style="font-size: 20px;">Détail action Commerciale</span>
             </div>
-            <div *ngIf="showmedia" class="col-md-6"><span style="float: right"> Statut :
+            <div *ngIf="showmedia" class="col-md-6"><span style="float: right;"> Statut :
                     {{getStatusAction(action.statut)}}&nbsp;&nbsp;</span></div>
         </div>
     </nb-card-header>
     <nb-card-body>
-
+        
         <form [formGroup]="ActionForm" (ngSubmit)="submit()">
-        <div class="row" *ngIf="showmedia  ">
+        <div class="row" *ngIf="showmedia" >
 
 
             
@@ -24,152 +24,107 @@
                     <source [src]="details.urlmedia" alt="Action.type">
                   </video>
             </div>
-
             
-            <div  class="col-sm-4 ">
+<div class="col-sm-9" >
+    <div class="row" style="text-align:center;">
+        
+        <div class="col-sm-4" style="height: 400px;border-right: 1px solid grey;">
+          <h6>Informations Générales</h6><br><br>
+          <div style="text-align: left;">
+            <p class="big">
 
 
 
-               
-                <p class="big">
+              <span class="bold">Titre </span><br>{{action.titre}} 
+             
+              <br> <br>
 
 
+              <span class="bold">Description </span> <br> {{action.description}}<br> <br>
 
-                    <span class="bold">Titre </span><br>{{action.titre}} <br> <br>
-
-
-                    <span class="bold">Desription </span> <br> {{action.description}}<br> <br>
-
-
-
-
-                    <span class="bold">Fréquence </span><span *ngIf="activer"> <input type="number" nbInput placeholder="Frequence" formControlName="Frequence">
-                        <label *ngIf=" isSubmitted && (formControls.Frequence.errors )" class="label-has-error">
-                            <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une frequence </label></span> <br><span *ngIf="!activer">Cette action va être affichée {{action.frequence}} fois par jour </span> <br> <br>
-
-
-
-
-                    <span class="bold">Catégorie du contenu </span> <br> {{details.sector}}<br> <br>
+              <span class="bold">Catégorie du contenu </span> <br> {{details.sector}}<br> <br>
 
                   
-                    <span class="bold">Période d'affichage </span> <br>Du <u>{{action.dateDebut |date:'dd/MM/yyyy'}}</u>
-                    au <u>{{action.dateFin |date:'dd/MM/yyyy'}}</u><br> <br>
+              <span class="bold">Période d'affichage </span> <br>Du <u *ngIf="!activer">{{action.dateDebut |date:'dd/MM/yyyy'}}</u>
+
+              <input fullWidth nbInput [nbDatepicker]="datedeb" placeholder="La Date de  Debut de l'action" formControlName="dateDebutPub" *ngIf="activer">
+                      <nb-datepicker [filter]="filterFn" #datedeb></nb-datepicker>
+                      <br> <label *ngIf=" isSubmitted1 && (formControls.dateDebutPub.errors )" class="label-has-error">
+                          <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date du debut </label>
+
+              au <u *ngIf="!activer">{{action.dateFin |date:'dd/MM/yyyy'}}</u> <input *ngIf="activer" nbInput [nbDatepicker]="datefn" fullWidth placeholder="La Date de Fin de l'action" formControlName="dateFinPub">
+              <nb-datepicker [filter]="filterFn"  #datefn></nb-datepicker>
+              <br>  <label *ngIf=" isSubmitted1 && (formControls.dateFinPub.errors )" class="label-has-error">
+                  <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date fin que doit être supérieur aux date du début de la diffusion </label><br> <br>
 
 
 
 
 
-                </p>
-
-
-
-
-
-
-
-
-            </div>
-
-
-            <div *ngIf="!activer" class="col-sm-5 ">
-               
-                <p class="big"  *ngIf="details.canaldifusion !='SMS'">
-                <span class="bold">Ville ciblé </span> <br> <span *ngFor="let ville of details.ville">{{ville}} </span><br> <br>
-
-                <span class="bold">Sexe ciblé </span> <br> {{sexe(details.sexe)}}<br> <br>
-
-
-                <span class="bold">Format d'affichage </span> <br> <span>Cette action va être affichée sous format d'une {{details.formataffichage}} </span><br> <br>
-
-
-
-                <span class="bold">Canal de diffusion </span> <br>Cette action va être affichée sur {{details.canaldifusion}} <br> <br>
-
-                <span class="bold">Lien Extern </span> <br> <span><a [href]="action.externUrl" target="_blank">Click</a> </span><br> <br>
-
-            </p>
-
-            <p class="big"  *ngIf="details.canaldifusion=='SMS'">
-                <span class="bold">Ville ciblé </span> <br> <span *ngFor="let ville of details.ville">{{ville}} </span><br> <br>
-
-                <span class="bold">Sexe ciblé </span> <br> {{sexe(details.sexe)}}<br> <br>
-
-
-                <span class="bold">Message SMS </span> <br> <span>{{action.smsBody}} </span><br> <br>
-
-
-
-                <span class="bold">Lien Extern </span> <br> <span><a [href]="action.externUrl" target="_blank">Click</a> </span><br> <br>
-
-            </p>
-            </div>
-
-
-
-
-
-
-
-
-
-
-            <!--
-            <div *ngIf="activer" class="col-sm-9 ">
-                <form [formGroup]="ActionForm" (ngSubmit)="submit()">
-                   
-                    <input type="text" nbInput placeholder="Titre" formControlName="titre">
-                    <label *ngIf=" isSubmitted && (formControls.titre.errors )" class="label-has-error">
-                        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir un Titre </label>
-
-                    <textarea fieldSize="medium" nbInput formControlName="Description"
-                        placeholder="Description de votre Action Marketing"></textarea>
-                    <label *ngIf=" isSubmitted && (formControls.Description.errors )" class="label-has-error">
-                        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une Description </label>
-
-                    <input type="number" nbInput placeholder="Frequence" formControlName="Frequence">
-                    <label *ngIf=" isSubmitted && (formControls.Frequence.errors )" class="label-has-error">
-                        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une frequence </label>
-
-                    <nb-select placeholder="Secteur d'activité" fullWidth formControlName="SecteurActivite">
-                        <nb-option *ngFor="let sctor of sectors" [value]="sctor.idCategorie">{{sctor.libelle}}
-                        </nb-option>
-                        <nb-option value="autre">Autre</nb-option>
-                    </nb-select> <input *ngIf="SecteurActivite=='Autre'" type="text" nbInput
-                        placeholder="Libellé Categorie">
-                    <label *ngIf=" isSubmitted && (formControls.SecteurActivite.errors )" class="label-has-error">
-                        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Secteur </label>
-
-                    <input nbInput [nbDatepicker]="datedeb" placeholder="Pick Date" formControlName="dateDebutPub">
-                    <nb-datepicker #datedeb></nb-datepicker>
-                    <label *ngIf=" isSubmitted && (formControls.dateDebutPub.errors )" class="label-has-error">
-                        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date du debut </label>
-
-                    <input nbInput [nbDatepicker]="datefn" placeholder="Form Picker" formControlName="dateFinPub">
-                    <nb-datepicker #datefn></nb-datepicker>
-                    <label *ngIf=" isSubmitted && (formControls.dateFinPub.errors )" class="label-has-error">
-                        <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date fin </label>
-                   
-                </form>
-                <button nbButton outline (click)="modifier()" status="warning">Modifier</button>
-                <button *ngIf="activer" type="submit" (click)="submit()" nbButton status="success" class="button-style"
-                        style="float: right;" [shape]="'round'">Enregistrer</button>
-            </div>
-        -->
-          
- 
+          </p>
+          </div>
 
         </div>
-        </form>
-        <div style="float: right" *ngIf="showmedia" >
-            <div *ngIf="action.statut == 1 ">
-            <button type="button"  style="float: right" nbButton status="danger" [shape]="'round'"
-            (click)="delete()">supprimer</button>
-            <button type="button"  style="float: right" nbButton status="warning" [shape]="'round'"
-            (click)="modifier()">Modifier</button>
-            <button type="button"  style="float: right ; background: #79008e !important;" nbButton  [shape]="'round'"
-            (click)="Parametrer()">Parametrer</button>
-             </div>
-      </div>
+        <div class="col-sm-4" style="border-right: 1px solid grey;">
+          <h6>Détails de l'Audience</h6><br><br>
+          <p class="big" style="text-align: left;">
+            <span class="bold">Ville ciblé </span> <br> <span *ngFor="let ville of details.ville">{{ville}} </span><br> <br>
+            <span class="bold">Secteur Ciblé </span> <br> <span *ngFor="let Secteur of details.secteurCible">{{Secteur}} </span><br> <br>
+
+            <span class="bold">Age ciblé </span> <br>{{details.age[0]}}-{{details.age[1]}}<br> <br>
+
+            <span class="bold">Sexe ciblé </span> <br> {{sexe(details.sexe)}}<br> <br>
+            </p>
+        </div>
+      
+
+      <div class="col-sm-4">
+        
+            <h6>Informations de Diffusion</h6><br><br>
+
+            <p class="big"  style="text-align: left;">
+
+              <span class="bold" *ngIf="details.canaldifusion =='SMS'">Message SMS </span> <br> <span>{{action.smsBody}} </span><br> <br>
+
+              <span class="bold">Fréquence </span><br><span *ngIf="activer"> <input type="number" nbInput placeholder="Frequence" formControlName="Frequence">
+                <label *ngIf=" isSubmitted && (formControls.Frequence.errors )" class="label-has-error">
+                    <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une frequence </label></span> <span *ngIf="!activer">Cette action va être affichée {{action.frequence}} fois par jour </span> <br> <br>
+
+             
+
+
+
+              <span class="bold">Lien Extern </span> <br> <span><a [href]="action.externUrl" target="_blank">Click</a> </span><br> <br>
+
+          </p>
+</div>
+        </div>
+    
+</div>
+
+
+
+
+
+
+        </div>
+        <div style="float: right;" *ngIf="showmedia" >
+          <div *ngIf="action.statut == 1 ">
+          <button type="button" *ngIf="!activer"  style="float: right;width: 130px;" nbButton status="danger" [shape]="'round'"
+          (click)="delete()">supprimer</button>
+          <button type="submit" *ngIf="activer"  style="float: right;width: 130px;" nbButton status="success" [shape]="'round'"
+          >Valider</button>
+          <button type="button" *ngIf="activer"  style="float: right;width: 130px;" nbButton status="danger" [shape]="'round'"
+          (click)="modifier()">Anuuler</button>
+          <button type="button" *ngIf="!activer" style="float: right;width: 130px;" nbButton status="warning" [shape]="'round'"
+          (click)="modifier()">Modifier</button>
+          <button type="button" *ngIf="!activer"  style="float: right ; background: #79008e !important;width: 130px;" nbButton  [shape]="'round'"
+          (click)="Parametrer()">Parametrer</button>
+           </div>
+    </div>
+     </form>
+
+
+       
     </nb-card-body>
 </nb-card>
