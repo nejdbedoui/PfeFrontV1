@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActionMarketing } from '../../../../model/ActionMarketing';
-import { DetailsActionDTO } from '../../../../model/DetailsActionDTO';
+import { DetailsActionDTO } from '../../../../model/dto/DetailsActionDTO';
 
 import { PartenaireBprice } from '../../../../model/PartenaireBprice';
 import { Sector } from '../../../../model/Sector';

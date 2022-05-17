@@ -64,7 +64,6 @@ listeStorages:Storage[];
    
  }
 
-  uploadedFiles: any[] = [];
 
   ajouteraction() {
     this.route.navigateByUrl("/pages/gestionpub/gestionactionmarketing/ajouteraction");

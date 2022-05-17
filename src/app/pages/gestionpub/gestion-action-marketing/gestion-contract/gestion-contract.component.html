@@ -47,7 +47,7 @@
             <td>
                 {{Contrat.numeroContrat}}
             </td>
-            <td>action</td>
+            <td> <span class="lienAction" (click)="RedirectToAction(Contrat)"> Action</span></td>
             <td>{{Contrat.descriptionAction}}</td>
             <td> <span >{{Contrat.dateDebut |date:'dd/MM/yyyy'}}</span> - <span >{{Contrat.dateFin |date:'dd/MM/yyyy'}}</span></td>
             <td><span >{{Contrat.dateCreation |date:'dd/MM/yyyy'}}</span></td>
@@ -55,7 +55,8 @@
            
             <td>{{getStatusContrat(Contrat.statutContrat)}}</td>
           <td >
-            <i  class="fa fa-check cursor buttonround editbutton" (click)="GestionContrat(Contrat,1)" nbTooltip="Confirmer" nbTooltipPlacement="bottom"></i>
+            <i  class="fa fa-check cursor buttonround editbutton" (click)="GestionContrat(Contrat,4)" nbTooltip="Accepter" nbTooltipPlacement="bottom"></i>
+            <i  class="fa fa-times cursor buttonround deletebutton" (click)="GestionContrat(Contrat,3)" nbTooltip="Refuser" nbTooltipPlacement="bottom"></i>
         </td>
         </tr>
         </ng-template>

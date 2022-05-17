@@ -31,7 +31,7 @@ findByIdPartenaire(id:string){
 findAllPartenaireBpriceByFActif(factif:number){
   return this.httpclient.get<PartenaireBpriceResponse>(environment.backend_url_Publicite+"findAllPartenaireBpriceByFActif/"+factif,{ headers: this.header });
 }
-findAllWithPointVentesByFActifDTO(factif:number){
-  return this.httpclient.get<PointeVentePartenaireDTOResponse>(environment.backend_url_Publicite+"findAllWithPointVentesByFActifDTO/"+factif,{ headers: this.header });
+findAllWithPointVentesByFActifDTO(factif:number,idPartenaire:String){
+  return this.httpclient.get<PointeVentePartenaireDTOResponse>(environment.backend_url_Publicite+"findAllWithPointVentesByFActifDTO/"+idPartenaire,{ headers: this.header });
 }
 }

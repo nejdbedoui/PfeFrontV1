@@ -36,6 +36,7 @@
             <th>Periode</th>
             <th>Date de Creation</th>
             <th>Statut</th>
+            <th>Action</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-Action>
@@ -47,6 +48,11 @@
             <td> <span class="bold">{{Action.dateDebut |date:'dd/MM/yyyy'}}</span> - <span class="bold">{{Action.dateFin |date:'dd/MM/yyyy'}}</span></td>
             <td><span class="bold">{{Action.dateCreation |date:'dd/MM/yyyy'}}</span></td>
             <td>{{getStatusAction(Action.statut)}}</td>
+            <td> <button class="btn btn-primary"
+              style="background-color: white; border-color:white;color:#417bff; margin-top: -6px;"
+              (click)="GenerateContrat(Action) " pInputText pTooltip="Générer le Contrat"
+              tooltipPosition="bottom" placeholder="Bottom"><img src="../../../assets/images/export-pdf.PNG"
+                style="width: 30px" alt="pdf" *ngIf="Action.statut=='2'"></button></td>
        
         </tr>
         </ng-template>

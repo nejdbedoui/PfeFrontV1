@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PointeVentePartenaireDTO } from '../../../../model/dto/PointeVentePartenaireDTO';
 import { ParametreActionMarketing } from '../../../../model/ParametreActionMarketing';
@@ -18,19 +18,22 @@ export class ParametrageActionComponent implements OnInit {
   
   checkedpartners:CheckedPartners[] = [];
   loading: boolean = true;
+  idPartenaire:String;
 
   constructor(private _GlobalService: GlobalServiceService,private _router: Router,private _partenaireBPriceService:PartenaireBpriceEndPointService,private _parametreActionService:ParametreActionEndPointServiceService, private route: ActivatedRoute) { 
 
   }
 idAction:String;
   ngOnInit() {
+    this.idPartenaire =localStorage.getItem("partenaireid");
     this.getAllPartenaireBPrice();
      this.idAction = this.route.snapshot.paramMap.get('id');
 
   }
 
   getAllPartenaireBPrice(){
-    this._partenaireBPriceService.findAllWithPointVentesByFActifDTO(1).subscribe(response=>{
+    this._partenaireBPriceService.findAllWithPointVentesByFActifDTO(1,"6051af0a33c276f08d303946").subscribe(response=>{
+      console.log(console.log(response))
  
       if(response.result==1){
         this.loading = false;

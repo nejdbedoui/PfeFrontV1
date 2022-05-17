@@ -126,7 +126,9 @@ filterFn:any;
       Secteurcible: [[], []],
       Frequence: [null, [Validators.required]],
       sexe:[null,[Validators.required]],
-      ville:[[],[]]
+      ville:[[],[]],
+      agemin:[16,[]],
+      agemax:[50,[Validators.required]]
     });
 
     this.ActionForm1.get('CanalDiffusion').setValue(null);
@@ -141,7 +143,7 @@ filterFn:any;
   submit() {
 this.disable=true;
 
-    if (this.ActionForm1.valid && this.ActionForm2.valid && this.ActionForm2.valid) {
+    if (this.ActionForm1.valid && this.ActionForm2.valid && this.ActionForm3.valid) {
 
       console.log("yes")
       this.action = new ActionMarketing();
@@ -168,8 +170,16 @@ this.disable=true;
             
           });
           this.populationCible.ville=stri;
+
+            let agerange:number[]= [];
+            agerange[0]=this.ActionForm3.value.agemin;
+            agerange[1]=this.ActionForm3.value.agemax;
+            this.populationCible.age = agerange;
+            console.log(this.populationCible)
+
           
-          this.populationCible.age='18'
+
+         
       
 }
 if(this.ActionForm3.value.Secteurcible !=null){
@@ -232,11 +242,14 @@ console.log(this.ActionForm2.value.TypeContenue)
 step2(){
   if(this.file !=null){
     this.isSubmitted2 = true;
+    this.ActionForm3.get('agemax').setValidators([Validators.required,Validators.min(this.ActionForm3.value.agemin)]);
+
   }
   
 }
 step3(){
   this.isSubmitted3 = true;
+  if(this.ActionForm3.valid)
   this.submit();
 }
 

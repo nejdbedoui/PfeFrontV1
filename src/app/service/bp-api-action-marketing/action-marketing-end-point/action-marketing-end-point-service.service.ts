@@ -90,5 +90,10 @@ updateActionMarketing(Action:ActionMarketing){
   GenerateContrat(action: ActionMarketingDTO) {
     return this.httpclient.post<OneActionMarketingResponse>(environment.backend_url_Publicite+"CreateContratActionMarketing/",action,{ headers: this.header });
   }
+  findAllActionMarketingDTOByStatut(statut:number){
+    return this.httpclient.get<ActionMarketingDTOResponse>(environment.backend_url_Publicite+"findAllActionMarketingDTOByStatut/"+statut,{ headers: this.header });
 
+  }
+
+  
 }
