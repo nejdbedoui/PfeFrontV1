@@ -16,6 +16,7 @@ export class ActionMarketing{
       dateFin:Date;
       frequence:number;
       statut:number;//crée ,accepter ,refuser ,en cours diffusion
+      notification:number;
       dateCreation:Date;
 }
 

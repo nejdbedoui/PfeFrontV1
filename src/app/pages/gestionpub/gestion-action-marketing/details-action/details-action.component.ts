@@ -97,6 +97,7 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaire2")).
 
   confirm() {
     this.action.statut = 1;
+    this.action.notification=2;
     this._actionMarketingService.updateActionMarketing(this.action).subscribe(val => {
       if (val.result == 1) {
         this._GlobalService.showToast("success", "success", "Action confirmer")
