@@ -13,6 +13,7 @@ import { PointVente } from '../../../model/PointVente';
 import { LocalstorageService } from '../../../service/GlobalService/Localstorage/localstorage.service';
 import { PartenaireBpriceEndPointService } from '../../../service/bp-api-pos/partenaire-bprice-end-point/partenaire-bprice-end-point.service';
 import { PartenaireBprice } from '../../../model/PartenaireBprice';
+import { ActionMarketingEndPointServiceService } from '../../../service/bp-api-action-marketing/action-marketing-end-point/action-marketing-end-point-service.service';
 
 @Component({
   selector: 'ngx-header',
@@ -43,10 +44,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       name: 'Corporate',
     },
   ];
-
+  notificationmenu;
   currentTheme = 'default';
 
   userMenu = [ { title: "Profil"}, { title: "Se Déconnecter"} ];
+ 
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -58,7 +60,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private router: Router,
               private _PointVenteEndPointService:PointVenteEndPointService,
               private _LocalstorageService:LocalstorageService,
-              private _PartenaireBpriceEndPointService:PartenaireBpriceEndPointService) {
+              private _PartenaireBpriceEndPointService:PartenaireBpriceEndPointService,
+              private _Actionmarketingendpoint:ActionMarketingEndPointServiceService) {
   }
 partenaire:Utilisateur;
   utilisateur:Utilisateur=new Utilisateur()
@@ -72,6 +75,7 @@ partenaire:Utilisateur;
   partenaireexist:boolean=true
   logo:string=null
   partenairename:any;
+  notification:number=0;
   ngOnInit() {
 
 
@@ -165,6 +169,31 @@ partenaire:Utilisateur;
         }
 
       });
+
+      if(localStorage.getItem("partenaire2")!=null){
+        console.log(localStorage.getItem("partenaire2"))
+        this._Actionmarketingendpoint.getNotificationPartenaire(1,localStorage.getItem("partenaire2")).subscribe(val=>
+         { this.notification=val
+        console.log(val)
+        this.notificationmenu=[{
+          title: this.notification+' Action modifier',
+          link: '/pages/gestionpub/gestionactionmarketing',
+        }]
+        }
+          )
+      }else if(localStorage.getItem("partenaire2")==null && localStorage.getItem("UserId")!=null){
+        this._Actionmarketingendpoint.getNotificationAdmin(2).subscribe(val=>
+         { this.notification=val
+          console.log(val)
+          this.notificationmenu=[{
+            title: this.notification+' Action modifier',
+            link: '/pages/gestionpub/gestionactionmarketing',
+          }]
+        }
+          
+          )
+      }
+    
   }
 
 

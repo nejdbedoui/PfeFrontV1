@@ -185,6 +185,7 @@ this.disable=true;
       this.populationCible.sexe=this.ActionForm3.value.sexe
       this.populationCible.factif=1
       console.log(this.ActionForm3.value.ville)
+      this.action.notification=0;
       if(this.ActionForm3.value.ville != null){
           let stri=[];
           this.ActionForm3.value.ville.forEach(function(item:Ville){
@@ -312,6 +313,7 @@ step3(){
             this._router.navigateByUrl("pages/gestionpub/gestionactionmarketing");
           } else
             this._GlobalService.showToast("danger", "Erreur", val.errorDescription);
+            this.disable=false;
         }
         )
       } else
