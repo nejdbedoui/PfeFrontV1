@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PointeVentePartenaireDTO } from '../../../../model/dto/PointeVentePartenaireDTO';
 import { ParametreActionMarketing } from '../../../../model/ParametreActionMarketing';
 import { PartenaireBprice } from '../../../../model/PartenaireBprice';
+import { ActionMarketingEndPointServiceService } from '../../../../service/bp-api-action-marketing/action-marketing-end-point/action-marketing-end-point-service.service';
 import { ParametreActionEndPointServiceService } from '../../../../service/bp-api-action-marketing/parametre-action-end-point/parametre-action-end-point-service.service';
 import { PartenaireBpriceEndPointService } from '../../../../service/bp-api-pos/partenaire-bprice-end-point/partenaire-bprice-end-point.service';
 import { GlobalServiceService } from '../../../../service/GlobalService/global-service.service';
@@ -20,7 +21,7 @@ export class ParametrageActionComponent implements OnInit {
   loading: boolean = true;
   idPartenaire:String;
 
-  constructor(private _GlobalService: GlobalServiceService,private _router: Router,private _partenaireBPriceService:PartenaireBpriceEndPointService,private _parametreActionService:ParametreActionEndPointServiceService, private route: ActivatedRoute) { 
+  constructor(private _actionMarketingService: ActionMarketingEndPointServiceService,private _GlobalService: GlobalServiceService,private _router: Router,private _partenaireBPriceService:PartenaireBpriceEndPointService,private _parametreActionService:ParametreActionEndPointServiceService, private route: ActivatedRoute) { 
 
   }
 idAction:String;
@@ -72,6 +73,11 @@ OnSubmit(){
     
       }
     });
+    this._actionMarketingService.findByidActionMarketing(this.idAction).subscribe(val1 => {
+      val1.objectResponse.notification=1;
+      this._actionMarketingService.updateActionMarketing(val1.objectResponse);
+    })
+    
   }
 }
 }

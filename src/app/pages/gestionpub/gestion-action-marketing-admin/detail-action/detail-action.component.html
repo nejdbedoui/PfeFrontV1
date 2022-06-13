@@ -118,12 +118,13 @@
           (click)="modifier()">Anuuler</button>
           <button type="button" *ngIf="!activer" style="float: right;width: 130px;" nbButton status="warning" [shape]="'round'"
           (click)="modifier()">Modifier</button>
-          <button type="button" *ngIf="!activer"  style="float: right ; background: #79008e !important;width: 130px;" nbButton  [shape]="'round'"
-          (click)="Parametrer()">Parametrer</button>
+   
            </div>
+           
     </div>
      </form>
-
+     <button type="button" *ngIf="!activer"  style="float: right ; background: #79008e !important;width: 130px;" nbButton  [shape]="'round'"
+     (click)="Parametrer()">Parametrer</button>
 
        
     </nb-card-body>

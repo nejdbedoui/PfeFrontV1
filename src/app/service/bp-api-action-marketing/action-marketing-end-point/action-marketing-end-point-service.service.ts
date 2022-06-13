@@ -95,5 +95,12 @@ updateActionMarketing(Action:ActionMarketing){
 
   }
 
-  
+  getNotificationPartenaire(num:number,idPartenaire:string){
+    return this.httpclient.get<number>(environment.backend_url_Publicite+"numbernotifpartenaire/"+idPartenaire+"/"+num,{ headers: this.header });
+
+  }
+  getNotificationAdmin(num:number){
+    return this.httpclient.get<number>(environment.backend_url_Publicite+"numbernotif/"+num,{ headers: this.header });
+
+  }
 }
