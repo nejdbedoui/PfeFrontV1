@@ -23,12 +23,12 @@ createCanal(canaldiffusion:CanalDiffusion){
   return this.httpclient.post<OneCanalDiffusionResponse>(environment.backend_url_Publicite+"createCanal/",canaldiffusion,{ headers: this.header });
 }
 
-deleteCanal(idformataffichage:String){
-  return this.httpclient.delete<any>(environment.backend_url_Publicite+"deleteCanal/"+idformataffichage,{ headers: this.header });
+deleteCanal(idCanalDiffusion:String){
+  return this.httpclient.delete<any>(environment.backend_url_Publicite+"deleteCanal/"+idCanalDiffusion,{ headers: this.header });
 }
 
-updateCanal(formataffichage:CanalDiffusion){
-  return this.httpclient.put<OneCanalDiffusionResponse>(environment.backend_url_Publicite+"updateCanal/",formataffichage,{ headers: this.header });
+updateCanal(CanalDiffusion:CanalDiffusion){
+  return this.httpclient.put<OneCanalDiffusionResponse>(environment.backend_url_Publicite+"updateCanal/",CanalDiffusion,{ headers: this.header });
 }
 
 

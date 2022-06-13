@@ -1,6 +1,6 @@
-export class formataffichage{
+export class FormatAffichage{
     idFormatAffichage: string;
     type:string;
     libelle: string;
-    fActif: number;
+    factif: number;
   }

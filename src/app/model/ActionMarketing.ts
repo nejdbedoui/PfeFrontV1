@@ -8,7 +8,8 @@ export class ActionMarketing{
       idFormatAffichage:string;
       secteurcible:Array<string>;
       titre:string;
-      typeContenue:number; //image video
+      typeContenue:number;
+      idTypeAffichage:string;
       externUrl:string;
       description:string;
       smsBody:string;

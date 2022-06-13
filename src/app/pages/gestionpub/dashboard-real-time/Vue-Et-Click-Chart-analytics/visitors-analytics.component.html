@@ -1,0 +1,18 @@
+<nb-card size="medium">
+  <nb-card-header>
+    <h3>Statistiques des retombées</h3>
+    <div class="subtitle">Interactions</div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="chart-container">
+      <div class="chart-header">
+        <ngx-legend-chart [legendItems]="chartLegend"></ngx-legend-chart>
+      </div>
+      <dashboard-statistique-click-et-vue-chart [chartData]="visitorsAnalyticsData"></dashboard-statistique-click-et-vue-chart>
+    </div>
+  </nb-card-body>
+
+  <ngx-slide-out [showVisitorsStatistics]="true">
+    <dashboard-vue-et-clickstatistics [value]="pieChartValue"></dashboard-vue-et-clickstatistics>
+  </ngx-slide-out>
+</nb-card>
