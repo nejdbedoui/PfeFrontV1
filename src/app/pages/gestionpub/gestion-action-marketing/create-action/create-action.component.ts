@@ -13,11 +13,13 @@ import { Sector } from '../../../../model/Sector';
 import { CanalDiffusionEndPointService } from '../../../../service/bp-api-action-marketing/canal-diffusion-end-point/canal-diffusion-end-point.service';
 import { FormatAffichageEndPointService } from '../../../../service/bp-api-action-marketing/format-affichage-end-point/format-affichage-end-point.service';
 import { CanalDiffusion } from '../../../../model/Canaldiffusion';
-import { formataffichage } from '../../../../model/FormatAffichage';
+import { FormatAffichage } from '../../../../model/FormatAffichage';
 import { VilleEndPointService } from '../../../../service/bp-api-action-marketing/ville-end-point/ville-end-point.service';
 import { Ville } from '../../../../model/Ville';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TypeAffichageEndPointServiceService } from '../../../../service/bp-api-action-marketing/type-affichage-end-point/type-affichage-end-point-service.service';
+import { TypeAffichage } from '../../../../model/TypeAffichage';
 @Component({
   selector: 'ngx-create-action',
   templateUrl: './create-action.component.html',
@@ -33,14 +35,14 @@ export class CreateActionComponent implements OnInit {
   ActionForm1: FormGroup;
   ActionForm2: FormGroup;
   ActionForm3: FormGroup;
-  optionContenue: any[];
+  optionContenue: TypeAffichage[];
   sectors: Sector[];
   action: ActionMarketing;
   populationCible: PopulationCible;
   id: string = localStorage.getItem("partenaire2");
   partenaire: PartenaireBprice;
   canal: CanalDiffusion[];
-  format: formataffichage[];
+  format: FormatAffichage[];
   showmedia: boolean = false;
   canal1: string;
   villes: Ville[];
@@ -53,9 +55,9 @@ export class CreateActionComponent implements OnInit {
 afficherimage:boolean=false;
 disable:boolean=false;
 filterFn:any;
-  constructor(private sanitizer: DomSanitizer,private _router: Router,private _villeEndpoint: VilleEndPointService, private _Canalservice: CanalDiffusionEndPointService, private _formataffichageservice: FormatAffichageEndPointService, private _Partenaire: PartenaireBpriceEndPointService, private _GlobalService: GlobalServiceService, private _FormBuilder: FormBuilder, private _populationCibleService: PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
-    this.optionContenue = [{ label: 'Image', value: 0 }, { label: 'Video', value: 1 }];
-    this.optionSexe = [{ label: 'Homme / Femme', value: 0 }, { label: 'Homme', value: 1 },{ label: 'Femme', value: 2 }];
+  constructor(private sanitizer: DomSanitizer,private _typeAffichage:TypeAffichageEndPointServiceService,private _router: Router,private _villeEndpoint: VilleEndPointService, private _Canalservice: CanalDiffusionEndPointService, private _formataffichageservice: FormatAffichageEndPointService, private _Partenaire: PartenaireBpriceEndPointService, private _GlobalService: GlobalServiceService, private _FormBuilder: FormBuilder, private _populationCibleService: PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
+   // this.optionContenue = [{ label: 'Image', value: 0 }, { label: 'Video', value: 1 }];
+   this.optionSexe = [{ label: 'Homme / Femme', value: 0 }, { label: 'Homme', value: 1 },{ label: 'Femme', value: 2 }];
   }
 
 
@@ -68,11 +70,33 @@ filterFn:any;
       this.getAllSectors(val.objectResponse.idSector);
       this.partenaire = val.objectResponse;
     })
-
+    this.getTypeAffichageData();
     this.InstanciateForm();
     this.canaldiffusion();
     this.ville();
     this.showmedia = true;
+  }
+  isImage(){
+    return 
+    //this.optionContenue.filter(value=>{
+    //   if(value.idTypeAffichage==id&&(value.libelle=="Image" || value.libelle=="GIF"))
+    //  found = true;
+    // });
+    // this.op
+    // return found
+  }
+  getTypeAffichageData(){
+    this._typeAffichage.findAllActiveTypeAffichage().subscribe(val=>
+      {
+        if(val.result==1){
+          this.optionContenue=val.objectResponse;
+          console.log(this.optionContenue)
+        }
+        else{
+        }
+      }
+      )
+
   }
   ville() {
     this._villeEndpoint.findAllActiveCanal().subscribe(val => {
@@ -118,7 +142,7 @@ filterFn:any;
     this.ActionForm2 = this._FormBuilder.group({
       formataffichage: ['', [Validators.required]],
       SMSBody: ['', [Validators.required]],
-      TypeContenue: [0, [Validators.required]],
+      TypeContenue: ["", [Validators.required]],
 
     });
 
@@ -159,6 +183,7 @@ this.disable=true;
       this.action.frequence = this.ActionForm3.value.Frequence;
       this.populationCible=new PopulationCible;
       this.populationCible.sexe=this.ActionForm3.value.sexe
+      this.populationCible.factif=1
       console.log(this.ActionForm3.value.ville)
       this.action.notification=0;
       if(this.ActionForm3.value.ville != null){
@@ -204,7 +229,7 @@ if(this.ActionForm3.value.Secteurcible !=null){
       } else if (this.ActionForm1.value.CanalDiffusion.libelle == "Mobile") {
        
         this.action.idFormatAffichage = this.ActionForm2.value.formataffichage;
-        this.action.typeContenue = this.ActionForm2.value.TypeContenue;
+        this.action.idTypeAffichage = this.ActionForm2.value.TypeContenue;
 
 
        this.ajouteractionavecmedia(this.action,this.populationCible);
@@ -284,7 +309,7 @@ step3(){
         this._Actionmarketingendpointservice.CreateActionMarketing(action).subscribe(val => {
           
           if (val.result == 1) {
-            this._GlobalService.showToast("success", "success", "Action ajouter avec succés")
+            this._GlobalService.showToast("success", "success", "Action ajouté avec succès")
             this._router.navigateByUrl("pages/gestionpub/gestionactionmarketing");
           } else
             this._GlobalService.showToast("danger", "Erreur", val.errorDescription);

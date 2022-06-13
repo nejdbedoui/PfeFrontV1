@@ -17,35 +17,65 @@ export class ParametrageActionComponent implements OnInit {
 
   ListePartenaire:PartenaireBprice[];
   
-  checkedpartners:CheckedPartners[] = [];
+  checkedpartners:ParametreAvecPrix[] = [];
   loading: boolean = true;
   idPartenaire:String;
 
   constructor(private _actionMarketingService: ActionMarketingEndPointServiceService,private _GlobalService: GlobalServiceService,private _router: Router,private _partenaireBPriceService:PartenaireBpriceEndPointService,private _parametreActionService:ParametreActionEndPointServiceService, private route: ActivatedRoute) { 
 
+
   }
 idAction:String;
+idUser:String;
   ngOnInit() {
     this.idPartenaire =localStorage.getItem("partenaireid");
+    this.idUser =localStorage.getItem("UserId");
+    this.idAction = this.route.snapshot.paramMap.get('id');
     this.getAllPartenaireBPrice();
-     this.idAction = this.route.snapshot.paramMap.get('id');
+
 
   }
-
+SendtoPartner(parametreAvecPrix:ParametreAvecPrix){
+  if(parametreAvecPrix.partenaire.statut==0){
+  let parametre:ParametreActionMarketing = new ParametreActionMarketing()
+  parametre.dateCreation= new Date();
+  parametre.idActionMarketing = this.idAction;
+  parametre.idPartenaireCible = parametreAvecPrix.partenaire.idPartenaire;
+  parametre.idUtilisateur = this.idUser;
+  parametre.prix = parametreAvecPrix.prix;
+  parametre.statut = 1;
+  console.log(parametre);
+    this._parametreActionService.CreateParametreActionMarketing(parametre).subscribe(response=>{
+      if(response.result==1){
+        if (response.result == 1) {
+          console.log(response)
+          this._GlobalService.showToast("success", "success", "Paramètre envoyée avec succès")
+        } else
+          this._GlobalService.showToast("danger", "Erreur", response.errorDescription)
+    
+      }
+    });
+  }
+  else{
+    this._GlobalService.showToast("danger", "Erreur","No.")
+  }
+  
+}
   getAllPartenaireBPrice(){
-    this._partenaireBPriceService.findAllWithPointVentesByFActifDTO(1,"6051af0a33c276f08d303946").subscribe(response=>{
-      console.log(console.log(response))
- 
+    console.log(this.idAction)
+    this._partenaireBPriceService.findAllWithPointVentesByFActifDTO(1,this.idAction).subscribe(response=>{
       if(response.result==1){
         this.loading = false;
+        console.log(response)
         response.objectResponse.filter(value=>{
-          let cp:CheckedPartners = new CheckedPartners();
+          let cp:ParametreAvecPrix = new ParametreAvecPrix();
           cp.partenaire = value;
-          cp.checked = false;
+          if(cp.partenaire.prix!=null){
+            cp.prix=cp.partenaire.prix;
+          }
           this.checkedpartners.push(cp);
           
         })
-        console.log(this.checkedpartners)
         this.loading= false;
       }
       else{
@@ -53,6 +83,7 @@ idAction:String;
       }
     });
   }
+
 
 OnSubmit(){
   let parametre:ParametreActionMarketing = new ParametreActionMarketing();
@@ -80,8 +111,9 @@ OnSubmit(){
     
   }
 }
+
 }
-export class CheckedPartners {
+export class ParametreAvecPrix {
  partenaire:PointeVentePartenaireDTO;
- checked:boolean;
+ prix:number;
 }

@@ -1,0 +1,46 @@
+
+<ngx-bread-crumb></ngx-bread-crumb>
+<nb-card>
+    <nb-card-header>
+        <div class="row">
+            <div class="col-md-6"><span style="font-size: 20px;">Ajouter une canal de diffusion</span></div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form  [formGroup]="TypeAffichageForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-4">
+                    Libelle du nouveau type d'affichage :
+                   <input fullWidth type="text" nbInput placeholder="Libelle" formControlName="libelle">
+                    <br> <label *ngIf=" isSubmitted && (formControls1.libelle.errors )" class="label-has-error">
+                              <i class="fas fa-exclamation-circle"></i> Veuillez Saisir un libelle </label>
+            
+                                     
+                </div>
+            
+            <div class="col-md-4">
+                Statut :<nb-select placeholder="canal de diffusion" fullWidth formControlName="factif" >
+                <nb-option [value]="1">Activer</nb-option>
+                <nb-option [value]="0">Désactiver</nb-option>
+            </nb-select>
+            <br> <label *ngIf=" isSubmitted && (formControls1.factif.errors )" class="label-has-error">
+                <i class="fas fa-exclamation-circle"></i> Veuillez choisir la statue du Type d'affichage au moment d'ajout </label>
+            
+            
+            </div>
+
+            
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                <button  type="submit"  nbButton status="success" class="button-style"  style="float: right; margin-top: 15px;" [shape]="'round'">Enregistrer</button>
+                </div>
+            </div>
+        
+        
+        
+        </form>
+
+  
+    </nb-card-body>
+</nb-card>

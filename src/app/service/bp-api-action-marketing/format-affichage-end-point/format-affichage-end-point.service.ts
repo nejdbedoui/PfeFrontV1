@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { formataffichage } from '../../../model/FormatAffichage';
+import { FormatAffichage } from '../../../model/FormatAffichage';
 import { FormataffichageResponse } from '../../../model/response/FormataffichageResponse';
 import { OneFormataffichageResponse } from '../../../model/response/OneFormataffichageResponse';
 
@@ -22,7 +22,7 @@ export class FormatAffichageEndPointService {
 
 );
 
-createformat(formataffichage:formataffichage){
+createformat(formataffichage:FormatAffichage){
   return this.httpclient.post<OneFormataffichageResponse>(environment.backend_url_Publicite+"createformat/",formataffichage,{ headers: this.header });
 }
 
@@ -30,7 +30,7 @@ deleteformat(idformataffichage:String){
   return this.httpclient.delete<any>(environment.backend_url_Publicite+"deleteformat/"+idformataffichage,{ headers: this.header });
 }
 
-updateformat(formataffichage:formataffichage){
+updateformat(formataffichage:FormatAffichage){
   return this.httpclient.put<OneFormataffichageResponse>(environment.backend_url_Publicite+"updateformat/",formataffichage,{ headers: this.header });
 }
 

@@ -130,7 +130,7 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaire2")).
       myChoices: [new FormArray([]), []],
       Atatchement: [null, [Validators.required]],
       SMSBody: [this.action.smsBody, []],
-      TypeContenue: [this.action.typeContenue, []],
+      TypeContenue: [this.action.idFormatAffichage, []],
       Frequence: [this.action.frequence, [Validators.required]],
 
 
@@ -154,7 +154,7 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaire2")).
     } else if (this.ActionForm.value.CanalDiffusion == 0) {
 
       this.action.idFormatAffichage = this.ActionForm.value.myChoices;
-      this.action.typeContenue = this.ActionForm.value.TypeContenue;
+      this.action.idFormatAffichage = this.ActionForm.value.TypeContenue;
 
     } else {
 

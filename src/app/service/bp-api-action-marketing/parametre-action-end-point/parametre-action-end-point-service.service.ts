@@ -21,8 +21,8 @@ export class ParametreActionEndPointServiceService {
 
 
 );
-CreateParametreActionMarketing(ParametreAction:ParametreActionMarketing,idAction:String){
-  return this.httpclient.post<OneParametreActionMarketingResponse>(environment.backend_url_Publicite+"CreateParametreActionMarketing/"+idAction,ParametreAction,{ headers: this.header });
+CreateParametreActionMarketing(ParametreAction:ParametreActionMarketing){
+  return this.httpclient.post<OneParametreActionMarketingResponse>(environment.backend_url_Publicite+"CreateParametreActionMarketing/",ParametreAction,{ headers: this.header });
 
 }
 findAllParametreActionMarketing(){

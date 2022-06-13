@@ -3,16 +3,102 @@
   <nb-card-header>
     <div class="row">
       <div class="col-md-6"><span style="font-size: 20px;">Paramétrage  d'une Action Marketing</span></div>
-      <div class="col-md-6"><span style="float: right"> Action Marketing&nbsp;&nbsp;</span></div>
     </div>
   </nb-card-header>
   <nb-card-body>
 
-    
+ 
+
 
     <div style="display : flex;justify-content: between;flex-wrap: wrap;">
     <ng-template ngFor let-part [ngForOf]="checkedpartners" let-i="index">
-        <p-card header="{{part.partenaire.abbreviation}}" subheader="{{part.partenaire.adresse}}" [style]="{height: '250px',width:'250px',margin:'10px'}" styleClass="ui-card-shadow">
+
+
+
+      <div class="mt-5" style="margin: 10px;">
+
+        <div class="card">
+          
+          <div class="top-container">
+          
+            <img src="https://www.pginsight.com/wp-content/uploads/2017/03/icone-points-de-vente-magasin.png" class="img-fluid profile-image" width="70">
+            
+            
+            <div class="ml-3">
+              <h5 class="name">{{part.partenaire.abbreviation}}</h5>
+              <p class="bumeroTel">{{part.partenaire.nTel}}</p>
+            </div>
+          </div>
+      
+      
+          <div class="middle-container d-flex justify-content-between align-items-center mt-3 p-2" *ngIf="part.partenaire.statut==0">
+              <div class="dollar-div px-3 cursor" (click)="SendtoPartner(part)">
+                
+                <div class="round-div"><i class="fa fa-paper-plane"></i></div>
+      
+              </div>
+              <div class="d-flex flex-column text-right mr-2">
+                <input fullWidth type="number" min="0" nbInput placeholder="TND" [(ngModel)]="part.prix">
+              </div>
+      
+          </div>
+
+          <div class="middle-container d-flex justify-content-between align-items-center mt-3 p-2" *ngIf="part.partenaire.statut!=0">
+            <div class="dollar-div px-3">
+              
+              <div class="round-div" *ngIf="part.partenaire.statut==1">  <mat-spinner [diameter]="20" [color]="warn"></mat-spinner></div>
+              <div class="round-div" style="background-color: #8DCE4C;" *ngIf="part.partenaire.statut==2"><i  class="fa fa-check"nbTooltip="Acceptée" nbTooltipPlacement="bottom"></i></div>
+              <div class="round-div" style="background-color: rgb(228, 83, 83);"*ngIf="part.partenaire.statut==3"><i  class="fa fa-times "nbTooltip="Refusée" nbTooltipPlacement="bottom"></i></div>
+
+    
+            </div>
+            <div class="d-flex flex-column text-right mr-2">
+              <input fullWidth type="number" min="0" nbInput placeholder="TND" [(ngModel)]="part.prix" disabled>
+            </div>
+    
+        </div>
+      
+          <div class="recent-border mt-4">
+            <span class="recent-orders">Pointes de Vente</span>
+          </div>
+          <div class="wishlist-border pt-2">
+            <ul>
+              <li *ngFor="let point of part.partenaire.listePointVente">{{point.designation}}</li>
+            </ul>
+          </div>
+          
+          
+        </div>
+        
+      </div>
+
+
+
+
+
+
+
+     <!-- <mat-card class="example-card" style="background-color: white; color:black" (click)="Checked(part)" [ngClass]="{'cardvisited': (!part.checked)}">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{part.partenaire.abbreviation}}</mat-card-title>
+    <mat-card-subtitle style="color: black;min-height: 80px;"><span style="color: red;">Addresse : </span> {{part.partenaire.adresse}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Pointes de Vente : </p>
+    <ul>
+      <li *ngFor="let point of part.partenaire.listePointVente">{{point.designation}}</li>
+    </ul>
+  </mat-card-content>
+</mat-card> -->
+      
+      
+      
+
+
+
+
+        <!-- <p-card header="{{part.partenaire.abbreviation}}" subheader="{{part.partenaire.adresse}}" [style]="{height: '250px',width:'250px',margin:'10px'}" styleClass="ui-card-shadow">
             <p-header>
               <nb-checkbox status="primary" [(ngModel)]="part.checked" style="float:right"></nb-checkbox>
             </p-header>
@@ -24,7 +110,7 @@
             <p-footer style="margin-bottom: 0px;" >
 
             </p-footer>
-        </p-card>
+        </p-card> -->
     </ng-template>
     </div>
 

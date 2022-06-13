@@ -3,7 +3,7 @@ export const MENU_ITEMSTABLEAU: NbMenuItem[] = [
   {
     title: 'Home',
     icon: 'home-outline',
-    link: '/pages/home',
+    link: '/pages/gestionpub/gestionactionmarketin/dashboard-principale/',
 
   },
   {
@@ -27,7 +27,7 @@ export const MENU_ITEMSADMIN: NbMenuItem[] = [
   {
     title: 'Home',
     icon: 'home-outline',
-    link: '/pages/home',
+    link: '/pages/gestionpub/gestionactionmarketin/dashboard-principale/',
 
   },
   {
@@ -54,6 +54,12 @@ export const MENU_ITEMSADMIN: NbMenuItem[] = [
       },
 
     ],
+  },
+  {
+    title: 'Configuration Générale',
+    icon: 'settings-2-outline',
+    link: '/pages/gestionpub/gestionactionmarketingadmin/configuration',
+
   },
 
 

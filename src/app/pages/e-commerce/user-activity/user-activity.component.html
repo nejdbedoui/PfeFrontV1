@@ -1,0 +1,41 @@
+<nb-card size="medium">
+
+  <nb-card-header>
+    <span>Historique</span>
+    <nb-select [selected]="type" (selectedChange)="getUserActivity($event); type = $event">
+      <nb-option *ngFor="let t of types" [value]="t">{{ t }}</nb-option>
+    </nb-select>
+  </nb-card-header>
+
+  <nb-list class="user-activity-list">
+    <nb-list-item *ngFor="let item of userActivity">
+
+      <div class="visited-date" style="max-width: 20rem;">
+        {{ item.date |date:'short'}}
+      </div>
+
+      <div class="visited-pages-count" style="text-align:left;">
+        <div class="caption">Interaction</div>
+        <div class="value">
+          <span *ngIf="item.Interaction==0">Clique</span>
+          <span *ngIf="!item.Interaction==0">Vue</span>
+        </div>
+      </div>
+      <div class="visited-pages-count" style="text-align:left;">
+        <div class="caption">Âge</div>
+        <div class="value">{{ item.Age }}</div>
+      </div>
+
+      <div class="visited-percentages" style="text-align:left;">
+        <div class="caption">Sexe</div>
+        <div class="delta value" [class.up]="item.Sexe" [class.down]="!item.Sexe">
+          <!--<nb-icon [icon]="item.Sexe ? 'arrow-up' : 'arrow-down'" pack="eva"></nb-icon>-->
+          <span *ngIf="item.Sexe==0">Femme <i class="fa fa-venus"></i></span>
+          <span *ngIf="!item.Sexe==0">Homme <i class="fa fa-mars"></i></span>
+        </div>
+      </div>
+
+    </nb-list-item>
+  </nb-list>
+
+</nb-card>

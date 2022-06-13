@@ -6,6 +6,7 @@ import { ActionMarketing } from '../../../model/ActionMarketing';
 import { ActionMarketingDTO } from '../../../model/dto/ActionmarketingDTO';
 import { ActionMarketingDTOResponse } from '../../../model/response/ActionMarketingDTOResponse';
 import { ActionMarketingResponse } from '../../../model/response/ActionMarketingResponse';
+import { DemandeActionMarketingDTOResponse } from '../../../model/response/DemandeActionMarketingDTOResponse';
 import { OneActionMarketingResponse } from '../../../model/response/OneActionMarketingResponse';
 import { StorageResponse } from '../../../model/response/StorageResponse';
 
@@ -94,6 +95,12 @@ updateActionMarketing(Action:ActionMarketing){
     return this.httpclient.get<ActionMarketingDTOResponse>(environment.backend_url_Publicite+"findAllActionMarketingDTOByStatut/"+statut,{ headers: this.header });
 
   }
+  findAllDemandeActionMarketing(){
+    return this.httpclient.get<DemandeActionMarketingDTOResponse>(environment.backend_url_Publicite+"findAllDemandeActionMarketing/",{ headers: this.header });
+
+
+  }
+  
 
   getNotificationPartenaire(num:number,idPartenaire:string){
     return this.httpclient.get<number>(environment.backend_url_Publicite+"numbernotifpartenaire/"+idPartenaire+"/"+num,{ headers: this.header });
@@ -103,4 +110,5 @@ updateActionMarketing(Action:ActionMarketing){
     return this.httpclient.get<number>(environment.backend_url_Publicite+"numbernotif/"+num,{ headers: this.header });
 
   }
+
 }

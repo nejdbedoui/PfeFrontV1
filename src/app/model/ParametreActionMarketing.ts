@@ -1,5 +1,9 @@
 export class ParametreActionMarketing{
-      idParametreAction:String;
-    listeidPartenaire:String[];
-      dateCreation:Date;
+    idParametreAction:String;
+    idActionMarketing:String;
+    idUtilisateur:String;
+    idPartenaireCible:String;
+    dateCreation:Date;
+    prix:number;
+  statut: number;
 }

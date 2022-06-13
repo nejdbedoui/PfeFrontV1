@@ -6,7 +6,15 @@ export interface UserActive {
   deltaUp: boolean;
   newVisits: number;
 }
+export interface ActivityAction {
+  date: Date;
+  Age: number;
+  Interaction: boolean;
+  Sexe: boolean;
+}
 
 export abstract class UserActivityData {
-  abstract getUserActivityData(period: string): Observable<UserActive[]>;
+  abstract getUserActivityData(period: string): Observable<ActivityAction[]>;
+
 }
+
