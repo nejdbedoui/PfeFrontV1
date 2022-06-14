@@ -40,7 +40,7 @@ const routes: Routes = [
       {path:'gestionactionmarketingadmin/configuration/ajouterformat',component:ConfiguationActionsMarketingGeneraleComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketingadmin/configuration/ajouterTypeAffichage',component:CreateTypeAffichageComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketingadmin/parametrage/:id',component:ParametrageActionComponent,canActivate: [AuthGuardService]},
-      {path:'gestionactionmarketin/dashboard-principale',component:DashboardPrincipaleComponent,canActivate: [AuthGuardService]},
+      {path:'gestionactionmarketing/dashboard-principale',component:DashboardPrincipaleComponent,canActivate: [AuthGuardService]},
     ]
   },
 

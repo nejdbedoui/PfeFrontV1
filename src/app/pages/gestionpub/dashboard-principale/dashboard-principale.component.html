@@ -1,6 +1,7 @@
 <ngx-bread-crumb></ngx-bread-crumb>
 <nb-card>
 <nb-card-body>
+  
     <div class="row">
         <div class="col-md-12" >
             <ngx-charts-number-card
@@ -17,7 +18,47 @@
     <div class="row">
         <div class="col-md-8">
           <div class="pb-3">
-        
+
+            <p-carousel [value]="demandesDiffusions" [autoplayInterval]="3000" [numVisible]="2"[circular]="true">
+              <ng-template pTemplate="header">
+                  <h5>Vertical</h5>
+              </ng-template>
+              <ng-template let-demande pTemplate="item">
+                  <ul>
+
+ 
+  <li class="booking-card" [style.backgroundImage]="'url('+ demande.url +')'">
+    <div class="book-container">
+      <div class="content">
+        <a class="btn" routerLink="../detailsaction/{{demande.idActionMarketing}}">Détail</a>
+      </div>
+    </div>
+    <div class="informations-container">
+      <h2 class="title">{{demande.titre}}</h2>
+      <p class="sub-title">Demande de Diffusion</p>
+      <p class="price"><svg class="icon" style="width:24px;height:24px" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M3,6H21V18H3V6M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M7,8A2,2 0 0,1 5,10V14A2,2 0 0,1 7,16H17A2,2 0 0,1 19,14V10A2,2 0 0,1 17,8H7Z" />
+</svg>{{demande.prix}} TND</p>
+      <div class="more-information">
+        <div class="info-and-date-container">
+          <div class="box info">
+            <i  class="fa fa-check cursor buttonround editbutton"  nbTooltip="Accepter"(click)=GererDemande() nbTooltipPlacement="bottom"></i>
+          </div>
+          <div class="box date">
+            <i  class="fa fa-times cursor buttonround deletebutton" (click)="GererDemande()" nbTooltip="Refuser" nbTooltipPlacement="bottom"></i>
+
+          </div>
+        </div>
+        <p class="disclaimer" style="margin-top: 6rem;"></p>
+        </div>
+    </div>
+  </li>
+</ul>
+              </ng-template>
+          </p-carousel>
+
+          
+<!--         
 <ul>
 
  
@@ -52,11 +93,53 @@
         </div>
     </div>
   </li>
-</ul>
+</ul> -->
+
+
 
           </div>
         </div>
-        <div class="col-md-4"> <ngx-user-activity></ngx-user-activity></div>
+        <div class="col-md-4">
+          
+
+          <nb-card size="giant">
+
+            <nb-card-header>
+              <span>Demandes en cours de diffusions</span>
+            </nb-card-header>
+          
+            <nb-list class="user-activity-list">
+              <nb-list-item *ngFor="let item of actionEncours">
+          
+                <div class="visited-date" style="min-width: 5rem;">
+                  {{ item.titre}}
+                </div>
+          
+                <div class="visited-pages-count" style="text-align:left;">
+                  <div class="caption">Interaction</div>
+                  <div class="value">
+                    {{item.canal}}
+                  </div>
+                </div>
+                <div class="visited-pages-count" style="text-align:left;">
+                  <div class="caption">Date Fin</div>
+                  <div class="value">{{ item.datefin | date:'mediumDate' }}</div>
+                </div>
+          
+                <div class="visited-percentages" style="text-align:left;">
+                  <i  class="fa fa-eye cursor buttonround affiche3button" routerLink="../detailsaction/{{item.idActionMarketing}}" nbTooltip="Ouvrir action" nbTooltipPlacement="bottom"></i>
+                </div>
+          
+              </nb-list-item>
+            </nb-list>
+          </nb-card>
+          
+
+
+
+
+
+        </div>
       </div>
 
 </nb-card-body>

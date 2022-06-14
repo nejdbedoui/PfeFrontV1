@@ -76,6 +76,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { DashboardPrincipaleComponent } from './dashboard-principale/dashboard-principale.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { Carousel, CarouselModule } from 'primeng/primeng';
 
 
 
@@ -166,6 +167,7 @@ NgxChartsModule,
 LeafletModule,
 NbListModule,
 MatGridListModule,
+CarouselModule,
 //ADDED FOR PARAMETRAGE
 MatCardModule,
 MatProgressSpinnerModule
