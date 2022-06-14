@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PointeVentePartenaireDTO } from '../../../../model/dto/PointeVentePartenaireDTO';
 import { ParametreActionMarketing } from '../../../../model/ParametreActionMarketing';
 import { PartenaireBprice } from '../../../../model/PartenaireBprice';
+import { ActionMarketingEndPointServiceService } from '../../../../service/bp-api-action-marketing/action-marketing-end-point/action-marketing-end-point-service.service';
 import { ParametreActionEndPointServiceService } from '../../../../service/bp-api-action-marketing/parametre-action-end-point/parametre-action-end-point-service.service';
 import { PartenaireBpriceEndPointService } from '../../../../service/bp-api-pos/partenaire-bprice-end-point/partenaire-bprice-end-point.service';
 import { GlobalServiceService } from '../../../../service/GlobalService/global-service.service';
@@ -20,7 +21,9 @@ export class ParametrageActionComponent implements OnInit {
   loading: boolean = true;
   idPartenaire:String;
 
-  constructor(private _GlobalService: GlobalServiceService,private _router: Router,private _partenaireBPriceService:PartenaireBpriceEndPointService,private _parametreActionService:ParametreActionEndPointServiceService, private route: ActivatedRoute) { 
+  constructor(private _actionMarketingService: ActionMarketingEndPointServiceService,private _GlobalService: GlobalServiceService,private _router: Router,private _partenaireBPriceService:PartenaireBpriceEndPointService,private _parametreActionService:ParametreActionEndPointServiceService, private route: ActivatedRoute) { 
+
+
   }
 idAction:String;
 idUser:String;
@@ -80,6 +83,34 @@ SendtoPartner(parametreAvecPrix:ParametreAvecPrix){
       }
     });
   }
+
+
+OnSubmit(){
+  let parametre:ParametreActionMarketing = new ParametreActionMarketing();
+  parametre.listeidPartenaire=[];
+  this.checkedpartners.forEach(value=>{
+    if(value.checked){
+      parametre.listeidPartenaire.push(value.partenaire.idPartenaire);
+    }
+  })
+  if(parametre.listeidPartenaire.length>0){
+    this._parametreActionService.CreateParametreActionMarketing(parametre,this.idAction).subscribe(response=>{
+      if(response.result==1){
+        if (response.result == 1) {
+          this._GlobalService.showToast("success", "success", "Action paramétrée avec succès")
+          this._router.navigateByUrl("pages/gestionpub/gestionactionmarketingadmin");
+        } else
+          this._GlobalService.showToast("danger", "Erreur", response.errorDescription)
+    
+      }
+    });
+    this._actionMarketingService.findByidActionMarketing(this.idAction).subscribe(val1 => {
+      val1.objectResponse.notification=1;
+      this._actionMarketingService.updateActionMarketing(val1.objectResponse);
+    })
+    
+  }
+}
 
 }
 export class ParametreAvecPrix {

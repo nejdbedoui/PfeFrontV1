@@ -27,7 +27,10 @@
       <nb-search type="rotate-layout"></nb-search>
     </nb-action>
     <nb-action class="control-item" icon="email-outline"></nb-action>
-    <nb-action class="control-item" icon="bell-outline"></nb-action>
+    <nb-action class="control-item" [nbContextMenu]="notificationmenu"
+     [badgeText]="notification"  icon="bell-outline" badgeStatus="danger" badgePosition="bottom right">
+      
+    </nb-action>
    <!--  <nb-action class="user-action" *nbIsGranted="['view', 'user']" >
       <nb-user [nbContextMenu]="userMenu"
                 nbContextMenuTag="my-context-menu"
