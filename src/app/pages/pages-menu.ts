@@ -3,7 +3,7 @@ export const MENU_ITEMSTABLEAU: NbMenuItem[] = [
   {
     title: 'Home',
     icon: 'home-outline',
-    link: '/pages/gestionpub/gestionactionmarketin/dashboard-principale/',
+    link: '/pages/gestionpub/gestionactionmarketing/dashboard-principale/',
 
   },
   {
@@ -27,7 +27,7 @@ export const MENU_ITEMSADMIN: NbMenuItem[] = [
   {
     title: 'Home',
     icon: 'home-outline',
-    link: '/pages/gestionpub/gestionactionmarketin/dashboard-principale/',
+    link: '/pages/gestionpub/gestionactionmarketing/dashboard-principale/',
 
   },
   {
