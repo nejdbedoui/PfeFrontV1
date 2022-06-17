@@ -131,12 +131,12 @@ filterFn:any;
 
   InstanciateForm() {
     this.ActionForm1 = this._FormBuilder.group({
-      CanalDiffusion: [new CanalDiffusion, [Validators.required]],//
-      LienPub: ['', [Validators.required]],//
-      titre: ['', [Validators.required]],//
-      Description: ['', [Validators.required]],//
-      dateDebutPub: [null, [Validators.required]],//
-      dateFinPub: [null, [Validators.required]],//
+      CanalDiffusion: [new CanalDiffusion, []],//
+      LienPub: ['', []],//
+      titre: ['', []],//
+      Description: ['', []],//
+      dateDebutPub: [null, []],//
+      dateFinPub: [null, []],//
     });
 
     this.ActionForm2 = this._FormBuilder.group({

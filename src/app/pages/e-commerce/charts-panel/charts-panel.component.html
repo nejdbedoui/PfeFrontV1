@@ -1,6 +1,5 @@
-<nb-card size="large">
-  <nb-tabset fullWidth (changeTab)="changeTab($event)">
-    <nb-tab tabTitle="Orders">
+  <!-- <nb-tabset fullWidth (changeTab)="changeTab($event)">
+    <nb-tab tabTitle="Orders"> -->
       <div class="chart-container">
         <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
         <ngx-chart-panel-header [type]="period"
@@ -8,8 +7,8 @@
         </ngx-chart-panel-header>
         <ngx-orders-chart #ordersChart [ordersChartData]="ordersChartData"></ngx-orders-chart>
       </div>
-    </nb-tab>
-    <nb-tab tabTitle="Profit" [lazyLoad]="true">
+    <!-- </nb-tab> -->
+    <!-- <nb-tab tabTitle="Profit" [lazyLoad]="true">
       <div class="chart-container">
         <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
         <ngx-chart-panel-header [type]="period"
@@ -21,6 +20,5 @@
     </nb-tab>
     <nb-tab tabTitle="Pie Chart" [lazyLoad]="true">
       <dashboard-vue-et-clickstatistics [value]="pieChartValue"></dashboard-vue-et-clickstatistics>
-  </nb-tab>
-  </nb-tabset>
-</nb-card>
+  </nb-tab> -->
+  <!-- </nb-tabset> -->

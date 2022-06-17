@@ -85,33 +85,6 @@ SendtoPartner(parametreAvecPrix:ParametreAvecPrix){
   }
 
 
-OnSubmit(){
-  let parametre:ParametreActionMarketing = new ParametreActionMarketing();
-  parametre.listeidPartenaire=[];
-  this.checkedpartners.forEach(value=>{
-    if(value.checked){
-      parametre.listeidPartenaire.push(value.partenaire.idPartenaire);
-    }
-  })
-  if(parametre.listeidPartenaire.length>0){
-    this._parametreActionService.CreateParametreActionMarketing(parametre,this.idAction).subscribe(response=>{
-      if(response.result==1){
-        if (response.result == 1) {
-          this._GlobalService.showToast("success", "success", "Action paramétrée avec succès")
-          this._router.navigateByUrl("pages/gestionpub/gestionactionmarketingadmin");
-        } else
-          this._GlobalService.showToast("danger", "Erreur", response.errorDescription)
-    
-      }
-    });
-    this._actionMarketingService.findByidActionMarketing(this.idAction).subscribe(val1 => {
-      val1.objectResponse.notification=1;
-      this._actionMarketingService.updateActionMarketing(val1.objectResponse);
-    })
-    
-  }
-}
-
 }
 export class ParametreAvecPrix {
  partenaire:PointeVentePartenaireDTO;

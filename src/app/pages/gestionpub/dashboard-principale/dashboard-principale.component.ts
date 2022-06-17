@@ -19,20 +19,20 @@ export class DashboardPrincipaleComponent implements OnInit {
   ngOnInit() {
     this.getAllDemandeActionsMarketing(this.idPartenaire);
     this.getAllDemandeDiffusion(this.idPartenaire);
+    console.log(this.idPartenaire)
   }
 actionEncours:ActionEnCoursDeDiffusionDTO[];
 demandesDiffusions:DemandeDiffusionDTO[];
   currentTheme: string;
 
   constructor(private themeService: NbThemeService,
-    private userActivityService: UserActivityData,private _dashboardGeneraleService : DashboardGeneraleEndPointServiceService) {
+  private _dashboardGeneraleService : DashboardGeneraleEndPointServiceService) {
         this.themeService.getJsTheme()
       .pipe(takeWhile(() => this.alive))
       .subscribe(theme => {
         this.currentTheme = theme.name;
     });
 
-    this.getUserActivity('week');
 
 
 
@@ -45,7 +45,6 @@ demandesDiffusions:DemandeDiffusionDTO[];
     this.loading = true;
      this._dashboardGeneraleService.findAllActionEnCourDeDiffusionByIdPartenaire(idPartenaire).subscribe(response=>
       {
-        console.log(response)
         if(response.result==1){
           this.actionEncours=response.objectResponse;
           
@@ -62,6 +61,7 @@ demandesDiffusions:DemandeDiffusionDTO[];
         console.log(response)
         if(response.result==1){
           this.demandesDiffusions=response.objectResponse;
+          this.getNumberCardData();
           
           this.loading = false;
         }
@@ -70,11 +70,22 @@ demandesDiffusions:DemandeDiffusionDTO[];
      
    }
 
+   //if (this.ListeCanalDiffusion.indexOf(value.canal) === -1) {
+    //this.ListeCanalDiffusion.push(value.canal);
+  //}
+   numberCard:ngxcard[];
+   getNumberCardData(){
+   this.single[0].value = this.demandesDiffusions.length;
+   this.single[2].value = this.demandesDiffusions.reduce((accumulator, obj)=>{
+    return accumulator+obj.prix;
+   },0);
+   }
+
 
   single: ngxcard[]=[
     {
       "name":"Demandes en attente",
-      "value":10
+      "value":5
     },
     {
       "name":"Total des revenus en TND",
@@ -108,14 +119,7 @@ demandesDiffusions:DemandeDiffusionDTO[];
 
 
 
-  getUserActivity(period: string) {
-    this.userActivityService.getUserActivityData('week')
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(userActivityData => {
-        this.userActivity = userActivityData;
-      });
-      console.log(this.userActivity)
-  }
+  
 
   ngOnDestroy() {
     this.alive = false;
