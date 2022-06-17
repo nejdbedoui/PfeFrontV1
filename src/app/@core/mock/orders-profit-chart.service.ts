@@ -16,14 +16,6 @@ export class OrdersProfitChartService extends OrdersProfitChartData {
       title: "Clique d'Aujourd'hui",
       value: 3,
     },
-    {
-      title: 'Last Week',
-      value: 654,
-    },
-    {
-      title: 'Today',
-      value: 230,
-    },
   ];
 
   constructor(private ordersChartService: OrdersChartData,

@@ -108,7 +108,7 @@ export class CreateClientBpriceComponent implements OnInit {
       console.log(devise.objectResponse);
       this.listdevise=devise.objectResponse
     })
-    $(".dataTables_empty").text("There are currently no xyz available for this.");
+   // $(".dataTables_empty").text("There are currently no xyz available for this.");
 
     this.dtOptions = {
       paging: false,

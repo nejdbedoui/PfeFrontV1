@@ -7,6 +7,7 @@ export class DetailsActionDTO{
     urlmedia:string;
     canaldifusion:string;
     formataffichage:string;
+    idSector:String;
 }
 
 

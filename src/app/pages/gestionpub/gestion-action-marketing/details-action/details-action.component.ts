@@ -51,11 +51,10 @@ this.id=this.route.snapshot.paramMap.get('id');
       }
     });
 
-this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaire2")).subscribe(val=>
-  {
-    this.getAllSectors(val.objectResponse.idSector);
-  }
-  )
+
+    
+    
+  
 
 
   }
@@ -120,18 +119,16 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaire2")).
   InstanciateForm() {
 
     this.ActionForm = this._FormBuilder.group({
-      SecteurActivite: [this.categorie.designation, [Validators.required]],
-      CanalDiffusion: [this.action.idCanaldiffusion, [Validators.required]],
-      LienPub: [this.action.externUrl, [Validators.required]],
       titre: [this.action.titre, [Validators.required]],
       Description: [this.action.description, [Validators.required]],
+      Frequence: [this.action.frequence, [Validators.required]],
       dateDebutPub: [this.action.dateDebut, [Validators.required]],
       dateFinPub: [this.action.dateFin, [Validators.required]],
       myChoices: [new FormArray([]), []],
       Atatchement: [null, [Validators.required]],
       SMSBody: [this.action.smsBody, []],
       TypeContenue: [this.action.idFormatAffichage, []],
-      Frequence: [this.action.frequence, [Validators.required]],
+      
 
 
 
@@ -140,6 +137,12 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaire2")).
   }
   get formControls() { return this.ActionForm.controls; }
   modifier() {
+    if(!this.ActionForm){
+      this.InstanciateForm();
+    }
+    if(!this.sectors){
+      this.getAllSectors(this.details.idSector);
+    }
     this.activer = !this.activer;
   }
   submit() {

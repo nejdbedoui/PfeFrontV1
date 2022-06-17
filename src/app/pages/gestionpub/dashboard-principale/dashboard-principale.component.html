@@ -2,13 +2,12 @@
 <nb-card>
 <nb-card-body>
   
-    <div class="row">
+    <div class="row" *ngIf="!loading">
         <div class="col-md-12" >
             <ngx-charts-number-card
             [scheme]="colorScheme"
             [results]="single"
             [cardColor]="cardColor"
-            (select)="onSelect($event)"
             [animations]="true"
             >
           </ngx-charts-number-card>
@@ -102,7 +101,7 @@
         <div class="col-md-4">
           
 
-          <nb-card size="giant">
+         
 
             <nb-card-header>
               <span>Demandes en cours de diffusions</span>
@@ -132,7 +131,7 @@
           
               </nb-list-item>
             </nb-list>
-          </nb-card>
+
           
 
 

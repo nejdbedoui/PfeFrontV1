@@ -127,11 +127,12 @@
                     <label *ngIf=" isSubmitted && (formControls.Frequence.errors )" class="label-has-error">
                         <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une frequence </label>
 
-                    <nb-select placeholder="Secteur d'activité" fullWidth formControlName="SecteurActivite">
+                    <!-- <nb-select placeholder="Secteur d'activité" fullWidth formControlName="SecteurActivite">
                         <nb-option *ngFor="let sctor of sectors" [value]="sctor.idCategorie">{{sctor.libelle}}
                         </nb-option>
                         <nb-option value="autre">Autre</nb-option>
-                    </nb-select> <input *ngIf="SecteurActivite=='Autre'" type="text" nbInput
+                    </nb-select> -->
+                    <input *ngIf="SecteurActivite=='Autre'" type="text" nbInput
                         placeholder="Libellé Categorie">
                     <label *ngIf=" isSubmitted && (formControls.SecteurActivite.errors )" class="label-has-error">
                         <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Secteur </label>

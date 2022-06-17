@@ -122,7 +122,7 @@ placeholder="Description de votre Action Marketing"></textarea>
         <nb-step (click)="step1()" [stepControl]="ActionForm2" [label]="labelTwo">
           <ng-template #labelTwo>Contenu</ng-template>
           <form  [formGroup]="ActionForm2" >
-          <div *ngIf="canal1=='SMS'">
+          <div *ngIf="canal1=='SMS'" class="SMS">
             <textarea nbInput placeholder="Votre SMS d'envoie" formControlName="SMSBody"></textarea>
             <br>  <label *ngIf=" isSubmitted2 && (formControls2.SMSBody.errors )" class="label-has-error">
                 <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la contenue du sms </label>
@@ -298,7 +298,7 @@ placeholder="Description de votre Action Marketing"></textarea>
                     <button style="float: left; " nbButton nbStepperPrevious>Retour</button>
                 </div>
                 <div class="col-md-6">
-                <button [disabled]="disable" [nbSpinner]="disable" style="float: right"  nbButton nbStepperNext>Suivant</button>
+                <button [disabled]="disable" [nbSpinner]="disable" style="float: right" id="Button" nbButton nbStepperNext>Suivant</button>
                 </div>
                                    </div>
           

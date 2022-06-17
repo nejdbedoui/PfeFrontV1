@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { GestionpubRoutingRoutingModule } from './gestionpub-routing.module';
 import { GestionpubComponent } from './gestionpub.component';
 import { GestionActionMarketingComponent } from './gestion-action-marketing/gestion-action-marketing.component';
@@ -39,9 +39,6 @@ import { ECommerceVisitorsAnalyticsChartComponent } from '../e-commerce/visitors
 import { SlideOutComponent } from '../e-commerce/slide-out/slide-out.component';
 import { ECommerceVisitorsStatisticsComponent } from '../e-commerce/visitors-analytics/visitors-statistics/visitors-statistics.component';
 import { ECommerceVisitorsAnalyticsComponent } from '../e-commerce/visitors-analytics/visitors-analytics.component';
-import { DashboardStatistiqueclicketvueChartComponent } from './dashboard-real-time/Vue-Et-Click-Chart-analytics/visitors-analytics-chart/visitors-analytics-chart.component';
-import { DashboardVueEtClickStatisticsComponent } from './dashboard-real-time/Vue-Et-Click-Chart-analytics/visitors-statistics/visitors-statistics.component';
-import { DashboardStatistiqueVueEtClick } from './dashboard-real-time/Vue-Et-Click-Chart-analytics/visitors-analytics.component';
 import { ECommerceUserActivityComponent } from '../e-commerce/user-activity/user-activity.component';
 import { ECommerceChartsPanelComponent } from '../e-commerce/charts-panel/charts-panel.component';
 import { ChartPanelSummaryComponent } from '../e-commerce/charts-panel/chart-panel-summary/chart-panel-summary.component';
@@ -83,7 +80,10 @@ import { Carousel, CarouselModule } from 'primeng/primeng';
 
 
 @NgModule({
-  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, DetailsActionComponent, GestionActionMarketingAdminComponent, DetailActionComponent, ActionMobileComponent, ActionSmsComponent, ActionTvComponent, ParametrageActionComponent, GestionContractComponent, DashboardRealTimeComponent,ECommerceLegendChartComponent,SlideOutComponent,DashboardStatistiqueclicketvueChartComponent,DashboardVueEtClickStatisticsComponent,DashboardStatistiqueVueEtClick,
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
+  declarations: [GestionpubComponent, GestionActionMarketingComponent, CreateActionComponent, DetailsActionComponent, GestionActionMarketingAdminComponent, DetailActionComponent, ActionMobileComponent, ActionSmsComponent, ActionTvComponent, ParametrageActionComponent, GestionContractComponent, DashboardRealTimeComponent,ECommerceLegendChartComponent,SlideOutComponent,
     ECommerceComponent,
     StatsCardFrontComponent,
     StatsAreaChartComponent,
