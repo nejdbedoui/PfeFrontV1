@@ -41,7 +41,7 @@
                       <td>{{Canal.libelle}}</td>              
                       <td>{{getStatus(Canal.factif)}}</td>
                     <td >
-                      <nb-toggle status="danger" style="margin-left: 10px;" [checked]="Canal.factif" (checkedChange)="ChangeStatusCan(Canal)"></nb-toggle> <br>
+                      <nb-toggle [status]="(Canal.factif==0) ? 'danger' : 'success' " style="margin-left: 10px;" [checked]="Canal.factif" (checkedChange)="ChangeStatusCan(Canal)" style="position:relative; top:11px"></nb-toggle>
                       <i  class="fa fa-trash cursor buttonround deletebutton" nbTooltip="Supprimer Canal" nbTooltipPlacement="bottom" (click)="DeleteCanalDiff(Canal)"></i> 
                     </td>
                   </tr>
@@ -81,7 +81,7 @@
                       <td>{{Population.age[0]}} -{{Population.age[1]}} </td>   
                       <td>{{getSexe(Population.sexe)}}</td>
                     <td >
-                      <nb-toggle status="danger" style="margin-left: 10px;" [checked]="Population.factif" (checkedChange)="ChangeStatusPop(Population)"></nb-toggle> <br>
+                      <nb-toggle [status]="(Population.factif==0) ? 'danger' : 'success' " style="margin-left: 10px;" [checked]="Population.factif" (checkedChange)="ChangeStatusPop(Population)" style="position:relative; top:11px"></nb-toggle>
                       <i  class="fa fa-trash cursor buttonround deletebutton" nbTooltip="Supprimer Population Cible"(click)="DeletePopulationCible(Population)" nbTooltipPlacement="bottom"></i>
                     </td>
                   </tr>
@@ -122,7 +122,7 @@
                       <td>{{getStatus(Format.factif)}}</td>
                       <td>{{Format.type}} </td>   
                     <td >
-                      <nb-toggle status="danger" style="margin-left: 10px;" [checked]="Format.factif" (checkedChange)="ChangeStatusForm(Format)"></nb-toggle> <br>
+                      <nb-toggle [status]="(Format.factif==0) ? 'danger' : 'success' " style="margin-left: 10px;" [checked]="Format.factif" (checkedChange)="ChangeStatusForm(Format)" style="position:relative; top:11px"></nb-toggle>
                       <i  class="fa fa-trash cursor buttonround deletebutton" nbTooltip="Supprimer Population Cible" nbTooltipPlacement="bottom" (click)="DeleteFormatAffichage(Format)"></i> 
                       
                     </td>
@@ -174,7 +174,7 @@
                     <td>{{Type.libelle}}</td>              
                     <td>{{getStatus(Type.factif)}}</td>
                   <td >
-                    <nb-toggle status="danger" style="margin-left: 10px;" [checked]="Type.factif" (checkedChange)="ChangeStatusType(Type)"></nb-toggle> <br>
+                    <nb-toggle [status]="(Type.factif==0) ? 'danger' : 'success' " style="margin-left: 10px;" [checked]="Type.factif" (checkedChange)="ChangeStatusType(Type)" style="position:relative; top:11px"></nb-toggle>
                     <i  class="fa fa-trash cursor buttonround deletebutton" nbTooltip="Supprimer Type d'Affichage" nbTooltipPlacement="bottom" (click)="DeleteTypeAffichage(Type)"></i> 
                   </td>
                 </tr>

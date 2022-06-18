@@ -21,8 +21,8 @@ export class DashboardPrincipaleComponent implements OnInit {
     this.getAllDemandeDiffusion(this.idPartenaire);
     console.log(this.idPartenaire)
   }
-actionEncours:ActionEnCoursDeDiffusionDTO[];
-demandesDiffusions:DemandeDiffusionDTO[];
+actionEncours:ActionEnCoursDeDiffusionDTO[] = [];
+demandesDiffusions:DemandeDiffusionDTO[] = [];
   currentTheme: string;
 
   constructor(private themeService: NbThemeService,
@@ -56,13 +56,18 @@ demandesDiffusions:DemandeDiffusionDTO[];
    }
    getAllDemandeDiffusion(idPartenaire:String){
     this.loading = true;
-     this._dashboardGeneraleService.findAllDemandeDiffusionDTOByIdPartenaire(idPartenaire).subscribe(response=>
+     this._dashboardGeneraleService.findAllDemandeDiffusionDTOByIdPartenaire(idPartenaire).subscribe(async response=>
       {
         console.log(response)
         if(response.result==1){
           this.demandesDiffusions=response.objectResponse;
-          this.getNumberCardData();
-          
+         let res = await this._dashboardGeneraleService.findTotalRevenueAndNombreDemandeEnCour(this.idPartenaire).toPromise();
+          this.single[0].value = this.demandesDiffusions.length;
+          this.single[2].value = this.demandesDiffusions.reduce((accumulator, obj)=>{
+           return accumulator+obj.prix;
+          },0);
+          this.single[1].value=res.objectResponse.totalRevenueDesDemandes;
+          this.single[3].value=res.objectResponse.demandeEncoursDeDiffusion;
           this.loading = false;
         }
       }
@@ -74,30 +79,25 @@ demandesDiffusions:DemandeDiffusionDTO[];
     //this.ListeCanalDiffusion.push(value.canal);
   //}
    numberCard:ngxcard[];
-   getNumberCardData(){
-   this.single[0].value = this.demandesDiffusions.length;
-   this.single[2].value = this.demandesDiffusions.reduce((accumulator, obj)=>{
-    return accumulator+obj.prix;
-   },0);
-   }
+
 
 
   single: ngxcard[]=[
     {
       "name":"Demandes en attente",
-      "value":5
+      "value":0
     },
     {
       "name":"Total des revenus en TND",
-      "value":100
+      "value":0
     },
     {
       "name":"Revenue potentiel en TND",
-      "value":27
+      "value":0
     },
     {
-      "name":"Age Maximum Cliqué",
-      "value":54
+      "name":"Nombre des demandes diffusantes",
+      "value":0
     },
   ];
 

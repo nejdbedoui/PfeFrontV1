@@ -14,11 +14,11 @@
         </div>
 
     </div>
-    <div class="row">
+    <div class="row" *ngIf="!loading">
         <div class="col-md-8">
           <div class="pb-3">
 
-            <p-carousel [value]="demandesDiffusions" [autoplayInterval]="3000" [numVisible]="2"[circular]="true">
+            <p-carousel  [value]="demandesDiffusions" *ngIf="demandesDiffusions && demandesDiffusions.length > 0" [autoplayInterval]="3000" [numVisible]="(demandesDiffusions.length == 1) ? '1' : '2' " [circular]="demandesDiffusions.length > 1">
               <ng-template pTemplate="header">
                   <h5>Vertical</h5>
               </ng-template>

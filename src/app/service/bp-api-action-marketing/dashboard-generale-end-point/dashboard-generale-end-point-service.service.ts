@@ -27,4 +27,7 @@ findAllActionEnCourDeDiffusionByIdPartenaire(idPartenaire:String){
 findAllDemandeDiffusionDTOByIdPartenaire(idPartenaire:String){
   return this.httpclient.get<DemandeDiffusionDTOResponse>(environment.backend_url_Publicite+"findAllDemandeDiffusionDTOByIdPartenaire/"+idPartenaire,{ headers: this.header }); 
 }
+findTotalRevenueAndNombreDemandeEnCour(idPartenaire:String){
+  return this.httpclient.get<any>(environment.backend_url_Publicite+"findTotalRevenueAndNombreDemandeEnCour/"+idPartenaire,{ headers: this.header }); 
+}
 }

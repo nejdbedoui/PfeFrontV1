@@ -47,15 +47,16 @@
                   
               <span class="bold">Période d'affichage </span> <br>Du <u *ngIf="!activer">{{action.dateDebut |date:'dd/MM/yyyy'}}</u>
 
-              <input fullWidth nbInput [nbDatepicker]="datedeb" placeholder="La Date de  Debut de l'action" formControlName="dateDebutPub" *ngIf="activer">
+              <input style="width: 80%;"fullWidth nbInput [nbDatepicker]="datedeb" placeholder="La Date de  Debut de l'action" formControlName="dateDebutPub" *ngIf="activer">
                       <nb-datepicker [filter]="filterFn" #datedeb></nb-datepicker>
-                      <br> <label *ngIf=" isSubmitted1 && (formControls.dateDebutPub.errors )" class="label-has-error">
+                      <br> <label *ngIf=" isSubmitted && (formControls.dateDebutPub.errors)" class="label-has-error">
                           <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date du debut </label>
 
-              au <u *ngIf="!activer">{{action.dateFin |date:'dd/MM/yyyy'}}</u> <input *ngIf="activer" nbInput [nbDatepicker]="datefn" fullWidth placeholder="La Date de Fin de l'action" formControlName="dateFinPub">
+              au <u *ngIf="!activer">{{action.dateFin |date:'dd/MM/yyyy'}}</u> <input style="width: 82%;" *ngIf="activer" nbInput [nbDatepicker]="datefn" fullWidth placeholder="La Date de Fin de l'action" formControlName="dateFinPub">
               <nb-datepicker [filter]="filterFn"  #datefn></nb-datepicker>
-              <br>  <label *ngIf=" isSubmitted1 && (formControls.dateFinPub.errors )" class="label-has-error">
-                  <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date fin que doit être supérieur aux date du début de la diffusion </label><br> <br>
+              <br>  <label *ngIf=" isSubmitted && (formControls.dateFinPub.errors)" class="label-has-error">
+                  <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date fin que doit être supérieur aux date du début de la diffusion </label>
+                  <br> <br>
 
 
 
@@ -86,7 +87,7 @@
 
               <span class="bold" *ngIf="details.canaldifusion =='SMS'">Message SMS </span> <br> <span>{{action.smsBody}} </span><br> <br>
 
-              <span class="bold">Fréquence </span><br><span *ngIf="activer"> <input type="number" nbInput placeholder="Frequence" formControlName="Frequence">
+              <span class="bold">Fréquence </span><br><span *ngIf="activer"> Cette action va être affichée <input style="width: 30%;" type="number" nbInput placeholder="Frequence" formControlName="Frequence"> fois par jour
                 <label *ngIf=" isSubmitted && (formControls.Frequence.errors )" class="label-has-error">
                     <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une frequence </label></span> <span *ngIf="!activer">Cette action va être affichée {{action.frequence}} fois par jour </span> <br> <br>
 
