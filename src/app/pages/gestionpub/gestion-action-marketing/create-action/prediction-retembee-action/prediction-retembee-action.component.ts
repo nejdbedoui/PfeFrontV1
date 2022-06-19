@@ -4,6 +4,7 @@ import { NbThemeService } from '@nebular/theme';
 import { forkJoin } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 import { VisitorsAnalyticsData, OutlineData } from '../../../../../@core/data/visitors-analytics';
+import { LayoutService } from '../../../../../@core/utils';
 import { SystemePredictionServiceService } from '../../../../../service/bp-api-action-marketing/systeme-prediction-end-point/systeme-prediction-service.service';
 import { ngxcard } from '../../../dashboard-principale/dashboard-principale.component';
 
@@ -16,12 +17,8 @@ export class PredictionRetembeeActionComponent implements OnInit {
   visitorsAnalyticsData: { innerLine: number[]; outerLine: OutlineData[]; };
 
   constructor(private _predictionService:SystemePredictionServiceService,private themeService: NbThemeService,
-    private visitorsAnalyticsChartService: VisitorsAnalyticsData) { 
-      this.themeService.getJsTheme()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(theme => {
-        this.setLegendItems(theme.variables.visitorsLegend);
-      });
+    private visitorsAnalyticsChartService: VisitorsAnalyticsData,private layoutService: LayoutService) { 
+      
 
     // forkJoin(
     //   this.visitorsAnalyticsChartService.getInnerLineChartData(),
@@ -46,6 +43,7 @@ export class PredictionRetembeeActionComponent implements OnInit {
       "sexe":2
   };
   }
+  
 loading:boolean;
   ngOnInit() {
     this.predict();
@@ -119,13 +117,13 @@ console.log(this.listepredcliquewithdate)
   this.listepredvuewithdate.forEach(value=>{
     this.totalVue+=(value.nbreVue * countOccurrences(this.daysOfWeek,value.day,0));
   })
-  this.single[0].value=this.totalVue;
+  this.single[0].value=Math.round(this.totalVue);
   
   this.listepredcliquewithdate.forEach(value=>{
     this.totalClique+=(value.nbreClique * countOccurrences(this.daysOfWeek,value.day,0));
   })
   this.getChartData();
-  this.single[1].value=this.totalClique;
+  this.single[1].value=Math.round(this.totalClique);
   
   this.loading = false;
 })
@@ -144,9 +142,7 @@ let outerLine: OutlineData[] = [];
          innerLine: this.listeVue,
          outerLine: outerLine,
          };
-  this.pieChartValue = (this.totalVue/this.totalClique)*100;
-  console.log(this.totalClique)
-  console.log(this.totalVue)
+  this.pieChartValue = (this.totalClique/this.totalVue)*100;
 
 
   this.chartload=false
@@ -155,26 +151,15 @@ let outerLine: OutlineData[] = [];
   private alive = true;
 
   pieChartValue: number;
-  chartLegend: {iconColor: string; title: string}[];
 
- 
 
-  setLegendItems(visitorsLegend): void {
-    this.chartLegend = [
-      {
-        iconColor: visitorsLegend.firstIcon,
-        title: 'Nombre des cliques probable',
-      },
-      {
-        iconColor: visitorsLegend.secondIcon,
-        title: 'Nombre des vues probable',
-      },
-    ];
-  }
 
   ngOnDestroy() {
     this.alive = false;
   }
+
+
+
 }
 export class PredVueAvecDate{
   nbreVue:number;

@@ -149,7 +149,7 @@ export class ECommerceVisitorsAnalyticsChartComponent implements AfterViewInit, 
       },
       lineStyle: {
         normal: {
-          width: eTheme.lineWidth,
+          width: 7,
           type: eTheme.lineStyle,
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
             offset: 0,
@@ -167,10 +167,10 @@ export class ECommerceVisitorsAnalyticsChartComponent implements AfterViewInit, 
         normal: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
             offset: 0,
-            color: eTheme.areaGradFrom,
+            color: "#fcbc34",
           }, {
             offset: 1,
-            color: eTheme.areaGradTo,
+            color: "#fcbc34",
           }]),
         },
       },
@@ -197,7 +197,7 @@ export class ECommerceVisitorsAnalyticsChartComponent implements AfterViewInit, 
       },
       lineStyle: {
         normal: {
-          width: eTheme.innerLineWidth,
+          width: 7,
           type: eTheme.innerLineStyle,
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1),
         },
