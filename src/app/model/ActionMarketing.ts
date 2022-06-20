@@ -19,5 +19,6 @@ export class ActionMarketing{
       statut:number;//crée ,accepter ,refuser ,en cours diffusion
       notification:number;
       dateCreation:Date;
+      auto:boolean;
 }
 

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NbThemeService } from '@nebular/theme';
 import { forkJoin } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+import { delay, takeWhile } from 'rxjs/operators';
 import { VisitorsAnalyticsData, OutlineData } from '../../../../../@core/data/visitors-analytics';
 import { LayoutService } from '../../../../../@core/utils';
 import { ActionMarketing } from '../../../../../model/ActionMarketing';
@@ -130,6 +130,8 @@ getNombreJour(){
   console.log(this.prediction)
   let dateDeb = new Date(this.action.dateDebut);
   let dateF = new Date (this.action.dateFin);
+
+
    while (dateDeb <= dateF) {
      this.daysOfWeek.push(dateDeb.getDay());
      dateDeb.setDate(dateDeb.getDate() + 1);
@@ -144,7 +146,7 @@ listepredcliquewithdate:PredCliqueAvecDate[] = [];
 
   predict(){
 
-    console.log(this.totalClique)
+
     const countOccurrences = (arr, val,rep) => arr.reduce((a, v) => (v === val ? a + 1 : a), rep);
     this.loading = true;
 let dateD = new Date(this.prediction["dateDebut"]);

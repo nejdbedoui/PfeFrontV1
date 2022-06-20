@@ -22,4 +22,7 @@ findDetailsByAction(action:ActionMarketing){
   return this.httpclient.post<OneDetailsActionDTO>(environment.backend_url_Publicite+"findDetailsByAction/",action,{ headers: this.header });
 
 }
+sendsms(smsbody:String){
+  return this.httpclient.get<any>(environment.backend_url_Publicite+"sendSms/destination/28023738/bodysms/"+smsbody+"/application/600aac6297f53a04044d3466",{ headers: this.header }); 
+}
 }

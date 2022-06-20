@@ -13,6 +13,10 @@ import { HistoriqueInteractionEndPointServiceService } from '../../../service/bp
 import { HistoriqueInteractionAction } from '../../../model/HistoriqueInteractionAction';
 import { ActivatedRoute } from '@angular/router';
 import { OneHistoriqueInteractionActionResponse } from '../../../model/response/OneHistoriqueInteractionActionResponse';
+import { DetailsActionService } from '../../../service/bp-api-action-marketing/details-action-dto-end-point/details-action.service';
+import { ActionMarketingEndPointServiceService } from '../../../service/bp-api-action-marketing/action-marketing-end-point/action-marketing-end-point-service.service';
+import { ActionMarketing } from '../../../model/ActionMarketing';
+import { DetailsActionDTO } from '../../../model/dto/DetailsActionDTO';
 
 
 @Component({
@@ -29,16 +33,35 @@ export class DashboardRealTimeComponent implements OnInit {
 
   @ViewChild('ordersChart', { static: true }) ordersChart: OrdersChartComponent;
   @ViewChild('profitChart', { static: true }) profitChart: ProfitChartComponent;
-
+action:ActionMarketing;
+details:DetailsActionDTO;
   ngOnInit(): void {
+    
     this.idActionMarketing=this.route.snapshot.paramMap.get('id');
+
+    
+    this._actionMarketingService.findByidActionMarketing(this.idActionMarketing).subscribe(val1 => {
+      if (val1.result == 1) {
+        console.log(this.details)
+
+        this.action = val1.objectResponse
+        this._DetailsactiondtoService.findDetailsByAction(this.action).subscribe(result=>{
+          if(result.result==1){
+            this.details=result.objectResponse;
+            console.log(this.details)
+          }
+         
+        })
+      }
+    });
+
     this.getHistoriqueData(this.idActionMarketing);
     this.connect();
   }
 
 idActionMarketing:String;
 historiquesInteractions:HistoriqueInteractionAction[];
-  constructor(private route: ActivatedRoute,private ordersProfitChartService: OrdersProfitChartData,private visitorsAnalyticsChartService: VisitorsAnalyticsData,private userActivityService: UserActivityData,private _historiqueService:HistoriqueInteractionEndPointServiceService) {
+  constructor(private _actionMarketingService: ActionMarketingEndPointServiceService,private _DetailsactiondtoService:DetailsActionService,private route: ActivatedRoute,private ordersProfitChartService: OrdersProfitChartData,private visitorsAnalyticsChartService: VisitorsAnalyticsData,private userActivityService: UserActivityData,private _historiqueService:HistoriqueInteractionEndPointServiceService) {
    
 
     this.getUserActivity('week');
@@ -132,6 +155,15 @@ const today = new Date();
         this.userActivity = userActivityData;
       });
   }
+  show:boolean = false;
+  sendSMS(){
+    this._DetailsactiondtoService.sendsms(this.action.smsBody).subscribe();
+
+  }
+  changerstatut(){
+    this.show = true;
+  }
+  
 
 
   getOrdersChartData() {
