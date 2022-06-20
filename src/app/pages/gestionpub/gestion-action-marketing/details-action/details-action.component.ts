@@ -220,6 +220,7 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
       this.action.smsBody = this.ActionForm.value.SMSBody;
       this.action.typeContenue = this.ActionForm.value.TypeContenue;
       this.action.notification=1;
+
       this.populationCible.ageMax = this.ActionForm.value.agemax;
       this.populationCible.ageMin = this.ActionForm.value.agemin;
       this.populationCible.sexe = this.ActionForm.value.sexe;
@@ -233,6 +234,9 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
         }
 
       })
+=======
+      this.action.statut=1;
+
       this._actionMarketingService.updateActionMarketing(this.action).subscribe(val => {
         if (val.result == 1) {
           this.activer =false;
