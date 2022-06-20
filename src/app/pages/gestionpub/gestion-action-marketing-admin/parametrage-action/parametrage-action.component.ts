@@ -85,7 +85,20 @@ SendtoPartner(parametreAvecPrix:ParametreAvecPrix){
     });
   }
 
+submit(){
+  this._actionMarketingService.findByidActionMarketing(this.idAction).subscribe(val1 => {
+    let action=val1.objectResponse;
+    action.statut=1
 
+    this._actionMarketingService.updateActionMarketing(action).subscribe(val => {
+      if(val.result==1){
+        this._GlobalService.showToast("success", "success", "Paramètre Enregistrer avec succès")
+      }else
+      this._GlobalService.showToast("danger", "Erreur", val.errorDescription)
+    })
+  })
+  
+}
 }
 export class ParametreAvecPrix {
  partenaire:PointeVentePartenaireDTO;
