@@ -44,7 +44,7 @@
     <div class="col-md-4">
        Titre :
        <input fullWidth type="text" nbInput placeholder="Titre de votre action" formControlName="titre">
-        <br> <label *ngIf=" isSubmitted && (formControls1.titre.errors )" class="label-has-error">
+        <br> <label *ngIf=" isSubmitted1 && (formControls1.titre.errors )" class="label-has-error">
                   <i class="fas fa-exclamation-circle"></i> Veuillez Saisir un Titre </label>
 
                
@@ -52,7 +52,7 @@
 
                     Du :<input fullWidth nbInput [nbDatepicker]="datedeb" placeholder="La Date de  Debut de l'action" formControlName="dateDebutPub">
                       <nb-datepicker [filter]="filterFn" #datedeb></nb-datepicker>
-                      <br> <label *ngIf=" isSubmitted && (formControls1.dateDebutPub.errors )" class="label-has-error">
+                      <br> <label *ngIf=" isSubmitted1 && (formControls1.dateDebutPub.errors )" class="label-has-error">
                           <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date du debut </label>
 
 
@@ -65,20 +65,20 @@
     (selectedChange)="formataffichage($event)">
     <nb-option *ngFor="let canal of canal" [value]="canal">{{canal.libelle}}</nb-option>
 </nb-select>
-<br> <label *ngIf=" isSubmitted && (formControls1.CanalDiffusion.errors )" class="label-has-error">
+<br> <label *ngIf=" isSubmitted1 && (formControls1.CanalDiffusion.errors )" class="label-has-error">
     <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le canal de diffusion </label>
 
 <br>
     Au :<input nbInput [nbDatepicker]="datefn" fullWidth placeholder="La Date de Fin de l'action" formControlName="dateFinPub">
     <nb-datepicker [filter]="filterFn"  #datefn></nb-datepicker>
-    <br>  <label *ngIf=" isSubmitted && (formControls1.dateFinPub.errors )" class="label-has-error">
+    <br>  <label *ngIf=" isSubmitted1 && (formControls1.dateFinPub.errors )" class="label-has-error">
         <i class="fas fa-exclamation-circle"></i> Veuillez Saisir la date fin </label>
 
 </div>
 
 <div class="col-md-4">
    Lien Externe :<input type="text" nbInput placeholder="page facebook,site web..." fullWidth formControlName="LienPub">
-    <br> <label *ngIf=" isSubmitted && (formControls1.LienPub.errors )" class="label-has-error">
+    <br> <label *ngIf=" isSubmitted1 && (formControls1.LienPub.errors )" class="label-has-error">
         <i class="fas fa-exclamation-circle"></i> Veuillez Saisir le Lien externe </label>
     
         <br>
@@ -93,7 +93,7 @@
             <br>
 Description :<textarea fieldSize="medium" fullWidth nbInput formControlName="Description"
 placeholder="Description de votre Action Marketing"></textarea>
-<label *ngIf=" isSubmitted && (formControls1.Description.errors )" class="label-has-error">
+<label *ngIf=" isSubmitted1 && (formControls1.Description.errors )" class="label-has-error">
 <i class="fas fa-exclamation-circle"></i> Veuillez Saisir une Description </label>
 
 <br>  
@@ -168,7 +168,7 @@ placeholder="Description de votre Action Marketing"></textarea>
                 <div>
                     
 <div class="div1">
-    <img class="image1" *ngIf="afficherimage && isImage()" [src]="transform(file.objectURL.changingThisBreaksApplicationSecurity)"/>
+    <img class="image1" *ngIf="afficherimage" [src]="transform(file.objectURL.changingThisBreaksApplicationSecurity)"/>
 </div>
 </div>
           </div>  
