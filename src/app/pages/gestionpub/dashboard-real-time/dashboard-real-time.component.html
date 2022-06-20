@@ -11,14 +11,14 @@
 <div class="row">
   <div class="col-xxl-9">
     <div class="chart-container">
-      <ngx-chart-panel-summary [summary]="chartPanelSummar+y"></ngx-chart-panel-summary>
+      <!-- <ngx-chart-panel-summary [summary]="chartPanelSummar+y"></ngx-chart-panel-summary> -->
       <ngx-chart-panel-header [type]="period"
                               (periodChange)="setPeriodAndGetChartData($event)">
       </ngx-chart-panel-header>
-      <ngx-orders-chart #ordersChart [ordersChartData]="ordersChartData"></ngx-orders-chart>
+      <ngx-orders-chart *ngIf="ordersChartData" #ordersChart [ordersChartData]="ordersChartData"></ngx-orders-chart>
     </div>  </div>
-  <div class="col-xxl-3" style="display: flex;align-items: center; justify-content: center;">
-    <ngx-charts-number-card
+  <div class="col-xxl-3" style="display: flex;align-items: center; justify-content: center;"  *ngIf="!loading">
+    <ngx-charts-number-card 
   [view]="view"
   [scheme]="colorScheme"
   [results]="single"
@@ -31,7 +31,42 @@
 
 
 </div>
-<ngx-user-activity></ngx-user-activity>
+<nb-card-header>
+    <span>Historique</span>
+    <nb-select [selected]="type" (selectedChange)="getUserActivity($event); type = $event">
+      <nb-option *ngFor="let t of types" [value]="t">{{ t }}</nb-option>
+    </nb-select>
+  </nb-card-header>
+
+  <nb-list class="user-activity-list" style="overflow: auto; max-height: 500px;">
+    <nb-list-item *ngFor="let item of historiquesInteractions">
+
+      <div class="visited-date" style="max-width: 20rem;">
+        {{ item.date |date:'short'}}
+      </div>
+
+      <div class="visited-pages-count" style="text-align:left;">
+        <div class="caption">Interaction</div>
+        <div class="value">
+          <span *ngIf="item.action==1">Clique</span>
+          <span *ngIf="item.action==0">Vue</span>
+        </div>
+      </div>
+      <div class="visited-pages-count" style="text-align:left;">
+        <div class="caption">Âge</div>
+        <div class="value">{{ item.age }}</div>
+      </div>
+
+      <div class="visited-percentages" style="text-align:left;">
+        <div class="caption">Sexe</div>
+        <div class="delta value" [class.up]="item.sexe" [class.down]="!item.sexe">
+          <span *ngIf="item.sexe==0">Femme <i class="fa fa-venus"></i></span>
+          <span *ngIf="item.sexe==1">Homme <i class="fa fa-mars"></i></span>
+        </div>
+      </div>
+
+    </nb-list-item>
+  </nb-list>
 <!---
 <head>
   <meta charset="utf-8">
@@ -83,5 +118,6 @@
 </body>
 
 -->
+
 </nb-card-body>
 </nb-card>
