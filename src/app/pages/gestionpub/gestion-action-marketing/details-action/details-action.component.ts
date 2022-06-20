@@ -209,6 +209,7 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
       this.action.dateDebut=this.ActionForm.value.dateDebutPub;
       this.action.dateFin==this.ActionForm.value.dateFinPub;
       this.action.notification=1;
+      this.action.statut=1;
       this._actionMarketingService.updateActionMarketing(this.action).subscribe(val => {
         if (val.result == 1) {
           this.action=val.objectResponse;

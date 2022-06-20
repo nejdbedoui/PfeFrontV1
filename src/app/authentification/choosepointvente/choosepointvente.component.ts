@@ -99,30 +99,30 @@ export class ChoosepointventeComponent implements OnInit {
 
   choosepartenaire(partenair: PartenaireBprice) {
     localStorage.setItem("partenaire2", partenair.idPartenaire)
-    this.router.navigateByUrl("/pages/home");
+    this.router.navigateByUrl("/pages/gestionpub/gestionactionmarketing/dashboard-principale");
   }
 
   choosepointvente(pointvente: PointVente) {
     localStorage.setItem("pointventeid", pointvente.idPointVente)
     localStorage.setItem("partenaire2", pointvente.idPartenaire)
-    this.router.navigateByUrl("/pages/home");
+    this.router.navigateByUrl("/pages/gestionpub/gestionactionmarketing/dashboard-principale");
   }
 
   chooseAdminActionMarketing(){
-    this.router.navigateByUrl("/pages/gestionpub/gestionactionmarketingadmin");
+    this.router.navigateByUrl("/pages/gestionpub/gestionactionmarketing/dashboard-principale");
     localStorage.setItem("type", 'Administration')
   }
 
   tableauboard() {
     //type ==0 for dashboard
     localStorage.setItem("type", '0')
-    this.router.navigateByUrl("/pages/home");
+    this.router.navigateByUrl("/pages/gestionpub/gestionactionmarketing/dashboard-principale");
   }
 
   param() {
     //type ==1 for parametre
     localStorage.setItem("type", '1')
-    this.router.navigateByUrl("/pages/home");
+    this.router.navigateByUrl("/pages/gestionpub/gestionactionmarketing/dashboard-principale");
   }
   getcolor(index: number) {
     let val: number = (index + 1) % 3;
