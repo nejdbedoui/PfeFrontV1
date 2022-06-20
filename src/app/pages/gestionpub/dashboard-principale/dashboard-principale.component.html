@@ -41,10 +41,10 @@
       <div class="more-information">
         <div class="info-and-date-container">
           <div class="box info">
-            <i  class="fa fa-check cursor buttonround editbutton"  nbTooltip="Accepter"(click)=GererDemande() nbTooltipPlacement="bottom"></i>
+            <i  class="fa fa-check cursor buttonround editbutton"  nbTooltip="Accepter"(click)=GererDemande(demande,2) nbTooltipPlacement="bottom"></i>
           </div>
           <div class="box date">
-            <i  class="fa fa-times cursor buttonround deletebutton" (click)="GererDemande()" nbTooltip="Refuser" nbTooltipPlacement="bottom"></i>
+            <i  class="fa fa-times cursor buttonround deletebutton" (click)="GererDemande(demande,3)" nbTooltip="Refuser" nbTooltipPlacement="bottom"></i>
 
           </div>
         </div>

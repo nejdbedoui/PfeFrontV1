@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import { ActionMarketingDTO } from '../../../model/dto/ActionmarketingDTO';
 import { ActionMarketingEndPointServiceService } from '../../../service/bp-api-action-marketing/action-marketing-end-point/action-marketing-end-point-service.service';
 import { GlobalServiceService } from '../../../service/GlobalService/global-service.service';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { ActionMarketing } from '../../../model/ActionMarketing';
+
 
 @Component({
   selector: 'ngx-gestion-action-marketing-admin',
@@ -29,6 +33,8 @@ export class GestionActionMarketingAdminComponent implements OnInit {
 
 
  }
+
+
 
   ngOnInit() {
     this.getAllActionsMarketing();
@@ -96,10 +102,20 @@ listeStorages:Storage[];
   ajouteraction() {
     this.route.navigateByUrl("/pages/gestionpub/gestionactionmarketing/ajouteraction");
   }
+  public generatePDF(action:ActionMarketingDTO): void {
+    var doc = new jsPDF();
+    doc.text('Hello world!'+action.canal+'fdfd',20, 20);
+  
+    doc.save('Contrat.pdf');
+  
+  }
   GenerateContrat(action:ActionMarketingDTO){
+    //if(action.statut == 5)
     this._actionMarketingService.GenerateContrat(action).subscribe(response=>{
       if(response.result == 1){
+        this.generatePDF(action);
         console.log(response.objectResponse);
+        
         this._GlobalService.showToast("success", "success", "Contrat générer avec succès")
       }
       else {

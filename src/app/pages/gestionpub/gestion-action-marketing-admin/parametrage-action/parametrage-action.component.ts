@@ -48,6 +48,7 @@ SendtoPartner(parametreAvecPrix:ParametreAvecPrix){
     this._parametreActionService.CreateParametreActionMarketing(parametre).subscribe(response=>{
       if(response.result==1){
         if (response.result == 1) {
+          parametreAvecPrix.partenaire.statut=1;
           console.log(response)
           this._GlobalService.showToast("success", "success", "Paramètre envoyée avec succès")
         } else

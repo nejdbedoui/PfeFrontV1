@@ -28,6 +28,11 @@ CreateParametreActionMarketing(ParametreAction:ParametreActionMarketing){
 findAllParametreActionMarketing(){
   return this.httpclient.get<ParametreActionMarketingResponse>(environment.backend_url_Publicite+"findAllParametreActionMarketing/",{ headers: this.header }); 
 }
-
+updateParametre(parametre:ParametreActionMarketing){
+  return this.httpclient.put<OneParametreActionMarketingResponse>(environment.backend_url_Publicite+"UpdateParametreActionMarketing/",parametre,{ headers: this.header });
+}
+findByiIdParametreActionMarketing(idParametre){
+  return this.httpclient.get<OneParametreActionMarketingResponse>(environment.backend_url_Publicite+"findByIdParametreActionMarketing/"+idParametre,{ headers: this.header }); 
+}
 
 }
