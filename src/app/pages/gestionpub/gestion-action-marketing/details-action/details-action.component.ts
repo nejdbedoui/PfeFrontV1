@@ -234,7 +234,6 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
         }
 
       })
-=======
       this.action.statut=1;
 
       this._actionMarketingService.updateActionMarketing(this.action).subscribe(val => {

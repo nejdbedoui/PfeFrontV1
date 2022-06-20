@@ -42,14 +42,14 @@ export class PredictionRetembeeActionComponent implements OnInit {
 
     //     this.pieChartValue = pieChartValue;
     //   });
-    this.prediction= {
-      "agemin":16,
-      "agemax":54,
-      "dateDebut":new Date(2022,5,4),
-      "dateFin":new Date(2022,5,12),
-      "secteur":0,
-      "sexe":2
-  };
+  //   this.prediction= {
+  //     "agemin":16,
+  //     "agemax":54,
+  //     "dateDebut":new Date(2022,5,4),
+  //     "dateFin":new Date(2022,5,12),
+  //     "secteur":0,
+  //     "sexe":2
+  // };
   }
   idActionMarketing:String;
   action:ActionMarketing;
@@ -57,27 +57,39 @@ export class PredictionRetembeeActionComponent implements OnInit {
 loading:boolean;
 populationCible:PopulationCible;
   ngOnInit() {
+    
     this.idActionMarketing=this.route.snapshot.paramMap.get('id');
-    this._actionMarketingService.findByidActionMarketing(this.idActionMarketing).subscribe(val1 => {
-      if (val1.result == 1) {
-        this.action = val1.objectResponse
-        this._DetailsactiondtoService.findDetailsByAction(this.action).subscribe(result=>{
-          if(result.result==1){
-            this.details=result.objectResponse;
-            console.log(this.details)
-          }
-        })
-        this._populationcibleService.findByidPopulationCible(this.action.idPopulationCible).subscribe(response=>{
-          if (response.result==1){
-            this.populationCible = response.objectResponse;
-          }
-        });
-      }
-    });
+    
+           
+this.getAction();
 
-    this.predict();
-   this.getNombreJour();
+   
+
+
+  
+
   }
+
+ async getAction(){
+
+
+  this.action =  await( await this._actionMarketingService.findByidActionMarketing(this.idActionMarketing).toPromise()).objectResponse;
+     
+
+      this.populationCible =await (await this._populationcibleService.findByidPopulationCible(this.action.idPopulationCible).toPromise()).objectResponse;
+
+      this.prediction= {
+        "agemin":this.populationCible.ageMin,
+        "agemax":this.populationCible.ageMax,
+        "dateDebut":new Date(2022,5,4),
+        "dateFin":new Date(2022,5,12),
+        "secteur":0,
+        "sexe":2
+    };
+    this.predict();
+    this.getNombreJour();
+    
+ }
   getWeeks() {
     return [
       'Dimanche',
@@ -115,13 +127,15 @@ listeClique:any[]=[];
 daysOfWeek:number[]=[];
 chartload:boolean;
 getNombreJour(){
-  let dateDeb = new Date(this.prediction["dateDebut"]);
-  let dateF = new Date (this.prediction["dateFin"]);
+  console.log(this.prediction)
+  let dateDeb = new Date(this.action.dateDebut);
+  let dateF = new Date (this.action.dateFin);
    while (dateDeb <= dateF) {
      this.daysOfWeek.push(dateDeb.getDay());
      dateDeb.setDate(dateDeb.getDate() + 1);
    }
-  
+
+
 }
 totalVue=0;
 totalClique=0;
@@ -130,27 +144,32 @@ listepredcliquewithdate:PredCliqueAvecDate[] = [];
 
   predict(){
 
-    
+    console.log(this.totalClique)
     const countOccurrences = (arr, val,rep) => arr.reduce((a, v) => (v === val ? a + 1 : a), rep);
     this.loading = true;
 let dateD = new Date(this.prediction["dateDebut"]);
 this._predictionService.Predict(this.prediction).subscribe(response=>{
 let predicition = JSON.parse(response)["Predictions"];
+console.log(predicition)
   predicition.forEach(value=>{
     this.listepredvuewithdate.push({"nbreVue":value[0][0],"day":dateD.getDay()})
     this.listeVue.push(Math.round(value[0][0]))
     this.listepredcliquewithdate.push({"nbreClique":value[0][1],"day":dateD.getDay()})
     dateD.setDate(dateD.getDate() + 1);
+    
   })
-console.log(this.listepredcliquewithdate)
+  
+console.log(this.totalClique)
   this.listepredvuewithdate.forEach(value=>{
     this.totalVue+=(value.nbreVue * countOccurrences(this.daysOfWeek,value.day,0));
   })
+  
   this.single[0].value=Math.round(this.totalVue);
   
   this.listepredcliquewithdate.forEach(value=>{
     this.totalClique+=(value.nbreClique * countOccurrences(this.daysOfWeek,value.day,0));
   })
+  
   this.getChartData();
   this.single[1].value=Math.round(this.totalClique);
   

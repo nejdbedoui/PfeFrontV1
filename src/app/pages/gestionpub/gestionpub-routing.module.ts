@@ -28,7 +28,7 @@ const routes: Routes = [
     children:[
       {path:'gestionactionmarketing',component:GestionActionMarketingComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketing/ajouteraction',component:CreateActionComponent,canActivate: [AuthGuardService]},
-      {path:'gestionactionmarketing/ajouteraction/prediction',component:PredictionRetembeeActionComponent,canActivate: [AuthGuardService]},
+      {path:'gestionactionmarketing/ajouteraction/prediction/:id',component:PredictionRetembeeActionComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketing/dashboardtest/:id',component:DashboardRealTimeComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketing/detailsaction/:id',component:DetailsActionComponent,canActivate: [AuthGuardService]},
       {path:'gestionacontrat',component:GestionContractComponent,canActivate: [AuthGuardService]},

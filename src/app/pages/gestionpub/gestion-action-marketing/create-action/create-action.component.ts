@@ -308,7 +308,8 @@ step3(){
           
           if (val.result == 1) {
             this._GlobalService.showToast("success", "success", "Action ajouté avec succès")
-            this._router.navigateByUrl("pages/gestionpub/gestionactionmarketing");
+            this._router.navigate(["pages/gestionpub/gestionactionmarketing/ajouteraction/prediction/",val.objectResponse.idActionMarketing]);
+
           } else
             this._GlobalService.showToast("danger", "Erreur", val.errorDescription);
             this.disable=false;
@@ -329,7 +330,7 @@ step3(){
       this._Actionmarketingendpointservice.CreateActionMarketing(action).subscribe(val => {
         if (val.result == 1) {
           this._GlobalService.showToast("success", "success", "Action ajouter avec succés")
-          this._router.navigate(["pages/gestionpub/gestionactionmarketing/prediction",val.objectResponse.idActionMarketing]);
+          this._router.navigate(["pages/gestionpub/gestionactionmarketing/ajouteraction/prediction/",val.objectResponse.idActionMarketing]);
         } else
           this._GlobalService.showToast("danger", "Erreur", val.errorDescription);
           this.disable=false;
