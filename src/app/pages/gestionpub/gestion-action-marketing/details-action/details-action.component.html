@@ -36,14 +36,13 @@
     
     
                   <span class="bold">Titre <br> </span> <span *ngIf="!activer">{{action.titre}} </span>
-                 <span *ngIf="activer"> <input fullWidth  type="text" nbInput placeholder="Titre de votre action" formControlName="titre">
-                  <br> <label *ngIf=" isSubmitted && (formControls1.titre.errors )" class="label-has-error">
-                            <i class="fas fa-exclamation-circle"></i> Veuillez Saisir un Titre </label></span>
+                 <span *ngIf="activer"> <input fullWidth formControlName="titre"  type="text" nbInput placeholder="Titre de votre action" >
+                  <br> </span>
                  
                   <br> <br>
     
     
-                <span *ngIf="!activer">  <span class="bold">Description </span> <br> {{action.description}} </span>
+                  <span class="bold">Description </span> <br> <span *ngIf="!activer">{{action.description}} </span>
                 <span *ngIf="activer">
                     <textarea fieldSize="medium" nbInput formControlName="Description"
                         placeholder="Description de votre Action Marketing"></textarea>
@@ -80,7 +79,7 @@
               <h6>Détails de l'Audience</h6><br><br>
               <p class="big" style="text-align: left;">
              <span *ngIf="!activer">   <span class="bold">Ville ciblé </span> <br> <span *ngFor="let ville of details.ville">{{ville}} </span> </span>
-             <p-multiSelect *ngIf="activer" [options]="villes" optionLabel="libelle" formControlName="villes"></p-multiSelect>
+             <p-multiSelect *ngIf="activer" [options]="villes" optionLabel="libelle" formControlName="villes" optionValue="idVille"></p-multiSelect>
              <br> <br>
                 
                 <span class="bold">Secteur Ciblé </span> <br> <span *ngIf="!activer"><span *ngFor="let Secteur of details.secteurCible">{{Secteur}} </span></span>

@@ -138,8 +138,8 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
   InstanciateForm() {
 
     this.ActionForm = this._FormBuilder.group({
-      titre: [null, [Validators.required]],
       Description: [null, [Validators.required]],
+      titre: [null, [Validators.required]],
       dateDebutPub: [null, [Validators.required]],
       dateFinPub: [null, [Validators.required]],
       Frequence: [null, [Validators.required]],
@@ -167,7 +167,7 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
   get formControls() { return this.ActionForm.controls; }
   modifier() {
     this.ActionForm.get('agemax').setValidators([Validators.required,Validators.min(this.ActionForm.value.agemin)]);
-    this.ActionForm.get("titre").setValue(this.action.titre);
+  
     this.ActionForm.get("dateDebutPub").setValue(new Date(this.action.dateDebut));
     this.ActionForm.get("dateFinPub").setValue(new Date(this.action.dateFin));
     this.ActionForm.get("Frequence").setValue(this.action.frequence);
@@ -176,6 +176,7 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
     this.ActionForm.get("TypeContenue").setValue(this.action.typeContenue);
     this.ActionForm.get("sexe").setValue(this.details.sexe);
     this.ActionForm.get("LienExterne").setValue(this.action.externUrl);
+    this.ActionForm.get("titre").setValue(this.action.titre);
     let selectedsecteur = [];
     let selectedvilles = [];
     this.sectors.forEach(value=>{
@@ -199,29 +200,67 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
 
   submit() {
     this.isSubmitted = true;
-    if(this.ActionForm.valid){
 
-    if(this.action.frequence==this.ActionForm.value.Frequence && this.action.dateDebut==this.ActionForm.value.dateDebutPub && this.action.dateFin==this.ActionForm.value.dateFinPub){
-      this.modifier();
-    }
-    else{
+    if(this.ActionForm.valid){
+      let selectesec:string[]=[];
+      let selectedvil:string[] = [];
+      this.ActionForm.value.Secteurcible.forEach(value=>{
+        selectesec.push(value.idClientType);
+      })
+       this.ActionForm.value.villes.forEach(value=>{
+        selectedvil.push(value.idVille)
+      })
+      this.populationCible.ville=selectedvil;
       this.action.frequence=this.ActionForm.value.Frequence;
+      this.action.titre=this.ActionForm.value.titre;
       this.action.dateDebut=this.ActionForm.value.dateDebutPub;
       this.action.dateFin==this.ActionForm.value.dateFinPub;
+      this.action.description=this.ActionForm.value.Description;
+      this.action.externUrl = this.ActionForm.value.LienExterne;
+      this.action.smsBody = this.ActionForm.value.SMSBody;
+      this.action.typeContenue = this.ActionForm.value.TypeContenue;
       this.action.notification=1;
+
+      this.populationCible.ageMax = this.ActionForm.value.agemax;
+      this.populationCible.ageMin = this.ActionForm.value.agemin;
+      this.populationCible.sexe = this.ActionForm.value.sexe;
+      this.action.secteurcible = selectesec;
+      this._populationcibleService.updatePopulationCible(this.populationCible).subscribe(response=>{
+        if (response.result == 1) {
+          this.populationCible=response.objectResponse;
+          this._GlobalService.showToast("success", "success", "Population Cible mise avec succés")
+          this.activer =false;
+
+        }
+
+      })
+=======
       this.action.statut=1;
+
       this._actionMarketingService.updateActionMarketing(this.action).subscribe(val => {
         if (val.result == 1) {
+          this.activer =false;
           this.action=val.objectResponse;
-          this._GlobalService.showToast("success", "success", "Action Créer avec succés")
-          this.modifier();
+          this._GlobalService.showToast("success", "success", "Action marketing mise avec succés")
         }
       });
     }
     
+    
+  }
+  delete() {
+    if (confirm("Etes-vous sûr de vouloir supprimer cette action ?")) {
+      this._actionMarketingService.deleteActionMarketing(this.route.snapshot.paramMap.get('id')).subscribe(val => {
+        if (val.result == 1) {
+          this._GlobalService.showToast("success", "success", "Action supprimé avec succès")
+          this._router.navigateByUrl("pages/gestionpub/gestionactionmarketing");
+        } else
+          this._GlobalService.showToast("danger", "Erreur", val.errorDescription)
+      })
+    }
   }
 }
-}
+
 export class CustomeDateValidators {
   static fromToDate(fromDateField: string, toDateField: string, errorName: string = 'fromToDate'): ValidatorFn {
       return (formGroup: AbstractControl): { [key: string]: boolean } | null => {
@@ -299,17 +338,7 @@ export class CustomeDateValidators {
 //     return "Terminée"
 //   }
 
-//   delete() {
-//     if (confirm("would you like to delete this action")) {
-//       this._actionMarketingService.deleteActionMarketing(this.route.snapshot.paramMap.get('id')).subscribe(val => {
-//         if (val.result == 1) {
-//           this._GlobalService.showToast("success", "success", "Action supprimé avec succès")
-//           this._router.navigateByUrl("pages/gestionpub/gestionactionmarketing");
-//         } else
-//           this._GlobalService.showToast("danger", "Erreur", val.errorDescription)
-//       })
-//     }
-//   }
+  
 
 //   confirm() {
 //     this.action.statut = 1;

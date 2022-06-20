@@ -5,6 +5,7 @@ import { ActivityAction, UserActivityData } from '../../../@core/data/user-activ
 import { ActionEnCoursDeDiffusionDTO } from '../../../model/dto/ActionEnCoursDeDiffusionDTO';
 import { DemandeDiffusionDTO } from '../../../model/dto/DemandeDiffusionDTO';
 import { DashboardGeneraleEndPointServiceService } from '../../../service/bp-api-action-marketing/dashboard-generale-end-point/dashboard-generale-end-point-service.service';
+import { ParametreActionEndPointServiceService } from '../../../service/bp-api-action-marketing/parametre-action-end-point/parametre-action-end-point-service.service';
 
 @Component({
   selector: 'ngx-dashboard-principale',
@@ -26,7 +27,7 @@ demandesDiffusions:DemandeDiffusionDTO[] = [];
   currentTheme: string;
 
   constructor(private themeService: NbThemeService,
-  private _dashboardGeneraleService : DashboardGeneraleEndPointServiceService) {
+  private _dashboardGeneraleService : DashboardGeneraleEndPointServiceService,private _parametreservice:ParametreActionEndPointServiceService) {
         this.themeService.getJsTheme()
       .pipe(takeWhile(() => this.alive))
       .subscribe(theme => {
@@ -38,7 +39,21 @@ demandesDiffusions:DemandeDiffusionDTO[] = [];
 
   }
 
-  GererDemande(demande:DemandeDiffusionDTO){
+  GererDemande(demande:DemandeDiffusionDTO,statut:number){
+    console.log(demande)
+    this._parametreservice.findByiIdParametreActionMarketing(demande.idParametreActionMarketing).subscribe(response=>{
+      if (response.result==1){
+        console.log(response)
+        let parametre = response.objectResponse;
+        parametre.statut=statut;
+        this._parametreservice.updateParametre(parametre).subscribe(value=>{
+          if(value.result==1){
+          console.log(value)
+          
+          }
+        })
+      }
+    })
   }
 
   getAllDemandeActionsMarketing(idPartenaire:String){
