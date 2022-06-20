@@ -14,13 +14,14 @@ export class ECommerceVisitorsStatisticsComponent implements AfterViewInit, OnDe
   private alive = true;
 
   @Input() value: number;
-
+  pourcentage:number;
   option: any = {};
   chartLegend: { iconColor: string; title: string }[];
   echartsIntance: any;
 
   constructor(private theme: NbThemeService,
               private layoutService: LayoutService) {
+                
     this.layoutService.onChangeLayoutSize()
       .pipe(
         takeWhile(() => this.alive),
@@ -47,11 +48,12 @@ export class ECommerceVisitorsStatisticsComponent implements AfterViewInit, OnDe
     this.chartLegend = [
       {
         iconColor: visitorsPieLegend.firstSection,
-        title: 'New Visitors',
+        title: 'Nombre de clique',
+
       },
       {
         iconColor: visitorsPieLegend.secondSection,
-        title: 'Return Visitors',
+        title: 'Nombre de vue',
       },
     ];
   }
@@ -74,7 +76,7 @@ export class ECommerceVisitorsStatisticsComponent implements AfterViewInit, OnDe
           radius: visitorsPie.firstPieRadius,
           data: [
             {
-              value: this.value,
+              value: 100 - this.value,
               name: ' ',
               label: {
                 normal: {
@@ -112,7 +114,7 @@ export class ECommerceVisitorsStatisticsComponent implements AfterViewInit, OnDe
               hoverAnimation: false,
             },
             {
-              value: 100 - this.value,
+              value: this.value,
               name: ' ',
               tooltip: {
                 show: false,
@@ -139,7 +141,7 @@ export class ECommerceVisitorsStatisticsComponent implements AfterViewInit, OnDe
           radius: visitorsPie.secondPieRadius,
           data: [
             {
-              value: this.value,
+              value: 100 - this.value,
               name: ' ',
               label: {
                 normal: {
@@ -156,6 +158,7 @@ export class ECommerceVisitorsStatisticsComponent implements AfterViewInit, OnDe
               tooltip: {
                 show: false,
               },
+              
               itemStyle: {
                 normal: {
                   color: new echarts.graphic.LinearGradient(0, 0, 0, 1),
@@ -164,7 +167,7 @@ export class ECommerceVisitorsStatisticsComponent implements AfterViewInit, OnDe
               hoverAnimation: false,
             },
             {
-              value: 100 - this.value,
+              value: this.value,
               name: ' ',
               tooltip: {
                 show: false,

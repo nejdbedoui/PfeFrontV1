@@ -8,6 +8,7 @@ export class DetailsActionDTO{
     canaldifusion:string;
     formataffichage:string;
     idSector:String;
+    secteurCible:String[];
 }
 
 

@@ -74,6 +74,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { DashboardPrincipaleComponent } from './dashboard-principale/dashboard-principale.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { Carousel, CarouselModule } from 'primeng/primeng';
+import {MultiSelectModule} from 'primeng/multiselect';
+import { PredictionRetembeeActionComponent } from './gestion-action-marketing/create-action/prediction-retembee-action/prediction-retembee-action.component';
+
 
 
 
@@ -120,6 +123,7 @@ import { Carousel, CarouselModule } from 'primeng/primeng';
     CreateCanalDiffusionComponent,
     CreateTypeAffichageComponent,
     DashboardPrincipaleComponent,
+    PredictionRetembeeActionComponent,
 
   ],
   imports: [
@@ -155,6 +159,7 @@ import { Carousel, CarouselModule } from 'primeng/primeng';
     NgxEchartsModule,
     ChartModule,
     NbTabsetModule,
+    MultiSelectModule,
 // ADDED FOR CHARTS
 ThemeModule,
 NbCardModule,

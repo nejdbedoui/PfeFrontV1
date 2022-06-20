@@ -13,6 +13,7 @@ import { DetailActionComponent } from './gestion-action-marketing-admin/detail-a
 import { GestionActionMarketingAdminComponent } from './gestion-action-marketing-admin/gestion-action-marketing-admin.component';
 import { ParametrageActionComponent } from './gestion-action-marketing-admin/parametrage-action/parametrage-action.component';
 import { CreateActionComponent } from './gestion-action-marketing/create-action/create-action.component';
+import { PredictionRetembeeActionComponent } from './gestion-action-marketing/create-action/prediction-retembee-action/prediction-retembee-action.component';
 import { DetailsActionComponent } from './gestion-action-marketing/details-action/details-action.component';
 import { GestionActionMarketingComponent } from './gestion-action-marketing/gestion-action-marketing.component';
 import { GestionContractComponent } from './gestion-action-marketing/gestion-contract/gestion-contract.component';
@@ -27,6 +28,7 @@ const routes: Routes = [
     children:[
       {path:'gestionactionmarketing',component:GestionActionMarketingComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketing/ajouteraction',component:CreateActionComponent,canActivate: [AuthGuardService]},
+      {path:'gestionactionmarketing/ajouteraction/prediction',component:PredictionRetembeeActionComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketing/dashboardtest/:id',component:DashboardRealTimeComponent,canActivate: [AuthGuardService]},
       {path:'gestionactionmarketing/detailsaction/:id',component:DetailsActionComponent,canActivate: [AuthGuardService]},
       {path:'gestionacontrat',component:GestionContractComponent,canActivate: [AuthGuardService]},

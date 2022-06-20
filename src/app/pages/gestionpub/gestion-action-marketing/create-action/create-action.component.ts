@@ -57,7 +57,7 @@ disable:boolean=false;
 filterFn:any;
   constructor(private sanitizer: DomSanitizer,private _typeAffichage:TypeAffichageEndPointServiceService,private _router: Router,private _villeEndpoint: VilleEndPointService, private _Canalservice: CanalDiffusionEndPointService, private _formataffichageservice: FormatAffichageEndPointService, private _Partenaire: PartenaireBpriceEndPointService, private _GlobalService: GlobalServiceService, private _FormBuilder: FormBuilder, private _populationCibleService: PopulationCibleEndPointServiceService, private _Actionmarketingendpointservice: ActionMarketingEndPointServiceService, private _Categoriepubendpointservice: CategoriePubEndPointServiceService) {
    // this.optionContenue = [{ label: 'Image', value: 0 }, { label: 'Video', value: 1 }];
-   this.optionSexe = [{ label: 'Homme / Femme', value: 0 }, { label: 'Homme', value: 1 },{ label: 'Femme', value: 2 }];
+   this.optionSexe = [{ label: 'Homme / Femme', value: 2 }, { label: 'Homme', value: 1 },{ label: 'Femme', value: 0 }];
   }
 
 
@@ -197,10 +197,8 @@ this.disable=true;
           });
           this.populationCible.ville=stri;
 
-            let agerange:number[]= [];
-            agerange[0]=this.ActionForm3.value.agemin;
-            agerange[1]=this.ActionForm3.value.agemax;
-            this.populationCible.age = agerange;
+            this.populationCible.ageMin=this.ActionForm3.value.agemin;
+            this.populationCible.ageMax=this.ActionForm3.value.agemax;
             console.log(this.populationCible)
 
           

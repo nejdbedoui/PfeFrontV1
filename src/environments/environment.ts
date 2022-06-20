@@ -26,6 +26,7 @@ export const environment = {
   // image_url:'https://images.adcaisse.online',
   backend_url_Pos: "https://be.adcaisse.online/zull-serveur/bp-api-pos/v1/",
   backend_url_Publicite: "http://localhost:8080/v1/",
+  backend_url_Prediction: "http://localhost:5000/",
   backend_url_Admin: "https://be.adcaisse.online/zull-serveur/bp-api-admin/v1/",
   backend_url_Product: "https://be.adcaisse.online/zull-serveur/bp-api-product/v1/",
   backend_url_Transaction: "https://be.adcaisse.online/zull-serveur/bp-api-transaction/v1/",
@@ -34,6 +35,7 @@ export const environment = {
   backend_url_loyality: "https://be.adcaisse.online/zull-serveur/bp-api-loyality/v1/",
   backend_url_customer: "https://be.adcaisse.online/zull-serveur/bp-api-customer/v1/",
   backend_url_Notification: "https://be.adcaisse.online/zull-serveur/bp-api-notification/v1/",
+
 
 
   // backend_url_Pos:"http://51.178.47.149:8080/bp-api-pos/v1/",

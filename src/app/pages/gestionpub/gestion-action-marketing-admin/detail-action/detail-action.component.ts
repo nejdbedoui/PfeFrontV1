@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActionMarketing } from '../../../../model/ActionMarketing';
 import { DetailsActionDTO } from '../../../../model/dto/DetailsActionDTO';
@@ -120,8 +120,14 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
       dateDebutPub: [null, [Validators.required]],
       dateFinPub: [null, [Validators.required]],
       Frequence: [null, [Validators.required]],
-
-    });
+    },{
+      validator: [
+        CustomeDateValidators.fromToDate('dateDebutPub', 'dateFinPub')
+        
+        // For custome error name like: {customeErrorName: true}, pass third optional parameter with custome name
+        // CustomeDateValidators.fromToDate('fromDate', 'toDate', 'customeErrorName')
+      ]}   
+    )
   }
 
   
@@ -129,8 +135,8 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
  
   get formControls() { return this.ActionForm.controls; }
   modifier() {
-    this.ActionForm.get("dateDebutPub").setValue(this.action.dateDebut);
-    this.ActionForm.get("dateFinPub").setValue(this.action.dateFin);
+    this.ActionForm.get("dateDebutPub").setValue(new Date(this.action.dateDebut));
+    this.ActionForm.get("dateFinPub").setValue(new Date(this.action.dateFin));
     this.ActionForm.get("Frequence").setValue(this.action.frequence);
    
 
@@ -160,6 +166,17 @@ this._partenaireservice.findByIdPartenaire(localStorage.getItem("partenaireid"))
     
   }
 }
-
-
+}
+export class CustomeDateValidators {
+  static fromToDate(fromDateField: string, toDateField: string, errorName: string = 'fromToDate'): ValidatorFn {
+      return (formGroup: AbstractControl): { [key: string]: boolean } | null => {
+          const fromDate = formGroup.get(fromDateField).value;
+          const toDate = formGroup.get(toDateField).value;
+         // Ausing the fromDate and toDate are numbers. In not convert them first after null check
+          if ((fromDate !== null && toDate !== null) && fromDate > toDate) {
+              return {[errorName]: true};
+          }
+          return null;
+      };
+  }
 }
