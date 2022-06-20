@@ -65,6 +65,9 @@ demandesDiffusions:DemandeDiffusionDTO[] = [];
           
           this.loading = false;
         }
+        else{
+          this.loading = false;
+        }
       }
       )
      
@@ -83,6 +86,9 @@ demandesDiffusions:DemandeDiffusionDTO[] = [];
           },0);
           this.single[1].value=res.objectResponse.totalRevenueDesDemandes;
           this.single[3].value=res.objectResponse.demandeEncoursDeDiffusion;
+          this.loading = false;
+        }
+        else{
           this.loading = false;
         }
       }

@@ -4,7 +4,7 @@ export class Contrat {
       idPartenaire:string;
       numeroContrat:string;
       statutContrat:number;
-
+      prix:number;
       descriptionAction:string;
       dateDebut:Date;
       dateFin:Date;
