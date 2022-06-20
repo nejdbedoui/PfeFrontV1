@@ -8,6 +8,8 @@ import { GlobalServiceService } from '../../../service/GlobalService/global-serv
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { ActionMarketing } from '../../../model/ActionMarketing';
+import { ParametreActionEndPointServiceService } from '../../../service/bp-api-action-marketing/parametre-action-end-point/parametre-action-end-point-service.service';
+import { ParametreActionMarketing } from '../../../model/ParametreActionMarketing';
 
 
 @Component({
@@ -26,7 +28,7 @@ export class GestionActionMarketingAdminComponent implements OnInit {
   ListeCanalDiffusion:any[]=[];
   ListeStatutAction:any[]=[];
   ListePartenaire:any[]=[];
-  constructor(private route: Router,private _actionMarketingService:ActionMarketingEndPointServiceService,private datePipe: DatePipe,private _GlobalService: GlobalServiceService) { 
+  constructor(private route: Router,private _actionMarketingService:ActionMarketingEndPointServiceService,private datePipe: DatePipe,private _GlobalService: GlobalServiceService,private _parametreActionService:ParametreActionEndPointServiceService) { 
     this.stateOptions = [{label: 'image', value: 0}, {label: 'video', value: 1}];
 
     
@@ -102,24 +104,45 @@ listeStorages:Storage[];
   ajouteraction() {
     this.route.navigateByUrl("/pages/gestionpub/gestionactionmarketing/ajouteraction");
   }
-  public generatePDF(action:ActionMarketingDTO): void {
+  public generatePDF(action:ActionMarketingDTO,prix:number): void {
     var doc = new jsPDF();
-    doc.text('Hello world!'+action.canal+'fdfd',20, 20);
+    var strArr = doc.splitTextToSize("l'action de titre : "+action.titre+" qui va étre diffusée sur :  "+action.canal+" du : "+action.dateDebut+ " a "+action.dateFin+" pour un montant totale de  "+prix, 100)
+    doc.text(strArr,20, 20);
   
     doc.save('Contrat.pdf');
   
   }
   GenerateContrat(action:ActionMarketingDTO){
+    let parametre:ParametreActionMarketing[];
+    let prixtotale=0;
+    this._parametreActionService.findAccepteeByiIActionMarketing(action.idActionMarketing).subscribe(response=>{
+      if(response.result==1){
+        response.objectResponse.forEach(value=>{
+          prixtotale+=value.prix;
+        })
+      }
+      
+    })
+
     //if(action.statut == 5)
     this._actionMarketingService.GenerateContrat(action).subscribe(response=>{
       if(response.result == 1){
-        this.generatePDF(action);
+        this.generatePDF(action,prixtotale);
         console.log(response.objectResponse);
         
         this._GlobalService.showToast("success", "success", "Contrat générer avec succès")
       }
       else {
-        this._GlobalService.showToast("danger", "Erreur", response.errorDescription)
+        this._parametreActionService.findAccepteeByiIActionMarketing(action.idActionMarketing).subscribe(response=>{
+          if(response.result==1){
+            response.objectResponse.forEach(value=>{
+              prixtotale+=value.prix;
+            })
+          }
+          
+        })
+        this.generatePDF(action,prixtotale);
+
       }
     });
   }

@@ -15,9 +15,9 @@ export class GestionContractComponent implements OnInit {
 partenaire:String;
 ListeContrat:Contrat[];
 affichefilter:boolean = false;
-loading:boolean = true;
+loading:boolean;
   ngOnInit() {
-    this.partenaire = localStorage.getItem('partenaireid');
+    this.partenaire = localStorage.getItem('partenaire2');
     this.getAllContract();
   }
 
@@ -31,6 +31,7 @@ loading:boolean = true;
   }
 
 getAllContract(){
+  this.loading=true;
 this._contratServiceEndPoint.findAllContratActionMarketingByPartenaireId(this.partenaire).subscribe(response=>{
   if(response.result==1){
     this.loading = false;

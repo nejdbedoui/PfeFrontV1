@@ -55,8 +55,8 @@
            
             <td>{{getStatusContrat(Contrat.statutContrat)}}</td>
           <td >
-            <i  class="fa fa-check cursor buttonround editbutton" (click)="GestionContrat(Contrat,4)" nbTooltip="Accepter" nbTooltipPlacement="bottom"></i>
-            <i  class="fa fa-times cursor buttonround deletebutton" (click)="GestionContrat(Contrat,3)" nbTooltip="Refuser" nbTooltipPlacement="bottom"></i>
+            <i  class="fa fa-check cursor buttonround editbutton" (click)="GestionContrat(Contrat,1)" nbTooltip="Accepter" *ngIf="Contrat.statutContrat==0" nbTooltipPlacement="bottom"></i>
+            <i  class="fa fa-times cursor buttonround deletebutton" (click)="GestionContrat(Contrat,2)" nbTooltip="Refuser" *ngIf="Contrat.statutContrat==0" nbTooltipPlacement="bottom"></i>
         </td>
         </tr>
         </ng-template>

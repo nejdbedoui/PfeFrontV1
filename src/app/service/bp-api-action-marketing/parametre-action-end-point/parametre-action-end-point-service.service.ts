@@ -9,6 +9,7 @@ import { ParametreActionMarketingResponse } from '../../../model/response/Parame
   providedIn: 'root'
 })
 export class ParametreActionEndPointServiceService {
+  this: any;
 
   constructor(private httpclient:HttpClient) { }
 
@@ -33,6 +34,9 @@ updateParametre(parametre:ParametreActionMarketing){
 }
 findByiIdParametreActionMarketing(idParametre){
   return this.httpclient.get<OneParametreActionMarketingResponse>(environment.backend_url_Publicite+"findByIdParametreActionMarketing/"+idParametre,{ headers: this.header }); 
+}
+findAccepteeByiIActionMarketing(idAction){
+  return this.httpclient.get<ParametreActionMarketingResponse>(environment.backend_url_Publicite+"findAllByIdActionMarketingAndStatut/"+idAction,{ headers: this.header }); 
 }
 
 }

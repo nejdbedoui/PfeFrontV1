@@ -1,11 +1,19 @@
 import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NbThemeService } from '@nebular/theme';
 import { forkJoin } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 import { VisitorsAnalyticsData, OutlineData } from '../../../../../@core/data/visitors-analytics';
 import { LayoutService } from '../../../../../@core/utils';
+import { ActionMarketing } from '../../../../../model/ActionMarketing';
+import { DetailsActionDTO } from '../../../../../model/dto/DetailsActionDTO';
+import { PopulationCible } from '../../../../../model/PopulationCible';
+import { ActionMarketingEndPointServiceService } from '../../../../../service/bp-api-action-marketing/action-marketing-end-point/action-marketing-end-point-service.service';
+import { DetailsActionService } from '../../../../../service/bp-api-action-marketing/details-action-dto-end-point/details-action.service';
+import { PopulationCibleEndPointServiceService } from '../../../../../service/bp-api-action-marketing/population-cible-end-point/population-cible-end-point-service.service';
 import { SystemePredictionServiceService } from '../../../../../service/bp-api-action-marketing/systeme-prediction-end-point/systeme-prediction-service.service';
+import { PartenaireBpriceEndPointService } from '../../../../../service/bp-api-pos/partenaire-bprice-end-point/partenaire-bprice-end-point.service';
 import { ngxcard } from '../../../dashboard-principale/dashboard-principale.component';
 
 @Component({
@@ -17,7 +25,7 @@ export class PredictionRetembeeActionComponent implements OnInit {
   visitorsAnalyticsData: { innerLine: number[]; outerLine: OutlineData[]; };
 
   constructor(private _predictionService:SystemePredictionServiceService,private themeService: NbThemeService,
-    private visitorsAnalyticsChartService: VisitorsAnalyticsData,private layoutService: LayoutService) { 
+    private visitorsAnalyticsChartService: VisitorsAnalyticsData,private layoutService: LayoutService,private _DetailsactiondtoService:DetailsActionService,private _actionMarketingService: ActionMarketingEndPointServiceService, private route: ActivatedRoute, private _partenaireservice: PartenaireBpriceEndPointService,private _populationcibleService:PopulationCibleEndPointServiceService) { 
       
 
     // forkJoin(
@@ -43,9 +51,30 @@ export class PredictionRetembeeActionComponent implements OnInit {
       "sexe":2
   };
   }
-  
+  idActionMarketing:String;
+  action:ActionMarketing;
+  details:DetailsActionDTO;
 loading:boolean;
+populationCible:PopulationCible;
   ngOnInit() {
+    this.idActionMarketing=this.route.snapshot.paramMap.get('id');
+    this._actionMarketingService.findByidActionMarketing(this.idActionMarketing).subscribe(val1 => {
+      if (val1.result == 1) {
+        this.action = val1.objectResponse
+        this._DetailsactiondtoService.findDetailsByAction(this.action).subscribe(result=>{
+          if(result.result==1){
+            this.details=result.objectResponse;
+            console.log(this.details)
+          }
+        })
+        this._populationcibleService.findByidPopulationCible(this.action.idPopulationCible).subscribe(response=>{
+          if (response.result==1){
+            this.populationCible = response.objectResponse;
+          }
+        });
+      }
+    });
+
     this.predict();
    this.getNombreJour();
   }
